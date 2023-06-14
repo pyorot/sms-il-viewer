@@ -143,7 +143,8 @@ function parseTime(input) {
   return parseInt(matches[1]*60*60 + matches[2]*60 + matches[3]) + matches[4]/100
 }
 
-
-loadData()
-loadNav()
-loadLbOverall()
+(async() => {
+  loadData() // blocking data load
+  loadNav()
+  loadLbOverall()
+})()
