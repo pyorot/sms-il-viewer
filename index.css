@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+#main {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: Verdana;
+  overflow-x: hidden;
+}
+@media screen and (min-width: 600px) {
+  #main {
+    width: 600px;
+  }
+}
+
+#nav {
+  float: left;
+  width: 19%;
+  color: LightGray;
+  font-family: Verdana;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 4px -2px rgba(0, 0, 0, 0.5);
+}
+
+#lb {
+  float: right;
+  width: 80%;
+  text-align: center;
+}
+
+#lbt tr {
+  font-size: 18px;
+  height: 30px;
+}
+#lbt tr:nth-child(even) {
+  background-color: whitesmoke;
+}
+
+input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* nav accordion styles */
+.tab {
+  width: 100%;
+  color: white;
+  overflow: hidden;
+}
+.tab-label {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  background: LightGray;
+  font-weight: bold;
+  cursor: pointer;
+  /* Icon */
+}
+.tab-label:hover {
+  background: #bababa;
+}
+.tab-label:not(#tab-overall)::after {
+  content: "❯";
+  transition: all 0.5s;
+}
+.tab-content {
+  max-height: 0;
+  transition: all 0.5s;
+}
+
+button {
+  border: solid 1px #bababa;
+  background-color: #ededed;
+  color: #a0a0a0;
+  width: 100%;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+button:hover {
+  background: gainsboro;
+}
+
+input:checked + .tab-label {
+  background: #bababa;
+}
+input:checked + .tab-label::after {
+  transform: rotate(90deg);
+}
+input:checked ~ .tab-content {
+  max-height: none;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -300px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 7px;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+.tooltip:active .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
