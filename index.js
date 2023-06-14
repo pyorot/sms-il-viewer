@@ -3,12 +3,15 @@ const worldCodes = {"Bianco": "b", "Ricco": "r", "Gelato": "g", "Pinna": "p",
 
 var data
 const dataUrl = "https://script.google.com/macros/s/AKfycbxd8NZuM9w8GKPYKavwORBwzlk69gQcWjIslKqjl0jNny9MQC_cduooDx1Cf9cogp9B/exec"
-function loadData() {
-  let request = new XMLHttpRequest()
-  request.open("GET", dataUrl, false)
-  request.send(null)
-  console.log("data loaded")
-  data = JSON.parse(request.responseText)
+async function loadData() {
+  try {
+    let res = await fetch(dataUrl)
+    data = await res.json()
+    console.log("data loaded")
+  } catch (error) {
+    document.getElementById("lbh").innerHTML = "data load failed; see console"
+    console.error(error);
+  }
 }
 
 
@@ -144,7 +147,7 @@ function parseTime(input) {
 }
 
 (async() => {
-  loadData() // blocking data load
+  await loadData() // blocking data load
   loadNav()
   loadLbOverall()
 })()
