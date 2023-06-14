@@ -1,3 +1,4 @@
+var fs = require('fs')
 
 exports.handler = async (event, context) => {
   console.log(event)
