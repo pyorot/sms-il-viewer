@@ -2,15 +2,17 @@ const worldCodes = {"Bianco": "b", "Ricco": "r", "Gelato": "g", "Pinna": "p",
   "Sirena": "s", "Noki": "n", "Pianta": "q", "Delfino": ""}
 
 var data
-const dataUrl = "https://script.google.com/macros/s/AKfycbxd8NZuM9w8GKPYKavwORBwzlk69gQcWjIslKqjl0jNny9MQC_cduooDx1Cf9cogp9B/exec"
+var dataUrl = "https://script.google.com/macros/s/AKfycbxd8NZuM9w8GKPYKavwORBwzlk69gQcWjIslKqjl0jNny9MQC_cduooDx1Cf9cogp9B/exec"
+// dataUrl = "data.json" // for debug
 async function loadData() {
   try {
     let res = await fetch(dataUrl)
     data = await res.json()
-    console.log("data loaded")
+    console.log("data loaded:")
+    console.log(data)
   } catch (error) {
     document.getElementById("lbh").innerHTML = "data load failed; see console"
-    console.error(error);
+    console.error(error)
   }
 }
 
