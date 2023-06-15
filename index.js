@@ -2,7 +2,7 @@ const worldCodes = {"Bianco": "b", "Ricco": "r", "Gelato": "g", "Pinna": "p",
   "Sirena": "s", "Noki": "n", "Pianta": "q", "Delfino": ""}
 
 var data
-var dataUrl = "https://script.google.com/macros/s/AKfycbzhOK-tgpnUQVyEMeYO1yW4d-q0Xe_1vP1qpxG0MOCEEOzQnNCpRknpIwvN-jhXkx9g/exec"
+var dataUrl = "https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec"
 // dataUrl = "data.json" // for debug
 async function loadData() {
   try {
