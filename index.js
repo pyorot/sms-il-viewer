@@ -1,6 +1,7 @@
 const worldCodes = {"Bianco": "b", "Ricco": "r", "Gelato": "g", "Pinna": "p",
   "Sirena": "s", "Noki": "n", "Pianta": "q", "Delfino": ""}
 
+// data: load from API
 var data
 var dataUrl = "https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec"
 // dataUrl = "data.json" // for debug
@@ -147,6 +148,7 @@ function parseTime(input) {
   for (let i=1; i<matches.length; i++) { matches[i] = matches[i] ? parseInt(matches[i]) : 0 }
   return parseInt(matches[1]*60*60 + matches[2]*60 + matches[3]) + matches[4]/100
 }
+
 
 (async() => {
   await loadData() // blocking data load
