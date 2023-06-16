@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+// disable scrollbars
+::-webkit-scrollbar { display: none; } // Chrome, Safari, Opera
+#navleft, #lb {
+  -ms-overflow-style: none;  // IE and Edge
+  scrollbar-width: none;     // Firefox
+}
+
+html,
+body,
+#main {
+	height: 100%;
+  font-family: Tahoma;
+  font-size: 16px;
+}
+
+body {
+  // background-color: brown;
+	margin: 0;
+}
+
+// the flex setup:
+// http://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout
+.flexrow  { display: flex; overflow: hidden; }
+.flexcol  { display: flex; overflow: hidden; flex-direction: column; }
+.fixed    { flex: 0 0 auto; }
+.stretchy { flex: 1 1 auto;	}
+.scroll   { overflow: auto; }
+
+#main {
+  // background-color: lightcoral;
+  margin: auto;
+	.flexcol;
+
+	> #navtop {
+    background-color: lightpink;
+    .fixed;
+    .scroll;
+		height: 40px;
+	}
+
+	> #panelbottom {
+    // background-color: green;
+		.stretchy;
+    .flexrow;
+
+    > #navleft {
+      background-color: ivory;
+      .fixed;
+      .scroll;
+      width: 80px;
+    }
+
+    > #panelright {
+      // background-color: orange;
+      .stretchy;
+      .flexcol;
+      text-align: center;
+
+      > #selector {
+        background-color: lightblue;
+        .fixed;
+        height: 40px;
+      }
+      
+      > #title {
+        // background-color: indigo;
+        .fixed;
+        height: auto;
+      }
+      
+      > #lb {
+        // background-color: violet;
+        .stretchy;
+        .scroll;
+      }
+    }
+	}
+}
+@media screen and (min-width: 600px) {
+  #main { width: 600px; }
+}

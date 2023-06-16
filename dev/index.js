@@ -1,7 +1,7 @@
 // data: load from API
 var data
 var dataUrl = "https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec"
-// dataUrl = "data.json" // for debug
+// dataUrl = "../data.json" // for debug
 async function loadData() {
   try {
     let res = await fetch(dataUrl)
@@ -15,18 +15,12 @@ async function loadData() {
 }
 
 
-// remaining scripting (synced between versions)
-
-const worldCodes = {"Bianco": "b", "Ricco": "r", "Gelato": "g", "Pinna": "p",
+// div loaders
+function navleft() {
+  const worldCodes = {"Bianco": "b", "Ricco": "r", "Gelato": "g", "Pinna": "p",
   "Sirena": "s", "Noki": "n", "Pianta": "q", "Delfino": ""}
 
-function loadNav() {
-  let html = `<div class="tab">
-    <input type="radio" id="rd-overall" name="rd">
-    <label class="tab-label" id="tab-overall" for="rd-overall" onclick="return loadLbOverall()">
-      Overall
-    </label>
-  `
+  let html = `<div>`
   let prevWorld = ""
   for (let [l,level] of data.levels.names.entries()) {
     if (level.substring(0,7)=="divider") {continue}
@@ -58,10 +52,10 @@ function loadNav() {
       .replace("Left Bell", "lbell").replace("Right Bell", "rbell").replace("Underbell", "ubell")
       .replace("a 100", "a100")
 
-    html += `<button onclick="return loadLb(${l})">${ep}</button>`
+    html += `<button onclick="return panelRightLevel(${l})">${ep}</button>`
   }
   html += "</div></div>"
-  document.getElementById("nav").innerHTML = html
+  document.getElementById("navleft").innerHTML = html
 
   // binds menu-button deselect routine; see https://stackoverflow.com/a/27476660/6149041
   $("input:radio").on("click", function (e) {
@@ -75,9 +69,8 @@ function loadNav() {
   })
 }
 
-
-function loadLbOverall() {
-  let html = `<tr>
+function panelRightAggregate() {
+  let html = `<table><tr>
       <th style="width:50px">#</th>
       <th style="width:175px">player</th>
       <th style="width:75px">points</th>
@@ -103,17 +96,18 @@ function loadLbOverall() {
     </tr>`
     prevPoints = row[1]
   }
-  document.getElementById("lbh").innerHTML = "SMS IL Leaderboard"
-  document.getElementById("lbt").innerHTML = html
+  html += `</table>`
+  document.getElementById("title").innerHTML = `<h2>SMS IL Leaderboard</h2>`
+  document.getElementById("lb").innerHTML = html
 }
 
 
-function loadLb(l) {
+function panelRightLevel(l) {
   let rev = data.levels.reversed[l]
   let table = data.body[l].map((row,p) => [data.players.names[p]].concat(row)).filter(r => parseTime(r[1]))
   table.sort((r,s) => (rev ? -1 : 1) * (parseTime(r[1]) - parseTime(s[1]))) // [player, time, link, note]
 
-  let html = `<tr>
+  let html = `<table><tr>
       <th style="width:75px">#</th>
       <th style="width:225px">player</th>
       <th style="width:125px">time</th>
@@ -132,14 +126,14 @@ function loadLb(l) {
     </tr>`
     prevTime = row[1]
   }
-  document.getElementById("lbh").innerHTML = data.levels.names[l]
-  document.getElementById("lbt").innerHTML = html
+  html += `</table>`
+  document.getElementById("title").innerHTML = `<h2>${data.levels.names[l]}</h2>`
+  document.getElementById("lb").innerHTML = html
 }
 
 
-const regex = /^(?!0)(?:(?:(\d?\d)\:(?=\d\d))?([0-5]?\d)\:(?=\d\d))?([0-5]?\d)(?:\.(\d\d?|xx))?$/
-
 function parseTime(input) {
+  const regex = /^(?!0)(?:(?:(\d?\d)\:(?=\d\d))?([0-5]?\d)\:(?=\d\d))?([0-5]?\d)(?:\.(\d\d?|xx))?$/
   // run regex, validate and convert values
   let matches = input.match(regex) // returns null or [fullMatch, hrs, mins, secs, centisecs]
   if      (!matches)               {return null}
@@ -154,6 +148,7 @@ function parseTime(input) {
 
 (async() => {
   await loadData() // blocking data load
-  loadNav()
-  loadLbOverall()
+  navleft()
+  panelRightAggregate()
 })()
+  

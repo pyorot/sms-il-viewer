@@ -1,0 +1,7 @@
+tr {
+  background-color: white;
+  height: 30px;
+}
+tr:nth-child(even) {
+  background-color: whitesmoke;
+}
