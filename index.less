@@ -18,6 +18,7 @@ body,
 body {
   // background-color: brown;
 	margin: 0;
+  overflow: hidden;
 }
 
 // the flex setup:
@@ -37,13 +38,14 @@ body {
     background-color: lightpink;
     .fixed;
     .scroll;
-		height: 40px;
+		height: 0px;
 	}
 
 	> #panelbottom {
     // background-color: green;
 		.stretchy;
     .flexrow;
+    text-align: center;
 
     > #navleft {
       background-color: ivory;
@@ -56,18 +58,16 @@ body {
       // background-color: orange;
       .stretchy;
       .flexcol;
-      text-align: center;
 
       > #selector {
         background-color: lightblue;
         .fixed;
-        height: 40px;
+        height: 0px;
       }
       
       > #title {
         // background-color: indigo;
         .fixed;
-        height: auto;
       }
       
       > #lb {
@@ -79,5 +79,11 @@ body {
 	}
 }
 @media screen and (min-width: 600px) {
-  #main { width: 600px; }
+  #main {
+    width: 600px;
+    // font-size: 20px;
+  }
+  #navleft {
+    // width: 150px !important;
+  }
 }

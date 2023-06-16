@@ -1,7 +1,7 @@
 // data: load from API
 var data
 var dataUrl = "https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec"
-// dataUrl = "../data.json" // for debug
+dataUrl = "../data.json" // for debug
 async function loadData() {
   try {
     let res = await fetch(dataUrl)
@@ -21,6 +21,11 @@ function navleft() {
   "Sirena": "s", "Noki": "n", "Pianta": "q", "Delfino": ""}
 
   let html = `<div>`
+  html += `</div><div class="tab">
+  <input type="radio" id="rd-overall" name="rd">
+  <label class="tab-label" id="tab-overall" for="rd-overall" onclick="return panelRightAggregate()">
+    Overall
+  </label>`
   let prevWorld = ""
   for (let [l,level] of data.levels.names.entries()) {
     if (level.substring(0,7)=="divider") {continue}
@@ -71,14 +76,14 @@ function navleft() {
 
 function panelRightAggregate() {
   let html = `<table><tr>
-      <th style="width:50px">#</th>
-      <th style="width:175px">player</th>
-      <th style="width:75px">points</th>
-      <th style="width:33px">🥇</th>
-      <th style="width:34px">🥈</th>
-      <th style="width:33px">🥉</th>
-      <th style="width:50px">v</th>
-      <th style="width:50px">n</th>
+      <th style="width:10%">#</th>
+      <th style="width:35%">player</th>
+      <th style="width:15%">points</th>
+      <th style="width:6.7%">🥇</th>
+      <th style="width:6.6%">🥈</th>
+      <th style="width:6.7%">🥉</th>
+      <th style="width:10%">v</th>
+      <th style="width:10%">n</th>
     </tr>`
   
   let prevPoints, rank
@@ -91,8 +96,8 @@ function panelRightAggregate() {
       <td style="font-weight: bold; color: #e8b600">${row[2]}</td>
       <td style="font-weight: bold; color: #999999">${row[3]}</td>
       <td style="font-weight: bold; color: #b35c00">${row[4]}</td>
-      <td style="font-style: italic">${row[5]}</td>
-      <td style="font-weight: bold">${row[6]}</td>
+      <td style="font-style: italic; font-size: 85%">${row[5]}</td>
+      <td style="font-weight: bold;  font-size: 85%">${row[6]}</td>
     </tr>`
     prevPoints = row[1]
   }
@@ -108,10 +113,10 @@ function panelRightLevel(l) {
   table.sort((r,s) => (rev ? -1 : 1) * (parseTime(r[1]) - parseTime(s[1]))) // [player, time, link, note]
 
   let html = `<table><tr>
-      <th style="width:75px">#</th>
-      <th style="width:225px">player</th>
-      <th style="width:125px">time</th>
-      <th style="width:75px">note</th>
+      <th style="width:15%">#</th>
+      <th style="width:45%">player</th>
+      <th style="width:25%">time</th>
+      <th style="width:15%">note</th>
     </tr>`
   let prevTime, rank
   for (let [i,row] of table.entries()) {
@@ -151,4 +156,3 @@ function parseTime(input) {
   navleft()
   panelRightAggregate()
 })()
-  

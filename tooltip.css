@@ -7,14 +7,15 @@
   width: 300px;
   background-color: #555;
   color: #fff;
+  font-size: 14px;
   text-align: center;
   border-radius: 6px;
   padding: 5px;
   position: absolute;
-  z-index: 1;
+  z-index: 10;
   bottom: 125%;
   left: 50%;
-  margin-left: -300px;
+  margin-left: -290px;
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -22,7 +23,7 @@
   content: "";
   position: absolute;
   top: 100%;
-  right: 7px;
+  right: 17px;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
@@ -32,6 +33,9 @@
   visibility: visible;
   opacity: 1;
 }
+/*#lb:has( .tooltip:hover) {
+  overflow: visible;
+}*/
 .tooltip:active .tooltiptext {
   visibility: visible;
   opacity: 1;
