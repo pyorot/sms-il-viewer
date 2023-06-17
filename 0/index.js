@@ -87,7 +87,7 @@ function navleft() {
 function panelRightAggregate() {
   titleAggregate()
   lbAggregate()
-  $("#navleft").css("visibility", "collapse")
+  $("#navleft").css("display", "none")
 }
 
 function titleAggregate() {
@@ -153,14 +153,14 @@ function panelRightLevel(l) {
   html += `</table>`
   $("#title").html(`<h2>${data.levels.names[l]}</h2>`)
   $("#lb").html(html)
-  $("#navleft").css("visibility", "visible")
+  $("#navleft").css("display", "block")
 }
 
 
 function panelRightPlayers() {
   titlePlayers()
   lbPlayers()
-  $("#navleft").css("visibility", "collapse")
+  $("#navleft").css("display", "none")
 }
 
 function titlePlayers() {

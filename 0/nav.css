@@ -1,8 +1,4 @@
 @charset "UTF-8";
-#nt-3 + label {
-  visibility: collapse;
-}
-
 input {
   position: absolute;
   opacity: 0;
