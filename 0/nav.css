@@ -1,16 +1,75 @@
 @charset "UTF-8";
+#nt-3 + label {
+  visibility: collapse;
+}
+
 input {
   position: absolute;
   opacity: 0;
 }
 
-/* Accordion styles */
-.tab {
+#title {
+  background: linear-gradient(35deg, MediumSlateBlue, MediumTurquoise);
+  /* <select> styles */
+}
+#title select {
+  /* Reset */
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  /* Personalize */
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 5px;
+  font-size: 24px;
+  color: white;
+  background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg) no-repeat right 0.3em center/1.4em, linear-gradient(to left, rgba(255, 255, 255, 0.3) 2em, rgba(255, 255, 255, 0.2) 2em);
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  /* <option> colors */
+  /* Remove focus outline */
+}
+#title select option {
+  color: inherit;
+  background-color: MidnightBlue;
+  font-size: 16px;
+}
+#title select:focus {
+  outline: none;
+}
+
+#navtop label, #navtop div {
+  flex: 1 1 25%;
+  padding: 6px;
+  border: solid 1px #0077ea;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+#navtop div {
+  background: #005db7;
+}
+#navtop label {
+  background: DodgerBlue;
+  cursor: pointer;
+}
+#navtop label:hover {
+  background: #0077ea;
+}
+#navtop label input:checked + label {
+  background: #0077ea;
+}
+
+#navleft .tab {
   width: 100%;
   color: white;
   overflow: hidden;
 }
-.tab-label {
+#navleft .tab-label {
   display: flex;
   justify-content: space-between;
   padding: 6px;
@@ -18,19 +77,18 @@ input {
   font-weight: bold;
   cursor: pointer;
 }
-.tab-label:hover {
+#navleft .tab-label:hover {
   background: #bababa;
 }
-.tab-label:not(#tab-overall)::after {
+#navleft .tab-label:not(#tab-overall)::after {
   content: "❯";
   transition: all 0.5s;
 }
-.tab-content {
+#navleft .tab-content {
   max-height: 0;
   transition: all 0.5s;
 }
-
-button {
+#navleft button {
   border: solid 1px #bababa;
   background-color: #ededed;
   color: #a0a0a0;
@@ -39,19 +97,19 @@ button {
   font-size: 14px;
   cursor: pointer;
 }
-button:hover {
+#navleft button:hover {
   background: gainsboro;
+}
+#navleft input:checked + .tab-label {
+  background: #bababa;
+}
+#navleft input:checked + .tab-label::after {
+  transform: rotate(90deg);
+}
+#navleft input:checked ~ .tab-content {
+  max-height: none;
 }
 
 /*@media screen and (min-width: 600px) {
-  button { font-size: 16px; }
-}*/
-input:checked + .tab-label {
-  background: #bababa;
-}
-input:checked + .tab-label::after {
-  transform: rotate(90deg);
-}
-input:checked ~ .tab-content {
-  max-height: none;
-}/*# sourceMappingURL=nav.css.map */
+  #navleft button { font-size: 16px; }
+}*//*# sourceMappingURL=nav.css.map */

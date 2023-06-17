@@ -37,8 +37,8 @@ body {
 	> #navtop {
     background-color: lightpink;
     .fixed;
-    .scroll;
-		height: 0px;
+    .flexrow;
+		height: auto;
 	}
 
 	> #panelbottom {
@@ -48,23 +48,18 @@ body {
     text-align: center;
 
     > #navleft {
-      background-color: ivory;
+      background-color: lighten(lightgrey, 15%);
       .fixed;
       .scroll;
       width: 80px;
+      visibility: collapse;
     }
 
     > #panelright {
       // background-color: orange;
       .stretchy;
       .flexcol;
-
-      > #selector {
-        background-color: lightblue;
-        .fixed;
-        height: 0px;
-      }
-      
+  
       > #title {
         // background-color: indigo;
         .fixed;

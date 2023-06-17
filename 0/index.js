@@ -16,16 +16,25 @@ async function loadData() {
 
 
 // div loaders
+function navtop() {
+  let l = Math.floor(Math.random()*data.levels.names.length)
+  document.getElementById("navtop").innerHTML = `
+    <div>SMS ILs</div>
+    <input type="radio" id="nt-1" name="nt">
+    <label for="nt-1" onclick="return panelRightAggregate()">Overall</label>
+    <input type="radio" id="nt-2" name="nt">
+    <label for="nt-2" onclick="return panelRightLevel(${l})">Levels</label>
+    <input type="radio" id="nt-3" name="nt">
+    <label for="nt-3" onclick="return panelRightPlayers()">Players</label>
+  `
+}
+
+
 function navleft() {
   const worldCodes = {"Bianco": "b", "Ricco": "r", "Gelato": "g", "Pinna": "p",
   "Sirena": "s", "Noki": "n", "Pianta": "q", "Delfino": ""}
 
   let html = `<div>`
-  html += `</div><div class="tab">
-  <input type="radio" id="rd-overall" name="rd">
-  <label class="tab-label" id="tab-overall" for="rd-overall" onclick="return panelRightAggregate()">
-    Overall
-  </label>`
   let prevWorld = ""
   for (let [l,level] of data.levels.names.entries()) {
     if (level.substring(0,7)=="divider") {continue}
@@ -33,7 +42,7 @@ function navleft() {
     if (world != prevWorld) {
       prevWorld = world
       html += `</div></div>
-      <div class="tab">
+      <div class="tab" tabindex="-1">
         <input type="radio" id="rd-${world}" name="rd">
         <label class="tab-label" for="rd-${world}">${world}</label>
         <div class="tab-content">`
@@ -57,13 +66,13 @@ function navleft() {
       .replace("Left Bell", "lbell").replace("Right Bell", "rbell").replace("Underbell", "ubell")
       .replace("a 100", "a100")
 
-    html += `<button onclick="return panelRightLevel(${l})">${ep}</button>`
+    html += `<button onclick="return panelRightLevel(${l})" tabindex="-1">${ep}</button>`
   }
   html += "</div></div>"
   document.getElementById("navleft").innerHTML = html
 
   // binds menu-button deselect routine; see https://stackoverflow.com/a/27476660/6149041
-  $("input:radio").on("click", function (e) {
+  $("input[name=rd]").on("click", function (e) {
     let inp=$(this) // cache the selector
     if (inp.is(".theone")) { // if it has the "selected" class
       inp.prop("checked",false).removeClass("theone")
@@ -74,36 +83,46 @@ function navleft() {
   })
 }
 
+
 function panelRightAggregate() {
+  titleAggregate()
+  lbAggregate()
+  $("#navleft").css("visibility", "collapse")
+}
+
+function titleAggregate() {
+  $("#title").html(`<h2>SMS IL Leaderboard</h2>`)
+}
+
+function lbAggregate() {
   let html = `<table><tr>
-      <th style="width:10%">#</th>
-      <th style="width:35%">player</th>
-      <th style="width:15%">points</th>
-      <th style="width:6.7%">🥇</th>
-      <th style="width:6.6%">🥈</th>
-      <th style="width:6.7%">🥉</th>
-      <th style="width:10%">v</th>
-      <th style="width:10%">n</th>
+      <th class="cell-o1">#</th>
+      <th class="cell-o2">player</th>
+      <th class="cell-o3">points</th>
+      <th class="cell-o4">🥇</th>
+      <th class="cell-o5">🥈</th>
+      <th class="cell-o6">🥉</th>
+      <th class="cell-o7">v</th>
+      <th class="cell-o8">n</th>
     </tr>`
   
   let prevPoints, rank
   for (let [i,row] of data.overall.entries()) {
     if (row[1] != prevPoints) { rank = i+1 }
     html += `<tr>
-      <td style="font-weight: bold">${rank}</td>
-      <td>${row[0]}</td>
-      <td>${row[1]}</td>
-      <td style="font-weight: bold; color: #e8b600">${row[2]}</td>
-      <td style="font-weight: bold; color: #999999">${row[3]}</td>
-      <td style="font-weight: bold; color: #b35c00">${row[4]}</td>
-      <td style="font-style: italic; font-size: 85%">${row[5]}</td>
-      <td style="font-weight: bold;  font-size: 85%">${row[6]}</td>
+      <td class="cell-o1">${rank}</td>
+      <td class="cell-o2">${row[0]}</td>
+      <td class="cell-o3">${row[1]}</td>
+      <td class="cell-o4">${row[2]}</td>
+      <td class="cell-o5">${row[3]}</td>
+      <td class="cell-o6">${row[4]}</td>
+      <td class="cell-o7">${row[5]}</td>
+      <td class="cell-o8">${row[6]}</td>
     </tr>`
     prevPoints = row[1]
   }
   html += `</table>`
-  document.getElementById("title").innerHTML = `<h2>SMS IL Leaderboard</h2>`
-  document.getElementById("lb").innerHTML = html
+  $("#lb").html(html)
 }
 
 
@@ -113,10 +132,10 @@ function panelRightLevel(l) {
   table.sort((r,s) => (rev ? -1 : 1) * (parseTime(r[1]) - parseTime(s[1]))) // [player, time, link, note]
 
   let html = `<table><tr>
-      <th style="width:15%">#</th>
-      <th style="width:45%">player</th>
-      <th style="width:25%">time</th>
-      <th style="width:15%">note</th>
+      <th class="cell-l1">#</th>
+      <th class="cell-l2">player</th>
+      <th class="cell-l3">time</th>
+      <th class="cell-l4">note</th>
     </tr>`
   let prevTime, rank
   for (let [i,row] of table.entries()) {
@@ -124,16 +143,38 @@ function panelRightLevel(l) {
     let time = row[2]? `<a href=${row[2]}>${row[1]}</a>` : `${row[1]}`
     let note = row[3]? `<div class="tooltip">📝<span class="tooltiptext">${row[3]}</span></div>` : ""
     html += `<tr>
-      <td>${rank}</td>
-      <td>${row[0]}</td>
-      <td>${time}</td>
-      <td>${note}</td>
+      <td class="cell-l1">${rank}</td>
+      <td class="cell-l2">${row[0]}</td>
+      <td class="cell-l3">${time}</td>
+      <td class="cell-l4">${note}</td>
     </tr>`
     prevTime = row[1]
   }
   html += `</table>`
-  document.getElementById("title").innerHTML = `<h2>${data.levels.names[l]}</h2>`
-  document.getElementById("lb").innerHTML = html
+  $("#title").html(`<h2>${data.levels.names[l]}</h2>`)
+  $("#lb").html(html)
+  $("#navleft").css("visibility", "visible")
+}
+
+
+function panelRightPlayers() {
+  titlePlayers()
+  lbPlayers()
+  $("#navleft").css("visibility", "collapse")
+}
+
+function titlePlayers() {
+  $("#title").html(`
+    <select id="sel" name="sel" onchange="lbPlayers()">
+      ${data.overall.map(row => `<option value="${row[0]}">${row[0]}</option>`).join('')}
+    </select>
+  `)
+}
+
+function lbPlayers() {
+  let player = $("select#sel option").filter(":selected").val()
+  let html = ""
+  $("#lb").html(html)
 }
 
 
@@ -153,6 +194,7 @@ function parseTime(input) {
 
 (async() => {
   await loadData() // blocking data load
+  navtop()
   navleft()
   panelRightAggregate()
 })()

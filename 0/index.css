@@ -45,8 +45,9 @@ body {
 #main > #navtop {
   background-color: lightpink;
   flex: 0 0 auto;
-  overflow: auto;
-  height: 0px;
+  display: flex;
+  overflow: hidden;
+  height: auto;
 }
 #main > #panelbottom {
   flex: 1 1 auto;
@@ -55,21 +56,17 @@ body {
   text-align: center;
 }
 #main > #panelbottom > #navleft {
-  background-color: ivory;
+  background-color: #f9f9f9;
   flex: 0 0 auto;
   overflow: auto;
   width: 80px;
+  visibility: collapse;
 }
 #main > #panelbottom > #panelright {
   flex: 1 1 auto;
   display: flex;
   overflow: hidden;
   flex-direction: column;
-}
-#main > #panelbottom > #panelright > #selector {
-  background-color: lightblue;
-  flex: 0 0 auto;
-  height: 0px;
 }
 #main > #panelbottom > #panelright > #title {
   flex: 0 0 auto;

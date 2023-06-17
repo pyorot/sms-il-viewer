@@ -1,0 +1,49 @@
+h2 {
+  margin: 10px;
+  color: white;
+}
+table { width: 100%; }
+tr {
+  &:nth-child(odd)  { background-color: white }
+  &:nth-child(even) { background-color: whitesmoke }
+}
+th, td { padding: 4px; }
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1; // needed to overcome emojis somehow
+}
+
+th {
+  &.cell-l {
+    &1 { width: 15% }
+    &2 { width: 45% }
+    &3 { width: 25% }
+    &4 { width: 15% }
+  }
+  &.cell-o {
+    &1 { width: 10% }
+    &2 { width: 35% }
+    &3 { width: 15% }
+    &4 { width: 6.7% }
+    &5 { width: 6.6% }
+    &6 { width: 6.7% }
+    &7 { width: 10% }
+    &8 { width: 10% }
+  }
+}
+td {
+  &.cell-l {
+    &4 { font-size: 90% } // resolves uneven vertical sizes
+  }
+  &.cell-o {
+    &1 { font-weight: bold }
+    &4 { font-weight: bold; color: #e8b600 }
+    &5 { font-weight: bold; color: #999999 }
+    &6 { font-weight: bold; color: #b35c00 }
+    &7 { font-style: italic; font-size: 85% }
+    &8 { font-weight: bold;  font-size: 85% }
+  }
+}

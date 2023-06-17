@@ -1,65 +1,132 @@
-$colour: LightGray;
+#nt-3 + label {visibility: collapse;}
+
+$colourtop: DodgerBlue;
+$colourleft: LightGray;
 $animation: 0.5s;
 
-// General
+// Selector
 input {
   position: absolute;
   opacity: 0; // hides radio button icon
 }
-/* Accordion styles */
+
+$glass: rgba(255, 255, 255, 0.2);
+$glass-icon: rgba(255, 255, 255, 0.3);
+$gradient: linear-gradient(35deg, MediumSlateBlue , MediumTurquoise);
+$option: MidnightBlue ;
+#title {
+  background: $gradient;
+
+  /* <select> styles */
+  select {
+    /* Reset */
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    /* Personalize */
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 5px;
+    font-size: 24px;
+    color: white;
+    background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg)
+        no-repeat right 0.3em center / 1.4em,
+      linear-gradient(to left, $glass-icon 2em, $glass 2em);
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    /* <option> colors */
+    option {
+      color: inherit;
+      background-color: $option;
+      font-size: 16px;
+    }
+    /* Remove focus outline */
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+
+#navtop {
+  & label, & div {
+    flex: 1 1 25%;
+    padding: 6px;
+    border: solid 1px darken($colourtop, 10%);
+    text-align: center;
+    font-weight: bold;
+    color: white;
+  }
+  & div {
+    background: darken($colourtop, 20%);
+  }
+  & label {
+    background: $colourtop;
+    cursor: pointer;
+    &:hover {
+      background: darken($colourtop, 10%);
+    }
+    & input:checked + label {
+        background: darken($colourtop, 10%);
+    }
+  }
+}
+
+
 #navleft {
 //  border-radius: 5px;
 //  box-shadow: 0 0 4px -2px rgba(0,0,0,0.5);
-}
-.tab {
-  width: 100%;
-  color: white; // text colour
-  overflow: hidden;
-  &-label {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px;
-    background: $colour;
-    font-weight: bold;
-    cursor: pointer;
-    &:hover {
-      background: darken($colour, 10%);
+  & .tab {
+    width: 100%;
+    color: white; // text colour
+    overflow: hidden;
+    &-label {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px;
+      background: $colourleft;
+      font-weight: bold;
+      cursor: pointer;
+      &:hover {
+        background: darken($colourleft, 10%);
+      }
+      &:not(#tab-overall)::after { // Icon
+        content: "\276F";
+        transition: all $animation;
+      }
     }
-    &:not(#tab-overall)::after { // Icon
-      content: "\276F";
+    &-content {
+      max-height: 0;
       transition: all $animation;
     }
   }
-  &-content {
-    max-height: 0;
-    transition: all $animation;
+  & button {
+    border: solid 1px darken($colourleft, 10%);
+    background-color: lighten($colourleft, 10%);
+    color: darken($colourleft, 20%);
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover {
+      background: darken(whitesmoke, 10%);
+    }
   }
-}
-button {
-  border: solid 1px darken($colour, 10%);
-  background-color: lighten($colour, 10%);
-  color: darken($colour, 20%);
-  width: 100%;
-  padding: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  &:hover {
-    background: darken(whitesmoke, 10%);
+  // :checked
+  & input:checked {
+    + .tab-label {
+      background: darken($colourleft, 10%);
+      &::after {
+        transform: rotate(90deg);
+      }
+    }
+    ~ .tab-content {
+      max-height: none;
+    }
   }
 }
 /*@media screen and (min-width: 600px) {
-  button { font-size: 16px; }
+  #navleft button { font-size: 16px; }
 }*/
-
-// :checked
-input:checked {
-  + .tab-label {
-    background: darken($colour, 10%);
-    &::after {
-      transform: rotate(90deg);
-    }
-  }
-  ~ .tab-content {
-    max-height: none;
-  }
-}
