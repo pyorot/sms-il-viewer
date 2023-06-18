@@ -5,6 +5,7 @@ h2 {
 
 table {
   width: 100%;
+  border-spacing: 2px 0px;
 }
 
 tr:nth-child(odd) {
@@ -15,7 +16,8 @@ tr:nth-child(even) {
 }
 
 th, td {
-  height: 27px;
+  height: 28px;
+  padding: 0px;
 }
 
 th {
@@ -94,11 +96,11 @@ td.cell-a6 {
 }
 td.cell-a7 {
   font-style: italic;
-  font-size: 85%;
+  font-size: 90%;
 }
 td.cell-a8 {
   font-weight: bold;
-  font-size: 85%;
+  font-size: 90%;
 }
 td.cell-l4 {
   font-size: 90%;

@@ -2,12 +2,18 @@ h2 {
   margin: 10px;
   color: white;
 }
-table { width: 100%; }
+table {
+  width: 100%;
+  border-spacing: 2px 0px; // 2v, 0h
+}
 tr {
   &:nth-child(odd)  { background-color: white }
   &:nth-child(even) { background-color: whitesmoke }
 }
-th, td { height: 27px; }
+th, td {
+  height: 28px;
+  padding: 0px;
+}
 
 th {
   position: sticky;
@@ -47,8 +53,8 @@ td {
     &4 { font-weight: bold; color: #e8b600 }
     &5 { font-weight: bold; color: #999999 }
     &6 { font-weight: bold; color: #b35c00 }
-    &7 { font-style: italic; font-size: 85% }
-    &8 { font-weight: bold;  font-size: 85% }
+    &7 { font-style: italic; font-size: 90% }
+    &8 { font-weight: bold;  font-size: 90% }
   }
   &.cell-l {
     &4 { font-size: 90% } // resolves uneven vertical sizes
