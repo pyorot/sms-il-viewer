@@ -1,3 +1,5 @@
+// convention: x,y denote individual runs; p,l are player/level indices rsp.
+
 // data: load from API
 var data
 var dataUrl = "https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec"
@@ -15,27 +17,30 @@ async function loadData() {
   }
 }
 
+// mutates data into useful form
 function annotateData() {
   for (let l_ = 0; l_ < data.body.length; l_++) {
-    data.body[l_] = data.body[l_].map((entry, p_) => [p_, ...entry, null, null]) // [playerID, time, link, note, points, rank]
+    data.body[l_] = data.body[l_].map((entry, p_) => { return {
+      p: p_, l: l_, time: entry[0], link: entry[1], note: entry[2], points: null, rank: null
+    }}) // [playerID, time, link, note, points, rank]
     let sortedData = data.body[l_]
-      .filter(x => parseTime(x[1]))
-      .sort((x,y) => (data.levels.reversed[l_] ? -1 : 1) * (parseTime(x[1]) - parseTime(y[1])))
-
-    // ranks
-    let prevTime, rank
-    for (let [i, entry] of sortedData.entries()) {
-      if (entry[1] != prevTime) { rank = i+1 }
-      data.body[l_][entry[0]][5] = rank
-      prevTime = entry[1]
+      .filter(x => parseTime(x.time))
+      .sort((x,y) => (data.levels.reversed[l_] ? -1 : 1) * (parseTime(x.time) - parseTime(y.time)))
+    { // ranks
+      let prevTime, rank
+      for (let [i, x] of sortedData.entries()) {
+        if (x.time != prevTime) { rank = i+1 }
+        x.rank = rank
+        prevTime = x.time
+      }
     }
-
-    // points
-    let points
-    for (let [i, entry] of sortedData.reverse().entries()) {
-      if (entry[1] != prevTime) { points = i+1 }
-      data.body[l_][entry[0]][4] = points
-      prevTime = entry[1]
+    { // points
+      let prevTime, points
+      for (let [i, x] of sortedData.reverse().entries()) {
+        if (x.time != prevTime) { points = i+1 }
+        x.points = points
+        prevTime = x.time
+      }
     }
   }
 }
@@ -178,15 +183,17 @@ function lbAggregate() {
     let row = [0, "", 0, 0, 0, 0, 0, 0]
     row[1] = data.players.names[p_]
     for (let l_ of levelIDs) {
-      if (!data.body[l_][p_][4]) { continue } // skip unsubmitted levels
-      row[2] += data.body[l_][p_][4]          // add points
-      if (data.body[l_][p_][5] <= 3) { row[2 + data.body[l_][p_][5]] += 1 } // add medals
-      row[6] += data.body[l_][p_][2] ? 1 : 0  // add links (v)
-      row[7] += 1                             // add submissions (n)
+      let x = data.body[l_][p_]
+      if (!x.points) { continue }                // skip unsubmitted levels
+      row[2] += x.points                         // add points
+      if (x.rank <= 3) { row[2 + x.rank] += 1 }  // add medals
+      row[6] += x.link ? 1 : 0                   // add links (v)
+      row[7] += 1                                // add submissions (n)
     }
-    for (let pair of isotopes) {
-      if (pair[0] in levelIDs && data.body[pair[0]][p_][4] && data.body[pair[1]][p_][4]) {
-        row[2] -= Math.min(data.body[pair[0]][p_][4], data.body[pair[1]][p_][4])
+    for (let pair of isotopes) {  // take larger of two points values for isotopes
+      if (pair[0] in levelIDs) {
+        let [pts1, pts2] = [data.body[pair[0]][p_].points, data.body[pair[1]][p_].points]
+        if (pts1 && pts2) { row[2] -= Math.min(pts1, pts2)}
       }
     }
     table.push(row)
@@ -210,21 +217,21 @@ function lbAggregate() {
 
 
 function panelRightLevel(l_) {
-  let table = data.body[l_].filter(x => !!x[5]).sort((x,y) => x[5] - y[5])
+  let table = data.body[l_].filter(x => !!x.rank).sort((x,y) => x.rank - y.rank)
   let html = `<table><tr>
       <th class="cell-l1">#</th>
       <th class="cell-l2">player</th>
       <th class="cell-l3">time</th>
       <th class="cell-l4">note</th>
     </tr>`
-  for (let entry of table) {
-    let time = entry[2] ? `<a href=${entry[2]}>${entry[1]}</a>` : `${entry[1]}`
-    let note = entry[3] ? `<div class="tooltip">📝<span class="tooltiptext">${entry[3]}</span></div>` : ``
+  for (let x of table) {
+    let timeHTML = x.time ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
+    let noteHTML = x.note ? `<div class="tooltip">📝<span class="tooltiptext">${x.note}</span></div>` : ``
     html += `<tr>
-      <td class="cell-l1">${entry[5]}</td>
-      <td class="cell-l2">${data.players.names[entry[0]]}</td>
-      <td class="cell-l3">${time}</td>
-      <td class="cell-l4">${note}</td>
+      <td class="cell-l1">${x.rank}</td>
+      <td class="cell-l2">${data.players.names[x.p]}</td>
+      <td class="cell-l3">${timeHTML}</td>
+      <td class="cell-l4">${noteHTML}</td>
     </tr>`
   }
   html += `</table>`
@@ -249,8 +256,7 @@ function titlePlayers() {
 function lbPlayers() {
   p = $("select#sel option").filter(":selected").val()
   let table = data.body.map(levelData => levelData[p])
-  table.forEach((x, l_) => { x[0] = l_ }) // swap player index for level index
-  table = table.filter(x => !!x[5]).sort((x,y) => x[5] - y[5])
+  table = table.filter(x => !!x.rank).sort((x,y) => x.rank - y.rank)
   let html = `<table><tr>
       <th class="cell-p1">level</th>
       <th class="cell-p2">rank</th>
@@ -258,15 +264,15 @@ function lbPlayers() {
       <th class="cell-p4">time</th>
       <th class="cell-p5">note</th>
     </tr>`
-  for (let entry of table) { // entry[0] is now level index
-    let time = entry[2] ? `<a href=${entry[2]}>${entry[1]}</a>` : `${entry[1]}`
-    let note = entry[3] ? `<div class="tooltip">📝<span class="tooltiptext">${entry[3]}</span></div>` : ``
+  for (let x of table) {
+    let timeHTML = x.link ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
+    let noteHTML = x.note ? `<div class="tooltip">📝<span class="tooltiptext">${x.note}</span></div>` : ``
     html += `<tr>
-      <td class="cell-p1">${data.levels.codes[entry[0]]}</td>
-      <td class="cell-p2">${entry[5]}</td>
-      <td class="cell-p3">${entry[4]}</td>
-      <td class="cell-p4">${time}</td>
-      <td class="cell-p5">${note}</td>
+      <td class="cell-p1">${data.levels.codes[x.l]}</td>
+      <td class="cell-p2">${x.rank}</td>
+      <td class="cell-p3">${x.points}</td>
+      <td class="cell-p4">${timeHTML}</td>
+      <td class="cell-p5">${noteHTML}</td>
     </tr>`
   }
   html += `</table>`
@@ -278,7 +284,6 @@ function lbPlayers() {
 (async() => {
   // load data
   await loadData() // blocking data load
-  console.log(data)
   l = Math.floor(Math.random()*data.levels.names.length)
   p = Math.floor(Math.random()*4)
   annotateData()

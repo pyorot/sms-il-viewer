@@ -1,8 +1,8 @@
-link clicks player ↔ level lbs
 verify data
-bugs: libre undefined, name overwrite when toggling player board
-disable zoom
+link clicks player ↔ level lbs
 consistent title bar
 colour medals on player lb
 note hover mobile
 sort buttons
+
+disable zoom
