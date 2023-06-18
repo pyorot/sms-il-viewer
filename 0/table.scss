@@ -7,7 +7,7 @@ tr {
   &:nth-child(odd)  { background-color: white }
   &:nth-child(even) { background-color: whitesmoke }
 }
-th, td { padding: 4px; }
+th, td { height: 27px; }
 
 th {
   position: sticky;
@@ -17,13 +17,7 @@ th {
 }
 
 th {
-  &.cell-l {
-    &1 { width: 15% }
-    &2 { width: 45% }
-    &3 { width: 25% }
-    &4 { width: 15% }
-  }
-  &.cell-o {
+  &.cell-a {
     &1 { width: 10% }
     &2 { width: 35% }
     &3 { width: 15% }
@@ -33,17 +27,30 @@ th {
     &7 { width: 10% }
     &8 { width: 10% }
   }
+  &.cell-l {
+    &1 { width: 15% }
+    &2 { width: 45% }
+    &3 { width: 25% }
+    &4 { width: 15% }
+  }
+  &.cell-p {
+    &1 { width: 20% }
+    &2 { width: 20% }
+    &3 { width: 20% }
+    &4 { width: 20% }
+    &5 { width: 20% }
+  }
 }
 td {
-  &.cell-l {
-    &4 { font-size: 90% } // resolves uneven vertical sizes
-  }
-  &.cell-o {
+  &.cell-a {
     &1 { font-weight: bold }
     &4 { font-weight: bold; color: #e8b600 }
     &5 { font-weight: bold; color: #999999 }
     &6 { font-weight: bold; color: #b35c00 }
     &7 { font-style: italic; font-size: 85% }
     &8 { font-weight: bold;  font-size: 85% }
+  }
+  &.cell-l {
+    &4 { font-size: 90% } // resolves uneven vertical sizes
   }
 }

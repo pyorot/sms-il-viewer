@@ -15,7 +15,7 @@ tr:nth-child(even) {
 }
 
 th, td {
-  padding: 4px;
+  height: 27px;
 }
 
 th {
@@ -25,6 +25,30 @@ th {
   z-index: 1;
 }
 
+th.cell-a1 {
+  width: 10%;
+}
+th.cell-a2 {
+  width: 35%;
+}
+th.cell-a3 {
+  width: 15%;
+}
+th.cell-a4 {
+  width: 6.7%;
+}
+th.cell-a5 {
+  width: 6.6%;
+}
+th.cell-a6 {
+  width: 6.7%;
+}
+th.cell-a7 {
+  width: 10%;
+}
+th.cell-a8 {
+  width: 10%;
+}
 th.cell-l1 {
   width: 15%;
 }
@@ -37,54 +61,45 @@ th.cell-l3 {
 th.cell-l4 {
   width: 15%;
 }
-th.cell-o1 {
-  width: 10%;
+th.cell-p1 {
+  width: 20%;
 }
-th.cell-o2 {
-  width: 35%;
+th.cell-p2 {
+  width: 20%;
 }
-th.cell-o3 {
-  width: 15%;
+th.cell-p3 {
+  width: 20%;
 }
-th.cell-o4 {
-  width: 6.7%;
+th.cell-p4 {
+  width: 20%;
 }
-th.cell-o5 {
-  width: 6.6%;
-}
-th.cell-o6 {
-  width: 6.7%;
-}
-th.cell-o7 {
-  width: 10%;
-}
-th.cell-o8 {
-  width: 10%;
+th.cell-p5 {
+  width: 20%;
 }
 
-td.cell-l4 {
-  font-size: 90%;
-}
-td.cell-o1 {
+td.cell-a1 {
   font-weight: bold;
 }
-td.cell-o4 {
+td.cell-a4 {
   font-weight: bold;
   color: #e8b600;
 }
-td.cell-o5 {
+td.cell-a5 {
   font-weight: bold;
   color: #999999;
 }
-td.cell-o6 {
+td.cell-a6 {
   font-weight: bold;
   color: #b35c00;
 }
-td.cell-o7 {
+td.cell-a7 {
   font-style: italic;
   font-size: 85%;
 }
-td.cell-o8 {
+td.cell-a8 {
   font-weight: bold;
   font-size: 85%;
+}
+td.cell-l4 {
+  font-size: 90%;
 }/*# sourceMappingURL=table.css.map */
