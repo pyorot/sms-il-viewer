@@ -1,6 +1,5 @@
 var data
 var dataUrl = "https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec"
-var l, p // persistent level+player ids
 var aggregates = {}
 dataUrl = "../data.json" // for debug
 

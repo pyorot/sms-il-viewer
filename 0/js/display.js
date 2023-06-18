@@ -1,16 +1,19 @@
 // convention: x,y denote individual runs; p,l are player/level indices rsp.
 
+// selected options
+var l, p, s // persistent levelID, playerID, selection state
+
 // nav
 
 function navtop() {
   $("#navtop").html(`
     <div>SMS ILs</div>
     <input type="radio" id="nt-1" name="nt">
-    <label for="nt-1" onclick="return panelRightAggregate()">Overall</label>
+    <label for="nt-1" onclick="return bodyAggregate(s)">Overall</label>
     <input type="radio" id="nt-2" name="nt">
-    <label for="nt-2" onclick="return panelRightLevel(l)">Levels</label>
+    <label for="nt-2" onclick="return bodyLevel(l)">Levels</label>
     <input type="radio" id="nt-3" name="nt">
-    <label for="nt-3" onclick="return panelRightPlayers()">Players</label>
+    <label for="nt-3" onclick="return bodyPlayers(p)">Players</label>
   `)
 }
 
@@ -32,7 +35,7 @@ function navleft() {
         <div class="tab-content">`
     }
     let code = data.levels.codes[l_]
-    html += `<button onclick="l=${l_}; return panelRightLevel(l)" tabindex="-1">${code}</button>`
+    html += `<button onclick="return bodyLevel(${l_})" tabindex="-1">${code}</button>`
   }
   html += "</div></div>"
   $("#navleft").html(html)
@@ -51,21 +54,21 @@ function navleft() {
 
 // panels
 
-function panelRightAggregate() {
-  titleAggregate()
-  lbAggregate()
+function bodyAggregate(s_) {
+  titleAggregate(s_)
+  lbAggregate(s_)
   $("#navleft").css("display", "none")
 }
-function titleAggregate() {
+function titleAggregate(s_) { // s__ is the next level of dummy variable
   $("#title").html(`
-    <select id="sel" name="sel" onchange="lbAggregate()">
-      ${Object.keys(aggregates).map(agg => `<option value="${agg}">${agg}</option>`).join('')}
+    <select id="sel" name="sel" onchange="lbAggregate($('select#sel option').filter(':selected').val())">
+      ${Object.keys(aggregates).map(s__ => `<option value="${s__}" ${s__ == s_ ? `selected="selected"` : ``}>${s__}</option>`).join('')}
     </select>
   `)
 }
-function lbAggregate() {
-  let selection = $("select#sel option").filter(":selected").val()
-  let levelIDs = levelListToIDs(aggregates[selection])
+function lbAggregate(s_) {
+  s = s_ // update global index
+  let levelIDs = levelListToIDs(aggregates[s_])
   let isotopes = [levelListToIDs("peyg peygj"), levelListToIDs("s6 s6j")]
 
   let html = `<table><tr>
@@ -117,7 +120,16 @@ function lbAggregate() {
 }
 
 
-function panelRightLevel(l_) {
+function bodyLevel(l_) {
+  titleLevel(l_)
+  lbLevel(l_)
+  $("#navleft").css("display", "block")
+}
+function titleLevel(l_) {
+  $("#title").html(`<div>${data.levels.names[l_]}</div>`)
+}
+function lbLevel(l_) {
+  l = l_ // update persistent global index
   let table = data.body[l_].filter(x => !!x.rank).sort((x,y) => x.rank - y.rank)
   let html = `<table><tr>
       <th class="cell-l1">#</th>
@@ -136,27 +148,27 @@ function panelRightLevel(l_) {
     </tr>`
   }
   html += `</table>`
-  $("#title").html(`<h2>${data.levels.names[l_]}</h2>`)
   $("#lb").html(html)
-  $("#navleft").css("display", "block")
 }
 
 
-function panelRightPlayers() {
-  titlePlayers()
-  lbPlayers()
+function bodyPlayers(p_) {
+  titlePlayers(p_)
+  lbPlayers(p_)
   $("#navleft").css("display", "none")
 }
-function titlePlayers() {
+function titlePlayers(p_) { // p__ is the next level of dummy variable
   $("#title").html(`
-    <select id="sel" name="sel" onchange="lbPlayers()">
-      ${data.players.names.map((name,p_) => `<option value="${p_}" ${p == p_ ? `selected="selected"` : ``}>${name}</option>`).join('')}
+    <select id="sel" name="sel" onchange="lbPlayers($('select#sel option').filter(':selected').val())">
+      ${data.players.names.map((name,p__) =>
+        `<option value="${p__}" ${p__ == p_ ? `selected="selected"` : ``}>${name}</option>`).join('')
+      }
     </select>
   `)
 }
-function lbPlayers() {
-  p = $("select#sel option").filter(":selected").val()
-  let table = data.body.map(levelData => levelData[p])
+function lbPlayers(p_) {
+  p = p_ // update persistent global index
+  let table = data.body.map(levelData => levelData[p_])
   table = table.filter(x => !!x.rank).sort((x,y) => x.rank - y.rank)
   let html = `<table><tr>
       <th class="cell-p1">level</th>
@@ -188,6 +200,7 @@ function lbPlayers() {
   await loadData() // blocking data load
   l = Math.floor(Math.random()*data.levels.names.length)
   p = Math.floor(Math.random()*4)
+  s = "Total"
   annotateData()
   generateAggregates()
   console.log(data)
@@ -195,5 +208,5 @@ function lbPlayers() {
   // load website
   navtop()
   navleft()
-  panelRightAggregate()
+  bodyAggregate(s)
 })()

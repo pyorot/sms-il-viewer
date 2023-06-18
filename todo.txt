@@ -1,5 +1,4 @@
 link clicks player ↔ level lbs
-consistent title bar
 colour medals on player lb
 note hover mobile
 sort buttons
