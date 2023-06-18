@@ -1,3 +1,7 @@
+@mixin gold   { font-weight: bold; color: #e8b600 }
+@mixin silver { font-weight: bold; color: #999999 }
+@mixin bronze { font-weight: bold; color: #b35c00 }
+
 table {
   width: 100%;
   border-spacing: 2px 0px; // 2v, 0h
@@ -9,17 +13,19 @@ tr {
 th, td {
   height: 28px;
   padding: 0px;
+  &.selectable {
+    cursor: pointer;
+    &:hover { background: PowderBlue; }
+  }
+  &.gold   { @include gold   }
+  &.silver { @include silver }
+  &.bronze { @include bronze }
 }
 th {
   position: sticky;
   top: 0;
   background-color: white;
   z-index: 1; // needed to overcome emojis somehow
-}
-
-table .selectable {
-  cursor: pointer;
-  &:hover { background: PowderBlue; }
 }
 
 th {
@@ -50,9 +56,9 @@ th {
 td {
   &.cell-a {
     &1 { font-weight: bold }
-    &4 { font-weight: bold; color: #e8b600 }
-    &5 { font-weight: bold; color: #999999 }
-    &6 { font-weight: bold; color: #b35c00 }
+    &4 { @include gold   }
+    &5 { @include silver }
+    &6 { @include bronze }
     &7 { font-style: italic; font-size: 90% }
     &8 { font-weight: bold;  font-size: 90% }
   }

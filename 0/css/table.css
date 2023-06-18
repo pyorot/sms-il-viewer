@@ -14,19 +14,30 @@ th, td {
   height: 28px;
   padding: 0px;
 }
+th.selectable, td.selectable {
+  cursor: pointer;
+}
+th.selectable:hover, td.selectable:hover {
+  background: PowderBlue;
+}
+th.gold, td.gold {
+  font-weight: bold;
+  color: #e8b600;
+}
+th.silver, td.silver {
+  font-weight: bold;
+  color: #999999;
+}
+th.bronze, td.bronze {
+  font-weight: bold;
+  color: #b35c00;
+}
 
 th {
   position: sticky;
   top: 0;
   background-color: white;
   z-index: 1;
-}
-
-table .selectable {
-  cursor: pointer;
-}
-table .selectable:hover {
-  background: PowderBlue;
 }
 
 th.cell-a1 {

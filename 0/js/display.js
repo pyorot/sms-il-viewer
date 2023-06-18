@@ -146,10 +146,12 @@ function lbLevel(l_) {
       <th class="cell-l4">note</th>
     </tr>`
   for (let x of table) {
+    let colourClass = {1: "gold", 2: "silver", 3: "bronze"}[x.rank]
+    if (!colourClass) { colourClass = "" }
     let timeHTML = x.time ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
     let noteHTML = x.note ? `<div class="tooltip">📝<span class="tooltiptext">${x.note}</span></div>` : ``
     html += `<tr>
-      <td class="cell-l1">${x.rank}</td>
+      <td class="cell-l1 ${colourClass}">${x.rank}</td>
       <td class="cell-l2 selectable" onclick="bodyPlayers(${x.p})">${data.players.names[x.p]}</td>
       <td class="cell-l3">${timeHTML}</td>
       <td class="cell-l4">${noteHTML}</td>
@@ -192,11 +194,13 @@ function lbPlayers(p_, sort_=sortPlayers) {
       <th class="cell-p5">note</th>
     </tr>`
   for (let x of table) {
+    let colourClass = {1: "gold", 2: "silver", 3: "bronze"}[x.rank]
+    if (!colourClass) { colourClass = "" }
     let timeHTML = x.link ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
     let noteHTML = x.note ? `<div class="tooltip">📝<span class="tooltiptext">${x.note}</span></div>` : ``
     html += `<tr>
       <td class="cell-p1 selectable" onclick="bodyLevel(${x.l})">${data.levels.codes[x.l]}</td>
-      <td class="cell-p2">${x.rank}</td>
+      <td class="cell-p2 ${colourClass}">${x.rank}</td>
       <td class="cell-p3">${x.points}</td>
       <td class="cell-p4">${timeHTML}</td>
       <td class="cell-p5">${noteHTML}</td>
