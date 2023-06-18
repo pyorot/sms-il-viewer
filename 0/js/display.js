@@ -9,11 +9,11 @@ function navtop() {
   $("#navtop").html(`
     <div>SMS ILs</div>
     <input type="radio" id="nt-1" name="nt">
-    <label for="nt-1" onclick="return bodyAggregate(s,sortAggregate)">Overall</label>
+    <label for="nt-1" onclick="return bodyAggregate(s)">Overall</label>
     <input type="radio" id="nt-2" name="nt">
     <label for="nt-2" onclick="return bodyLevel(l)">Levels</label>
     <input type="radio" id="nt-3" name="nt">
-    <label for="nt-3" onclick="return bodyPlayers(p,sortPlayers)">Players</label>
+    <label for="nt-3" onclick="return bodyPlayers(p)">Players</label>
   `)
 }
 
@@ -62,19 +62,19 @@ const sortMethodsAggregate = {
     return 0
   },
 }
-function bodyAggregate(s_, sort_) {
+function bodyAggregate(s_, sort_=sortAggregate) {
   titleAggregate(s_, sort_)
   lbAggregate(s_, sort_)
   $("#navleft").css("display", "none")
 }
-function titleAggregate(s_, sort_) { // s__ is the next level of dummy variable
+function titleAggregate(s_, sort_=sortAggregate) { // s__ is the next level of dummy variable
   $("#title").html(`
-    <select id="sel" name="sel" onchange="lbAggregate($('select#sel option').filter(':selected').val(),sortAggregate)">
+    <select id="sel" name="sel" onchange="lbAggregate($('select#sel option').filter(':selected').val())">
       ${Object.keys(aggregates).map(s__ => `<option value="${s__}" ${s__ == s_ ? `selected="selected"` : ``}>${s__}</option>`).join('')}
     </select>
   `)
 }
-function lbAggregate(s_, sort_) {
+function lbAggregate(s_, sort_=sortAggregate) {
   s = s_; sortAggregate = sort_ // update global state
   let levelIDs = levelListToIDs(aggregates[s_])
   let isotopes = [levelListToIDs("peyg peygj"), levelListToIDs("s6 s6j")]
@@ -93,7 +93,7 @@ function lbAggregate(s_, sort_) {
   let table = [] // literal display table
   for (let p_ = 0; p_ < data.players.names.length; p_++) {
     let row = [0, "", 0, 0, 0, 0, 0, 0]
-    row[1] = data.players.names[p_]
+    row[1] = {p: p_, name: data.players.names[p_]}
     for (let l_ of levelIDs) {
       let x = data.body[l_][p_]
       if (!x.points) { continue }                // skip unsubmitted levels
@@ -117,9 +117,9 @@ function lbAggregate(s_, sort_) {
   for (let [i,row] of table.entries()) {
     if (row[2] != prevPoints) { rank = i+1 }
     row[0] = rank
-    html += `<tr>
-      ${row.map((cell,i) => `<td class="cell-a${i+1}">${cell}</td>`).join("")}
-    </tr>`
+    let rowHTML = row.map((cell,i) => `<td class="cell-a${i+1}">${cell}</td>`)
+    rowHTML[1] = `<td class="cell-a2 selectable" onclick="bodyPlayers(${row[1].p})">${row[1].name}</td>`
+    html += `<tr>${rowHTML.join("")}</tr>`
     prevPoints = row[2]
   }
 
@@ -150,7 +150,7 @@ function lbLevel(l_) {
     let noteHTML = x.note ? `<div class="tooltip">📝<span class="tooltiptext">${x.note}</span></div>` : ``
     html += `<tr>
       <td class="cell-l1">${x.rank}</td>
-      <td class="cell-l2">${data.players.names[x.p]}</td>
+      <td class="cell-l2 selectable" onclick="bodyPlayers(${x.p})">${data.players.names[x.p]}</td>
       <td class="cell-l3">${timeHTML}</td>
       <td class="cell-l4">${noteHTML}</td>
     </tr>`
@@ -166,21 +166,21 @@ const sortMethodsPlayers = {
   1: (x,y) => {return x.rank   - y.rank  }, // rank sort
   2: (x,y) => {return y.points - x.points}, // points sort
 }
-function bodyPlayers(p_, sort_) {
+function bodyPlayers(p_, sort_=sortPlayers) {
   titlePlayers(p_, sort_)
   lbPlayers(p_, sort_)
   $("#navleft").css("display", "none")
 }
-function titlePlayers(p_, sort_) { // p__ is the next level of dummy variable
+function titlePlayers(p_, sort_=sortPlayers) { // p__ is the next level of dummy variable
   $("#title").html(`
-    <select id="sel" name="sel" onchange="lbPlayers($('select#sel option').filter(':selected').val(),sortPlayers)">
+    <select id="sel" name="sel" onchange="lbPlayers($('select#sel option').filter(':selected').val())">
       ${data.players.names.map((name,p__) =>
         `<option value="${p__}" ${p__ == p_ ? `selected="selected"` : ``}>${name}</option>`).join('')
       }
     </select>
   `)
 }
-function lbPlayers(p_, sort_) {
+function lbPlayers(p_, sort_=sortPlayers) {
   p = p_; sortPlayers = sort_ // update persistent global index
   let table = data.body.map(levelData => levelData[p_])
   table = table.filter(x => !!x.rank).sort(sortMethodsPlayers[sort_])
@@ -195,7 +195,7 @@ function lbPlayers(p_, sort_) {
     let timeHTML = x.link ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
     let noteHTML = x.note ? `<div class="tooltip">📝<span class="tooltiptext">${x.note}</span></div>` : ``
     html += `<tr>
-      <td class="cell-p1">${data.levels.codes[x.l]}</td>
+      <td class="cell-p1 selectable" onclick="bodyLevel(${x.l})">${data.levels.codes[x.l]}</td>
       <td class="cell-p2">${x.rank}</td>
       <td class="cell-p3">${x.points}</td>
       <td class="cell-p4">${timeHTML}</td>
@@ -221,5 +221,5 @@ function lbPlayers(p_, sort_) {
   // load website
   navtop()
   navleft()
-  bodyAggregate(s,sortAggregate)
+  bodyAggregate(s)
 })()

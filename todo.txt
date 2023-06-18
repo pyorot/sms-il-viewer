@@ -1,6 +1,4 @@
-link clicks player ↔ level lbs
 colour medals on player lb
 note hover mobile
-sort buttons
 
 disable zoom
