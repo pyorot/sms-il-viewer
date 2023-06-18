@@ -10,12 +10,16 @@ th, td {
   height: 28px;
   padding: 0px;
 }
-
 th {
   position: sticky;
   top: 0;
   background-color: white;
   z-index: 1; // needed to overcome emojis somehow
+}
+
+table .selectable {
+  cursor: pointer;
+  &:hover { background: PowderBlue; }
 }
 
 th {

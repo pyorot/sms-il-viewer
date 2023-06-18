@@ -9,11 +9,11 @@ function navtop() {
   $("#navtop").html(`
     <div>SMS ILs</div>
     <input type="radio" id="nt-1" name="nt">
-    <label for="nt-1" onclick="return bodyAggregate(s)">Overall</label>
+    <label for="nt-1" onclick="return bodyAggregate(s,sortAggregate)">Overall</label>
     <input type="radio" id="nt-2" name="nt">
     <label for="nt-2" onclick="return bodyLevel(l)">Levels</label>
     <input type="radio" id="nt-3" name="nt">
-    <label for="nt-3" onclick="return bodyPlayers(p)">Players</label>
+    <label for="nt-3" onclick="return bodyPlayers(p,sortPlayers)">Players</label>
   `)
 }
 
@@ -54,28 +54,36 @@ function navleft() {
 
 // panels
 
-function bodyAggregate(s_) {
-  titleAggregate(s_)
-  lbAggregate(s_)
+var sortAggregate = 2 // default sort column index
+const sortMethodsAggregate = {
+  2: (a,b) => {return b[2] - a[2]}, // points sort
+  3: (a,b) => { // medal sort
+    for (let i of [3, 4, 5]) {if (a[i] != b[i]) {return b[i] - a[i]}}
+    return 0
+  },
+}
+function bodyAggregate(s_, sort_) {
+  titleAggregate(s_, sort_)
+  lbAggregate(s_, sort_)
   $("#navleft").css("display", "none")
 }
-function titleAggregate(s_) { // s__ is the next level of dummy variable
+function titleAggregate(s_, sort_) { // s__ is the next level of dummy variable
   $("#title").html(`
-    <select id="sel" name="sel" onchange="lbAggregate($('select#sel option').filter(':selected').val())">
+    <select id="sel" name="sel" onchange="lbAggregate($('select#sel option').filter(':selected').val(),sortAggregate)">
       ${Object.keys(aggregates).map(s__ => `<option value="${s__}" ${s__ == s_ ? `selected="selected"` : ``}>${s__}</option>`).join('')}
     </select>
   `)
 }
-function lbAggregate(s_) {
-  s = s_ // update global index
+function lbAggregate(s_, sort_) {
+  s = s_; sortAggregate = sort_ // update global state
   let levelIDs = levelListToIDs(aggregates[s_])
   let isotopes = [levelListToIDs("peyg peygj"), levelListToIDs("s6 s6j")]
 
   let html = `<table><tr>
       <th class="cell-a1">#</th>
       <th class="cell-a2">player</th>
-      <th class="cell-a3">points</th>
-      <th class="cell-a4">🥇</th>
+      <th class="cell-a3 selectable" onclick="lbAggregate(s,2)">points</th>
+      <th class="cell-a4 selectable" onclick="lbAggregate(s,3)">🥇</th>
       <th class="cell-a5">🥈</th>
       <th class="cell-a6">🥉</th>
       <th class="cell-a7">v</th>
@@ -102,7 +110,7 @@ function lbAggregate(s_) {
     }
     table.push(row)
   }
-  table.sort((r,s) => s[2] - r[2])
+  table.sort(sortMethodsAggregate[sort_])
 
   // aggregate rank calculation + display code
   let prevPoints, rank
@@ -152,28 +160,34 @@ function lbLevel(l_) {
 }
 
 
-function bodyPlayers(p_) {
-  titlePlayers(p_)
-  lbPlayers(p_)
+var sortPlayers = 0 // default sort column index
+const sortMethodsPlayers = {
+  0: (x,y) => {return x.l      - y.l     }, // level sort
+  1: (x,y) => {return x.rank   - y.rank  }, // rank sort
+  2: (x,y) => {return y.points - x.points}, // points sort
+}
+function bodyPlayers(p_, sort_) {
+  titlePlayers(p_, sort_)
+  lbPlayers(p_, sort_)
   $("#navleft").css("display", "none")
 }
-function titlePlayers(p_) { // p__ is the next level of dummy variable
+function titlePlayers(p_, sort_) { // p__ is the next level of dummy variable
   $("#title").html(`
-    <select id="sel" name="sel" onchange="lbPlayers($('select#sel option').filter(':selected').val())">
+    <select id="sel" name="sel" onchange="lbPlayers($('select#sel option').filter(':selected').val(),sortPlayers)">
       ${data.players.names.map((name,p__) =>
         `<option value="${p__}" ${p__ == p_ ? `selected="selected"` : ``}>${name}</option>`).join('')
       }
     </select>
   `)
 }
-function lbPlayers(p_) {
-  p = p_ // update persistent global index
+function lbPlayers(p_, sort_) {
+  p = p_; sortPlayers = sort_ // update persistent global index
   let table = data.body.map(levelData => levelData[p_])
-  table = table.filter(x => !!x.rank).sort((x,y) => x.rank - y.rank)
+  table = table.filter(x => !!x.rank).sort(sortMethodsPlayers[sort_])
   let html = `<table><tr>
-      <th class="cell-p1">level</th>
-      <th class="cell-p2">rank</th>
-      <th class="cell-p3">points</th>
+      <th class="cell-p1 selectable" onclick="lbPlayers(p,0)">level</th>
+      <th class="cell-p2 selectable" onclick="lbPlayers(p,1)">rank</th>
+      <th class="cell-p3 selectable" onclick="lbPlayers(p,2)">points</th>
       <th class="cell-p4">time</th>
       <th class="cell-p5">note</th>
     </tr>`
@@ -189,7 +203,6 @@ function lbPlayers(p_) {
     </tr>`
   }
   html += `</table>`
-  
   $("#lb").html(html)
 }
 
@@ -208,5 +221,5 @@ function lbPlayers(p_) {
   // load website
   navtop()
   navleft()
-  bodyAggregate(s)
+  bodyAggregate(s,sortAggregate)
 })()
