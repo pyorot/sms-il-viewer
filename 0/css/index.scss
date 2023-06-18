@@ -28,52 +28,52 @@ body {
 
 // the flex setup:
 // http://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout
-.flexrow  { display: flex; overflow: hidden; }
-.flexcol  { display: flex; overflow: hidden; flex-direction: column; }
-.fixed    { flex: 0 0 auto; }
-.stretchy { flex: 1 1 auto;	}
-.scroll   { overflow: auto; }
+@mixin flexrow  { display: flex; overflow: hidden; }
+@mixin flexcol  { display: flex; overflow: hidden; flex-direction: column; }
+@mixin fixed    { flex: 0 0 auto; }
+@mixin stretchy { flex: 1 1 auto;	}
+@mixin scroll   { overflow: auto; }
 
 #main {
   // background-color: lightcoral;
   margin: auto;
-	.flexcol;
+	@include flexcol;
 
 	> #navtop {
     background-color: lightpink;
-    .fixed;
-    .flexrow;
+    @include fixed;
+    @include flexrow;
 		height: auto;
 	}
 
 	> #panelbottom {
     // background-color: green;
-		.stretchy;
-    .flexrow;
+		@include stretchy;
+    @include flexrow;
     text-align: center;
 
     > #navleft {
       background-color: lighten(lightgrey, 15%);
-      .fixed;
-      .scroll;
+      @include fixed;
+      @include scroll;
       width: 80px;
       display: none;
     }
 
     > #panelright {
       // background-color: orange;
-      .stretchy;
-      .flexcol;
+      @include stretchy;
+      @include flexcol;
   
       > #title {
         // background-color: indigo;
-        .fixed;
+        @include fixed;
       }
       
       > #lb {
         // background-color: violet;
-        .stretchy;
-        .scroll;
+        @include stretchy;
+        @include scroll;
       }
     }
 	}
@@ -81,7 +81,5 @@ body {
 @media screen and (min-width: 600px) {
   #main {
     width: 600px;
-    // font-size: 20px;
   }
-  // #navleft { width: 150px !important; }
 }

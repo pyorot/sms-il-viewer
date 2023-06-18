@@ -1,15 +1,16 @@
-@charset "UTF-8";
 html {
   touch-action: pan-x pan-y;
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
-#navleft,
-#lb {
+
+#navleft, #lb {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 html,
 body,
 #main {
@@ -18,28 +19,12 @@ body,
   font-size: 16px;
   touch-action: pan-x pan-y;
 }
+
 body {
   margin: 0;
   overflow: hidden;
 }
-.flexrow {
-  display: flex;
-  overflow: hidden;
-}
-.flexcol {
-  display: flex;
-  overflow: hidden;
-  flex-direction: column;
-}
-.fixed {
-  flex: 0 0 auto;
-}
-.stretchy {
-  flex: 1 1 auto;
-}
-.scroll {
-  overflow: auto;
-}
+
 #main {
   margin: auto;
   display: flex;
@@ -79,8 +64,9 @@ body {
   flex: 1 1 auto;
   overflow: auto;
 }
+
 @media screen and (min-width: 600px) {
   #main {
     width: 600px;
   }
-}
+}/*# sourceMappingURL=index.css.map */
