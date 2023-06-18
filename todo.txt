@@ -1,4 +1,3 @@
-verify data
 link clicks player ↔ level lbs
 consistent title bar
 colour medals on player lb
