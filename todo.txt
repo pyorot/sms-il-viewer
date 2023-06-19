@@ -1,3 +1,0 @@
-note hover mobile
-
-disable zoom

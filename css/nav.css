@@ -1,0 +1,134 @@
+@charset "UTF-8";
+input {
+  position: absolute;
+  opacity: 0;
+}
+
+#navtop label, #navtop div {
+  flex: 1 1 25%;
+  padding: 6px;
+  border: solid 1px #0077ea;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+#navtop div {
+  background: #005db7;
+}
+#navtop label {
+  background: DodgerBlue;
+  cursor: pointer;
+}
+#navtop label:hover {
+  background: #0077ea;
+}
+#navtop label input:checked + label {
+  background: #0077ea;
+}
+
+#navleft .tab {
+  width: 100%;
+  color: white;
+  overflow: hidden;
+}
+#navleft .tab-label {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  cursor: pointer;
+}
+#navleft .tab-label:hover {
+  filter: saturate(200%);
+}
+#navleft .tab-label::after {
+  content: "❯";
+  transition: all 0.5s;
+}
+#navleft .tab-content {
+  max-height: 0;
+  transition: all 0.5s;
+}
+#navleft button {
+  border: solid 1px #bababa;
+  background-color: #ededed;
+  width: 100%;
+  height: 28px;
+  font-size: 14px;
+  cursor: pointer;
+}
+#navleft button:hover {
+  background: #dbdbdb;
+}
+#navleft input:checked ~ .tab-label {
+  filter: saturate(200%);
+}
+#navleft input:checked ~ .tab-label::after {
+  transform: rotate(90deg);
+}
+#navleft input:checked ~ .tab-content {
+  max-height: none;
+}
+
+.BBianco {
+  background: #86bb6f;
+}
+
+.BRicco {
+  background: #6795e1;
+}
+
+.BGelato {
+  background: #f4d062;
+}
+
+.BPinna {
+  background: #e19dc2;
+}
+
+.BSirena {
+  background: #ecaa65;
+}
+
+.BNoki {
+  background: #836dbb;
+}
+
+.BPianta {
+  background: red;
+}
+
+.BDelfino {
+  background: #2b6cd5;
+}
+
+.TBianco {
+  color: #6aa84f;
+}
+
+.TRicco {
+  color: #3c78d8;
+}
+
+.TGelato {
+  color: #f1c232;
+}
+
+.TPinna {
+  color: #d576aa;
+}
+
+.TSirena {
+  color: #e69138;
+}
+
+.TNoki {
+  color: #674ea7;
+}
+
+.TPianta {
+  color: #cc0000;
+}
+
+.TDelfino {
+  color: #2256aa;
+}/*# sourceMappingURL=nav.css.map */

@@ -1,0 +1,128 @@
+table {
+  width: 100%;
+  border-spacing: 2px 0px;
+}
+
+tr:nth-child(odd) {
+  background-color: white;
+}
+tr:nth-child(even) {
+  background-color: whitesmoke;
+}
+
+th, td {
+  height: 28px;
+  padding: 0px;
+}
+th.selectable, td.selectable {
+  cursor: pointer;
+}
+th.selectable:hover, td.selectable:hover {
+  background: PowderBlue;
+}
+th.gold, td.gold {
+  font-weight: bold;
+  color: #e8b600;
+}
+th.silver, td.silver {
+  font-weight: bold;
+  color: #999999;
+}
+th.bronze, td.bronze {
+  font-weight: bold;
+  color: #b35c00;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+th.cell-a1 {
+  width: 10%;
+}
+th.cell-a2 {
+  width: 35%;
+}
+th.cell-a3 {
+  width: 15%;
+}
+th.cell-a4 {
+  width: 6.7%;
+}
+th.cell-a5 {
+  width: 6.6%;
+}
+th.cell-a6 {
+  width: 6.7%;
+}
+th.cell-a7 {
+  width: 10%;
+}
+th.cell-a8 {
+  width: 10%;
+}
+th.cell-l1 {
+  width: 15%;
+}
+th.cell-l2 {
+  width: 45%;
+}
+th.cell-l3 {
+  width: 25%;
+}
+th.cell-l4 {
+  width: 15%;
+}
+th.cell-p1 {
+  width: 20%;
+}
+th.cell-p2 {
+  width: 20%;
+}
+th.cell-p3 {
+  width: 20%;
+}
+th.cell-p4 {
+  width: 20%;
+}
+th.cell-p5 {
+  width: 20%;
+}
+
+td.cell-a1 {
+  font-weight: bold;
+}
+td.cell-a4 {
+  font-weight: bold;
+  color: #e8b600;
+}
+td.cell-a5 {
+  font-weight: bold;
+  color: #999999;
+}
+td.cell-a6 {
+  font-weight: bold;
+  color: #b35c00;
+}
+td.cell-a7 {
+  font-style: italic;
+  font-size: 90%;
+}
+td.cell-a8 {
+  font-weight: bold;
+  font-size: 90%;
+}
+td.cell-l4 {
+  font-size: 90%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+td.cell-p5 {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}/*# sourceMappingURL=table.css.map */
