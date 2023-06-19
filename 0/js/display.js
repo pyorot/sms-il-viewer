@@ -211,7 +211,20 @@ function lbPlayers(p_, sort_=sortPlayers) {
 }
 
 
-// main loading script
+// main loading scripts
+
+function loadBodyfromURL() {
+  let target = window.location.hash.substring(1).toLowerCase()
+  if (!target) { return bodyAggregate("Total") } 
+  let l_ = data.levels.codes.indexOf(target)
+  if (l_ >= 0) { return bodyLevel(l_) }
+  let p_ = data.players.names.map(x=>x.toLowerCase()).indexOf(target)
+  if (p_ >= 0) { return bodyPlayers(p_) }
+  let s_ = Object.keys(aggregates).find(x=>x.toLowerCase()==target)
+  if (s_) { return bodyAggregate(s_) }
+  return bodyAggregate("Total")
+}
+
 (async() => {
   // load data
   await loadData() // blocking data load
@@ -225,5 +238,6 @@ function lbPlayers(p_, sort_=sortPlayers) {
   // load website
   navtop()
   navleft()
-  bodyAggregate(s)
+  loadBodyfromURL()
+  window.addEventListener("hashchange", loadBodyfromURL)
 })()

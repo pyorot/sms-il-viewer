@@ -51,7 +51,7 @@ function generateAggregates() {
   aggregates["Any%"]     = `b2 b3 b3s b4 b5 b6 b6s b7 r1 r2 r3 r4 r4s r5 r6 r7 g7 g8 `
                          + `p1 p2 p2s p3 p4 p6s peyg peygj p7 s1 s2 s2s s3 s4 s4s s5 s6 s6j s7 `
                          + `n1 n2 n3 n4 n6 n6s n7 q1 q3 q4 q5 q5s q6 q7 a c cb`
-  aggregates["¬Any%"]    = `b1 b8 b3r* b3r b6r* b6r b100 r6* r8 r4r* r4r r100 `
+  aggregates["NotAny%"]    = `b1 b8 b3r* b3r b6r* b6r b100 r6* r8 r4r* r4r r100 `
                          + `g1 g1s g2 g3 g4 g4s g5 g6 gh g1r* g1r g100 p5 p6 p8 p2r p6r p100 `
                          + `s8 s2r s4r s100 n5 n8 nh n6r* n6r n100 q2 q8 q5r qh q100 ar* ar a100 `
                          + `bp beach box1 box2 box3 chuck gbird grass jail lbell light lily pach rbell sgate ubell`
@@ -65,7 +65,7 @@ function generateAggregates() {
   aggregates["Noki"]     = c.slice(c.indexOf("n1"), c.indexOf("q1"))
   aggregates["Pianta"]   = c.slice(c.indexOf("q1"), c.indexOf("a"))
   aggregates["Delfino"]  = c.slice(c.indexOf("a"))
-  aggregates["Secret Reds"] = c.filter(code => code[2] == "r")
+  aggregates["SecretReds"] = c.filter(code => code[2] == "r")
   aggregates["100s"]        = c.filter(code => code.slice(1) == "100")
 }
 
