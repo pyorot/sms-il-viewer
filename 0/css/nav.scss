@@ -1,12 +1,9 @@
-$colourtop: DodgerBlue;
-$colourleft: LightGray;
-$animation: 0.5s;
-
 input {
   position: absolute;
   opacity: 0; // hides radio button icon
 }
 
+$colourtop: DodgerBlue;
 #navtop {
   & label, & div {
     flex: 1 1 25%;
@@ -31,7 +28,8 @@ input {
   }
 }
 
-
+$colourleft: LightGray;
+$animation: 0.5s;
 #navleft {
 //  border-radius: 5px;
 //  box-shadow: 0 0 4px -2px rgba(0,0,0,0.5);
@@ -44,49 +42,50 @@ input {
       justify-content: space-between;
       padding: 6px;
       cursor: pointer;
-      &:hover {
-        background: darken($colourleft, 10%);
-      }
-      &:not(#tab-overall)::after { // Icon
-        content: "\276F";
-        transition: all $animation;
-      }
+      &:hover { filter: saturate(200%) }
+      &::after { content: "\276F"; transition: all $animation } // icon
     }
-    &-content {
-      max-height: 0;
-      transition: all $animation;
-    }
+    &-content { max-height: 0; transition: all $animation }
   }
   & button {
     border: solid 1px darken($colourleft, 10%);
     background-color: lighten($colourleft, 10%);
-    color: darken($colourleft, 20%);
     width: 100%;
     height: 28px;
     font-size: 14px;
     cursor: pointer;
-    &:hover {
-      background: darken(whitesmoke, 10%);
-    }
+    &:hover { background: lighten($colourleft, 3%) }
   }
-  // :checked
-  & input:checked {
-    + .tab-label {
-      background: darken($colourleft, 10%);
-      &::after {
-        transform: rotate(90deg);
-      }
+  & input:checked ~ .tab { // checked state; selects next tab elements
+    &-label {
+      filter: saturate(200%);
+      &::after { transform: rotate(90deg) }
     }
-    ~ .tab-content {
-      max-height: none;
-    }
+    &-content { max-height: none }
   }
 }
-.Bianco  {background: lighten(#6aa84f, 10%)}
-.Ricco   {background: lighten(#3c78d8, 10%)}
-.Gelato  {background: lighten(#f1c232, 10%)}
-.Pinna   {background: lighten(#d576aa, 10%)}
-.Sirena  {background: lighten(#e69138, 10%)}
-.Noki    {background: lighten(#674ea7, 10%)}
-.Pianta  {background: lighten(#cc0000, 10%)}
-.Delfino {background: lighten(#2256aa, 10%)}
+// messy but it'll do for now
+$colBianco:  #6aa84f;
+$colRicco:   #3c78d8;
+$colGelato:  #f1c232;
+$colPinna:   #d576aa;
+$colSirena:  #e69138;
+$colNoki:    #674ea7;
+$colPianta:  #cc0000;
+$colDelfino: #2256aa;
+.BBianco  {background: lighten($colBianco,  10%)}
+.BRicco   {background: lighten($colRicco,   10%)}
+.BGelato  {background: lighten($colGelato,  10%)}
+.BPinna   {background: lighten($colPinna,   10%)}
+.BSirena  {background: lighten($colSirena,  10%)}
+.BNoki    {background: lighten($colNoki,    10%)}
+.BPianta  {background: lighten($colPianta,  10%)}
+.BDelfino {background: lighten($colDelfino, 10%)}
+.TBianco  {color: lighten($colBianco,  0%)}
+.TRicco   {color: lighten($colRicco,   0%)}
+.TGelato  {color: lighten($colGelato,  0%)}
+.TPinna   {color: lighten($colPinna,   0%)}
+.TSirena  {color: lighten($colSirena,  0%)}
+.TNoki    {color: lighten($colNoki,    0%)}
+.TPianta  {color: lighten($colPianta,  0%)}
+.TDelfino {color: lighten($colDelfino, 0%)}

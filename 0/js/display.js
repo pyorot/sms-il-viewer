@@ -31,11 +31,11 @@ function navleft() {
       html += `</div></div>
       <div class="tab" tabindex="-1">
         <input type="radio" id="rd-${world}" name="rd">
-        <label class="tab-label ${world}" for="rd-${world}">${world}</label>
+        <label class="tab-label B${world}" for="rd-${world}">${world}</label>
         <div class="tab-content">`
     }
     let code = data.levels.codes[l_]
-    html += `<button onclick="return bodyLevel(${l_})" tabindex="-1">${code}</button>`
+    html += `<button class="T${world}" onclick="return bodyLevel(${l_})" tabindex="-1">${code}</button>`
   }
   html += "</div></div>"
   $("#navleft").html(html)
