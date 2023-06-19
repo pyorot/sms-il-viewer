@@ -33,10 +33,7 @@
   visibility: visible;
   opacity: 1;
 }
-/*#lb:has( .tooltip:hover) {
-  overflow: visible;
-}*/
 .tooltip:active .tooltiptext {
   visibility: visible;
   opacity: 1;
-}
+}/*# sourceMappingURL=tooltip.css.map */

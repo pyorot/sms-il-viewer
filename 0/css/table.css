@@ -117,4 +117,12 @@ td.cell-a8 {
 }
 td.cell-l4 {
   font-size: 90%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+td.cell-p5 {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }/*# sourceMappingURL=table.css.map */
