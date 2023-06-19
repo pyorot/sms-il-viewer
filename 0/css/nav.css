@@ -4,7 +4,7 @@ input {
   opacity: 0;
 }
 
-#navtop label, #navtop div {
+#menu label, #menu div {
   flex: 1 1 25%;
   padding: 6px;
   border: solid 1px #0077ea;
@@ -12,43 +12,43 @@ input {
   font-weight: bold;
   color: white;
 }
-#navtop div {
+#menu div {
   background: #005db7;
 }
-#navtop label {
+#menu label {
   background: DodgerBlue;
   cursor: pointer;
 }
-#navtop label:hover {
+#menu label:hover {
   background: #0077ea;
 }
-#navtop label input:checked + label {
+#menu label input:checked + label {
   background: #0077ea;
 }
 
-#navleft .tab {
+.panelleft .tab {
   width: 100%;
   color: white;
   overflow: hidden;
 }
-#navleft .tab-label {
+.panelleft .tab-label {
   display: flex;
   justify-content: space-between;
   padding: 6px;
   cursor: pointer;
 }
-#navleft .tab-label:hover {
+.panelleft .tab-label:hover {
   filter: saturate(200%);
 }
-#navleft .tab-label::after {
+.panelleft .tab-label::after {
   content: "❯";
   transition: all 0.5s;
 }
-#navleft .tab-content {
+.panelleft .tab-content {
   max-height: 0;
   transition: all 0.5s;
 }
-#navleft button {
+.panelleft button {
   border: solid 1px #bababa;
   background-color: #ededed;
   width: 100%;
@@ -56,16 +56,16 @@ input {
   font-size: 14px;
   cursor: pointer;
 }
-#navleft button:hover {
+.panelleft button:hover {
   background: #dbdbdb;
 }
-#navleft input:checked ~ .tab-label {
+.panelleft input:checked ~ .tab-label {
   filter: saturate(200%);
 }
-#navleft input:checked ~ .tab-label::after {
+.panelleft input:checked ~ .tab-label::after {
   transform: rotate(90deg);
 }
-#navleft input:checked ~ .tab-content {
+.panelleft input:checked ~ .tab-content {
   max-height: none;
 }
 

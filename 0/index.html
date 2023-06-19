@@ -13,21 +13,26 @@
   </head>
   <body ontouchstart="">
     <div id="main">
-      <div id="navtop">
-        <div>SMS ILs</div>
+      <div id="menu">
+        <div style="flex: 1">SMS ILs</div>
+        <div style="flex: 3; font-style: italic;" id="loadStatus">loading... (should take ~3s)</div>
       </div>
       <div id="panelbottom">
-        <div id="navleft"></div>
+        <div class="panelleft nav level" id="navLevel"></div>
         <div id="panelright">
-          <div id="title">
-            <h2>loading... (should take ~3s)</h2>
-          </div>
+          <div class="paneltop nav level" id="titleLevel"></div>
+          <div class="paneltop nav aggregate" id="navAggregate"></div>
+          <div class="paneltop nav player" id="navPlayer"></div>
+          <div id="title"></div>
           <div id="lb"></div>
         </div>
       </div>
     </div>
 
     <script type="text/javascript" src="js/data.js"></script>
-    <script type="text/javascript" src="js/display.js"></script>
+    <script type="text/javascript" src="js/load.js"></script>
+    <script type="text/javascript" src="js/page.js"></script>
+    <script type="text/javascript" src="js/nav.js"></script>
+    <script type="text/javascript" src="js/table.js"></script>
   </body>
 </html>

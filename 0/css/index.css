@@ -2,11 +2,6 @@
   display: none;
 }
 
-#navleft, #lb {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 html,
 body,
 #main {
@@ -26,7 +21,7 @@ body {
   overflow: hidden;
   flex-direction: column;
 }
-#main > #navtop {
+#main > #menu {
   background-color: lightpink;
   flex: 0 0 auto;
   display: flex;
@@ -39,12 +34,13 @@ body {
   overflow: hidden;
   text-align: center;
 }
-#main > #panelbottom > #navleft {
+#main > #panelbottom > .panelleft {
   background-color: #f9f9f9;
   flex: 0 0 auto;
   overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   width: 80px;
-  display: none;
 }
 #main > #panelbottom > #panelright {
   flex: 1 1 auto;
@@ -52,12 +48,14 @@ body {
   overflow: hidden;
   flex-direction: column;
 }
-#main > #panelbottom > #panelright > #title {
+#main > #panelbottom > #panelright > .paneltop {
   flex: 0 0 auto;
 }
 #main > #panelbottom > #panelright > #lb {
   flex: 1 1 auto;
   overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @media screen and (min-width: 600px) {
