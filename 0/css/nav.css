@@ -35,8 +35,6 @@ input {
   display: flex;
   justify-content: space-between;
   padding: 6px;
-  background: LightGray;
-  font-weight: bold;
   cursor: pointer;
 }
 #navleft .tab-label:hover {
@@ -70,4 +68,36 @@ input {
 }
 #navleft input:checked ~ .tab-content {
   max-height: none;
+}
+
+.Bianco {
+  background: #86bb6f;
+}
+
+.Ricco {
+  background: #6795e1;
+}
+
+.Gelato {
+  background: #f4d062;
+}
+
+.Pinna {
+  background: #e19dc2;
+}
+
+.Sirena {
+  background: #ecaa65;
+}
+
+.Noki {
+  background: #836dbb;
+}
+
+.Pianta {
+  background: red;
+}
+
+.Delfino {
+  background: #2b6cd5;
 }/*# sourceMappingURL=nav.css.map */

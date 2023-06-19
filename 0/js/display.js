@@ -19,7 +19,7 @@ function navtop() {
 
 function navleft() {
   const worldCodes = {"Bianco": "b", "Ricco": "r", "Gelato": "g", "Pinna": "p",
-  "Sirena": "s", "Noki": "n", "Pianta": "q", "Delfino": ""}
+    "Sirena": "s", "Noki": "n", "Pianta": "q", "Delfino": ""}
 
   let html = `<div>`
   let prevWorld = ""
@@ -31,7 +31,7 @@ function navleft() {
       html += `</div></div>
       <div class="tab" tabindex="-1">
         <input type="radio" id="rd-${world}" name="rd">
-        <label class="tab-label" for="rd-${world}">${world}</label>
+        <label class="tab-label ${world}" for="rd-${world}">${world}</label>
         <div class="tab-content">`
     }
     let code = data.levels.codes[l_]

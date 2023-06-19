@@ -43,8 +43,6 @@ input {
       display: flex;
       justify-content: space-between;
       padding: 6px;
-      background: $colourleft;
-      font-weight: bold;
       cursor: pointer;
       &:hover {
         background: darken($colourleft, 10%);
@@ -84,3 +82,11 @@ input {
     }
   }
 }
+.Bianco  {background: lighten(#6aa84f, 10%)}
+.Ricco   {background: lighten(#3c78d8, 10%)}
+.Gelato  {background: lighten(#f1c232, 10%)}
+.Pinna   {background: lighten(#d576aa, 10%)}
+.Sirena  {background: lighten(#e69138, 10%)}
+.Noki    {background: lighten(#674ea7, 10%)}
+.Pianta  {background: lighten(#cc0000, 10%)}
+.Delfino {background: lighten(#2256aa, 10%)}
