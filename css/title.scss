@@ -3,10 +3,10 @@ $glass-icon: rgba(255, 255, 255, 0.3);
 $gradient: linear-gradient(35deg, MediumSlateBlue , MediumTurquoise);
 $option: MidnightBlue;
 
-#title {
+.paneltop {
   background: $gradient;
 
-  select, div {
+  > select, > div {
     // Reset
     appearance: none;
     border: 0;
@@ -21,7 +21,7 @@ $option: MidnightBlue;
     color: white;
     // box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
   }
-  select {
+  > select {
     background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg)
       no-repeat right 0.3em center / 1.4em,
       linear-gradient(to left, $glass-icon 2em, $glass 2em);

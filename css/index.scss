@@ -2,7 +2,7 @@
 
 // disable scrollbars
 ::-webkit-scrollbar { display: none; } // Chrome, Safari, Opera
-#navleft, #lb {
+@mixin noscrollbar {
   -ms-overflow-style: none;  // IE and Edge
   scrollbar-width: none;     // Firefox
 }
@@ -27,18 +27,18 @@ body {
 @mixin flexcol  { display: flex; overflow: hidden; flex-direction: column; }
 @mixin fixed    { flex: 0 0 auto; }
 @mixin stretchy { flex: 1 1 auto;	}
-@mixin scroll   { overflow: auto; }
+@mixin scroll   { overflow: auto; @include noscrollbar; }
 
 #main {
   // background-color: lightcoral;
   margin: auto;
 	@include flexcol;
 
-	> #navtop {
+	> #menu {
     background-color: lightpink;
     @include fixed;
     @include flexrow;
-		height: auto;
+		// min-height: 32.67px;
 	}
 
 	> #panelbottom {
@@ -47,12 +47,11 @@ body {
     @include flexrow;
     text-align: center;
 
-    > #navleft {
+    > .panelleft {
       background-color: lighten(lightgrey, 15%);
       @include fixed;
       @include scroll;
       width: 80px;
-      display: none;
     }
 
     > #panelright {
@@ -60,7 +59,7 @@ body {
       @include stretchy;
       @include flexcol;
   
-      > #title {
+      > .paneltop {
         // background-color: indigo;
         @include fixed;
       }
@@ -72,7 +71,17 @@ body {
       }
     }
 	}
+
+  > #panelbottomoverlay {
+    @include stretchy;
+    @include scroll;
+    max-height: 0%;
+    background-color: LightCyan;
+    text-align: center;
+    padding: 0px 5% !important;
+  }
 }
+
 @media screen and (min-width: 600px) {
   #main {
     width: 600px;

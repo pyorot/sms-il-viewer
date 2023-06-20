@@ -1,7 +1,7 @@
-#title {
+.paneltop {
   background: linear-gradient(35deg, MediumSlateBlue, MediumTurquoise);
 }
-#title select, #title div {
+.paneltop > select, .paneltop > div {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -15,15 +15,15 @@
   font-size: 24px;
   color: white;
 }
-#title select {
+.paneltop > select {
   background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg) no-repeat right 0.3em center/1.4em, linear-gradient(to left, rgba(255, 255, 255, 0.3) 2em, rgba(255, 255, 255, 0.2) 2em);
   cursor: pointer;
 }
-#title select option {
+.paneltop > select option {
   color: inherit;
   background-color: MidnightBlue;
   font-size: 16px;
 }
-#title select:focus {
+.paneltop > select:focus {
   outline: none;
 }/*# sourceMappingURL=title.css.map */

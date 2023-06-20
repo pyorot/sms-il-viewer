@@ -4,51 +4,66 @@ input {
   opacity: 0;
 }
 
-#navtop label, #navtop div {
-  flex: 1 1 25%;
-  padding: 6px;
+#menu label, #menu div {
+  flex: 0 1 25%;
   border: solid 1px #0077ea;
   text-align: center;
   font-weight: bold;
   color: white;
-}
-#navtop div {
-  background: #005db7;
-}
-#navtop label {
-  background: DodgerBlue;
   cursor: pointer;
 }
-#navtop label:hover {
+#menu div {
+  padding: 6px 3px 6px 1px;
+  background: #005db7;
+  display: inline-block;
+}
+#menu div:hover {
+  background: #004384;
+}
+#menu div.help::after {
+  content: "?";
+  -webkit-backdrop-filter: brightness(60%);
+          backdrop-filter: brightness(60%);
+  float: right;
+  border-radius: 50%;
+  padding-left: 1px !important;
+  height: 100%;
+  aspect-ratio: 1/1;
+}
+#menu label {
+  padding: 6px 1px;
+  background: DodgerBlue;
+}
+#menu label:hover {
   background: #0077ea;
 }
-#navtop label input:checked + label {
+#menu label input:checked + label {
   background: #0077ea;
 }
 
-#navleft .tab {
+.panelleft .tab {
   width: 100%;
   color: white;
   overflow: hidden;
 }
-#navleft .tab-label {
+.panelleft .tab-label {
   display: flex;
   justify-content: space-between;
   padding: 6px;
   cursor: pointer;
 }
-#navleft .tab-label:hover {
+.panelleft .tab-label:hover {
   filter: saturate(200%);
 }
-#navleft .tab-label::after {
+.panelleft .tab-label::after {
   content: "❯";
   transition: all 0.5s;
 }
-#navleft .tab-content {
+.panelleft .tab-content {
   max-height: 0;
   transition: all 0.5s;
 }
-#navleft button {
+.panelleft button {
   border: solid 1px #bababa;
   background-color: #ededed;
   width: 100%;
@@ -56,16 +71,16 @@ input {
   font-size: 14px;
   cursor: pointer;
 }
-#navleft button:hover {
+.panelleft button:hover {
   background: #dbdbdb;
 }
-#navleft input:checked ~ .tab-label {
+.panelleft input:checked ~ .tab-label {
   filter: saturate(200%);
 }
-#navleft input:checked ~ .tab-label::after {
+.panelleft input:checked ~ .tab-label::after {
   transform: rotate(90deg);
 }
-#navleft input:checked ~ .tab-content {
+.panelleft input:checked ~ .tab-content {
   max-height: none;
 }
 
