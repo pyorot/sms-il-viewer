@@ -6,19 +6,33 @@ input {
 $colourtop: DodgerBlue;
 #menu {
   & label, & div {
-    flex: 1 1 25%;
-    padding: 6px;
+    flex: 0 1 25%;
     border: solid 1px darken($colourtop, 10%);
     text-align: center;
     font-weight: bold;
     color: white;
+    cursor: pointer;
   }
   & div {
+    padding: 6px 3px 6px 1px;
     background: darken($colourtop, 20%);
+    display: inline-block;
+    &:hover {
+      background: darken($colourtop, 30%);
+    }
+    &.help::after {
+      content: "?";
+      backdrop-filter: brightness(60%);
+      float: right;
+      border-radius: 50%;
+      padding-left: 1px !important;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+    }
   }
   & label {
+    padding: 6px 1px;
     background: $colourtop;
-    cursor: pointer;
     &:hover {
       background: darken($colourtop, 10%);
     }

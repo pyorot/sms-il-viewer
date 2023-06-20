@@ -26,7 +26,6 @@ body {
   flex: 0 0 auto;
   display: flex;
   overflow: hidden;
-  height: auto;
 }
 #main > #panelbottom {
   flex: 1 1 auto;
@@ -56,6 +55,16 @@ body {
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+#main > #panelbottomoverlay {
+  flex: 1 1 auto;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  max-height: 0%;
+  background-color: LightCyan;
+  text-align: center;
+  padding: 0px 5% !important;
 }
 
 @media screen and (min-width: 600px) {

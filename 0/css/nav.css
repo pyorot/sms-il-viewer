@@ -5,19 +5,34 @@ input {
 }
 
 #menu label, #menu div {
-  flex: 1 1 25%;
-  padding: 6px;
+  flex: 0 1 25%;
   border: solid 1px #0077ea;
   text-align: center;
   font-weight: bold;
   color: white;
+  cursor: pointer;
 }
 #menu div {
+  padding: 6px 3px 6px 1px;
   background: #005db7;
+  display: inline-block;
+}
+#menu div:hover {
+  background: #004384;
+}
+#menu div.help::after {
+  content: "?";
+  -webkit-backdrop-filter: brightness(60%);
+          backdrop-filter: brightness(60%);
+  float: right;
+  border-radius: 50%;
+  padding-left: 1px !important;
+  height: 100%;
+  aspect-ratio: 1/1;
 }
 #menu label {
+  padding: 6px 1px;
   background: DodgerBlue;
-  cursor: pointer;
 }
 #menu label:hover {
   background: #0077ea;

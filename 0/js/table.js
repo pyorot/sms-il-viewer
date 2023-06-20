@@ -2,6 +2,10 @@
 // these return html for the table components of each Page
 // convention: x,y denote individual runs; p,l are player/level indices rsp.
 
+var tableFooterHTML = `<tr><td colspan="20" id="tableFooter">
+  this webapp was made by shoutplenty (v1)
+</td></tr>`
+
 function tableAggregate(s_=this.dataIndex, sortIndex=this.sortIndex) {
   let levelIDs = levelListToIDs(aggregates[s_])
   let isotopes = [levelListToIDs("peyg peygj"), levelListToIDs("s6 s6j")]
@@ -54,7 +58,9 @@ function tableAggregate(s_=this.dataIndex, sortIndex=this.sortIndex) {
     html += `<tr>${rowHTML.join("")}</tr>`
     prevValue = value
   }
-  return html + `</table>`
+  // include footer iff it would stay near the bottom of the screen. 28 is current row height in stylesheet
+  let includeFooter = 28 * (table.length + 2) >= parseInt($("#lb").css("height"),10) - 5
+  return html + (includeFooter ? tableFooterHTML : "") + "</table>"
 }
 
 
@@ -79,7 +85,9 @@ function tableLevel(l_=this.dataIndex, sortIndex=this.sortIndex) {
       <td class="cell-l4">${noteHTML}</td>
     </tr>`
   }
-  return html + `</table>`
+  // include footer iff it would stay near the bottom of the screen. 28 is current row height in stylesheet
+  let includeFooter = 28 * (table.length + 2) >= parseInt($("#lb").css("height"),10) - 5
+  return html + (includeFooter ? tableFooterHTML : "") + "</table>"
 }
 
 
@@ -106,5 +114,7 @@ function tablePlayer(p_=this.dataIndex, sortIndex=this.sortIndex) {
       <td class="cell-p5">${noteHTML}</td>
     </tr>`
   }
-  return html + `</table>`
+  // include footer iff it would stay near the bottom of the screen. 28 is current row height in stylesheet
+  let includeFooter = 28 * (table.length + 2) >= parseInt($("#lb").css("height"),10) - 5
+  return html + (includeFooter ? tableFooterHTML : "") + "</table>"
 }

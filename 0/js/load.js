@@ -37,7 +37,7 @@ function bindRadioDeselection() {
 // loads the top menu
 function loadMenu() {
   $("#menu").html(`
-    <div>SMS ILs</div>
+    <div class="help" onclick="toggleHelp()">SMS ILs</div>
     <input type="radio" id="rMenu-aggregate" name="rMenu">
     <label for="rMenu-aggregate" onclick="${go("a", "pageAggregate.dataIndex")}">Overall</label>
     <input type="radio" id="rMenu-level" name="rMenu">
@@ -45,7 +45,16 @@ function loadMenu() {
     <input type="radio" id="rMenu-player" name="rMenu">
     <label for="rMenu-player" onclick="${go("p", "pagePlayer.dataIndex")}">Players</label>
   `)
+  $("#panelbottomoverlay").click(toggleHelp)
 }
+
+// toggles the help panel (bound to some click controls)
+function toggleHelp() {
+  let helpActive = $("#panelbottom").css("max-height") == "0%"
+  $("#panelbottom")       .css("max-height", helpActive ? "none" : "0%")
+  $("#panelbottomoverlay").css("max-height", helpActive ? "0%" : "none")
+}
+
 
 // utility to generate JS commands that navigate to a given leaderboard
 // all navigation between leaderboards is done by running this command

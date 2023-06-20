@@ -38,7 +38,7 @@ body {
     background-color: lightpink;
     @include fixed;
     @include flexrow;
-		height: auto;
+		// min-height: 32.67px;
 	}
 
 	> #panelbottom {
@@ -71,7 +71,17 @@ body {
       }
     }
 	}
+
+  > #panelbottomoverlay {
+    @include stretchy;
+    @include scroll;
+    max-height: 0%;
+    background-color: LightCyan;
+    text-align: center;
+    padding: 0px 5% !important;
+  }
 }
+
 @media screen and (min-width: 600px) {
   #main {
     width: 600px;

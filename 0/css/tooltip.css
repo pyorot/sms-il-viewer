@@ -18,6 +18,9 @@
   margin-left: -290px;
   opacity: 0;
   transition: opacity 0.3s;
+  -webkit-user-select: all;
+     -moz-user-select: all;
+          user-select: all;
 }
 .tooltip .tooltiptext::after {
   content: "";
