@@ -3,7 +3,7 @@
 // convention: x,y denote individual runs; p,l are player/level indices rsp.
 
 var tableFooterHTML = `<tr><td colspan="20" id="tableFooter">
-  this webapp was made by shoutplenty (v1)
+  this webapp was made by shoutplenty (<a href='https://github.com/pyorot/sms-il-viewer'>v1</a>)
 </td></tr>`
 
 function tableAggregate(s_=this.dataIndex, sortIndex=this.sortIndex) {
