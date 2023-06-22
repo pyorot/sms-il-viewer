@@ -2,7 +2,7 @@
   position: relative;
   display: inline-block;
 
-  .tooltiptext {
+  .tooltipbox {
     visibility: hidden;
     width: 300px;
     background-color: #555;
@@ -29,13 +29,13 @@
       border-style: solid;
       border-color: #555 transparent transparent transparent;
     }
+    > .tooltiptext {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
-  &:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
-  &:active .tooltiptext {
+  &:hover .tooltipbox, &:active .tooltipbox {
     visibility: visible;
     opacity: 1;
   }
