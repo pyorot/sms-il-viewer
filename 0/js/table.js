@@ -3,7 +3,7 @@
 // convention: x,y denote individual runs; p,l are player/level indices rsp.
 
 var tableFooterHTML = `<tr><td colspan="20" id="tableFooter">
-  this webapp was made by shoutplenty (<a href='https://github.com/pyorot/sms-il-viewer'>v1</a>)
+  this app was made by shoutplenty (<a href='https://github.com/pyorot/sms-il-viewer'>v1.1</a>)
 </td></tr>`
 
 function tableAggregate(s_=this.dataIndex, sortIndex=this.sortIndex) {
@@ -76,7 +76,7 @@ function tableLevel(l_=this.dataIndex, sortIndex=this.sortIndex) {
   for (let x of table) {
     let colourClass = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] // html class annotation for colouring
     if (!colourClass) { colourClass = "" }
-    let timeHTML = x.time ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
+    let timeHTML = x.link ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
     let noteHTML = x.note ? `<div class="tooltip">📝<span class="tooltiptext">${x.note}</span></div>` : ``
     html += `<tr>
       <td class="cell-l1 ${colourClass}">${x.rank}</td>
