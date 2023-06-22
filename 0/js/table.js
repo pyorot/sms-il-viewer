@@ -2,9 +2,16 @@
 // these return html for the table components of each Page
 // convention: x,y denote individual runs; p,l are player/level indices rsp.
 
-var tableFooterHTML = `<tr><td colspan="20" id="tableFooter">
-  this app was made by shoutplenty (<a href='https://github.com/pyorot/sms-il-viewer'>v1.1</a>)
-</td></tr>`
+// aux html generators
+function tableFooterHTML(tableWidth) {
+  // colspans that are larger than the table width cause extra scrollable whitespace on Gecko only
+  return `<tr><td colspan="${tableWidth}" id="tableFooter">
+    this app was made by shoutplenty (<a href='https://github.com/pyorot/sms-il-viewer'>v1.2</a>)
+  </td></tr>`
+}
+function tooltipHTML(note) {
+  return `<div class="tooltip">📝<div class="tooltipbox"><div class="tooltiptext">${note}</div></div></div>`
+}
 
 function tableAggregate(s_=this.dataIndex, sortIndex=this.sortIndex) {
   let levelIDs = levelListToIDs(aggregates[s_])
@@ -60,7 +67,7 @@ function tableAggregate(s_=this.dataIndex, sortIndex=this.sortIndex) {
   }
   // include footer iff it would stay near the bottom of the screen. 28 is current row height in stylesheet
   let includeFooter = 28 * (table.length + 2) >= parseInt($("#lb").css("height"),10) - 5
-  return html + (includeFooter ? tableFooterHTML : "") + "</table>"
+  return html + (includeFooter ? tableFooterHTML(8) : "") + "</table>"
 }
 
 
@@ -77,7 +84,7 @@ function tableLevel(l_=this.dataIndex, sortIndex=this.sortIndex) {
     let colourClass = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] // html class annotation for colouring
     if (!colourClass) { colourClass = "" }
     let timeHTML = x.link ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
-    let noteHTML = x.note ? `<div class="tooltip">📝<span class="tooltiptext">${x.note}</span></div>` : ``
+    let noteHTML = x.note ? tooltipHTML(x.note) : ``
     html += `<tr>
       <td class="cell-l1 ${colourClass}">${x.rank}</td>
       <td class="cell-l2 selectable" onclick="${go("p",x.p)}">${data.players.names[x.p]}</td>
@@ -87,7 +94,7 @@ function tableLevel(l_=this.dataIndex, sortIndex=this.sortIndex) {
   }
   // include footer iff it would stay near the bottom of the screen. 28 is current row height in stylesheet
   let includeFooter = 28 * (table.length + 2) >= parseInt($("#lb").css("height"),10) - 5
-  return html + (includeFooter ? tableFooterHTML : "") + "</table>"
+  return html + (includeFooter ? tableFooterHTML(4) : "") + "</table>"
 }
 
 
@@ -105,7 +112,7 @@ function tablePlayer(p_=this.dataIndex, sortIndex=this.sortIndex) {
     let colourClass = {1: "gold", 2: "silver", 3: "bronze"}[x.rank]  // html class annotation for colouring
     if (!colourClass) { colourClass = "" }
     let timeHTML = x.link ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
-    let noteHTML = x.note ? `<div class="tooltip">📝<span class="tooltiptext">${x.note}</span></div>` : ``
+    let noteHTML = x.note ? tooltipHTML(x.note) : ``
     html += `<tr>
       <td class="cell-p1 selectable" onclick="${go("l",x.l)}">${data.levels.codes[x.l]}</td>
       <td class="cell-p2 ${colourClass}">${x.rank}</td>
@@ -116,5 +123,5 @@ function tablePlayer(p_=this.dataIndex, sortIndex=this.sortIndex) {
   }
   // include footer iff it would stay near the bottom of the screen. 28 is current row height in stylesheet
   let includeFooter = 28 * (table.length + 2) >= parseInt($("#lb").css("height"),10) - 5
-  return html + (includeFooter ? tableFooterHTML : "") + "</table>"
+  return html + (includeFooter ? tableFooterHTML(5) : "") + "</table>"
 }

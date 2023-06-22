@@ -2,7 +2,7 @@
   position: relative;
   display: inline-block;
 }
-.tooltip .tooltiptext {
+.tooltip .tooltipbox {
   visibility: hidden;
   width: 300px;
   background-color: #555;
@@ -22,7 +22,7 @@
      -moz-user-select: all;
           user-select: all;
 }
-.tooltip .tooltiptext::after {
+.tooltip .tooltipbox::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -32,11 +32,11 @@
   border-style: solid;
   border-color: #555 transparent transparent transparent;
 }
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+.tooltip .tooltipbox > .tooltiptext {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.tooltip:active .tooltiptext {
+.tooltip:hover .tooltipbox, .tooltip:active .tooltipbox {
   visibility: visible;
   opacity: 1;
 }/*# sourceMappingURL=tooltip.css.map */
