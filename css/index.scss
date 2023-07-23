@@ -36,10 +36,23 @@ body {
 
 	> #menu {
     background-color: lightpink;
-    @include fixed;
+    @include fixed; height: 30px;
     @include flexrow;
-		// min-height: 32.67px;
+
+    > #menuTitle   { flex: 1 }                // always visible
+    > #menuPages   { flex: 3; display: none } // visible after load
+    > #menuToggles { flex: 1; display: none } // visible after load
+    > #loadStatus  { flex: 4 }                // invisible after load
 	}
+
+  > #settings {
+    background-color: lightskyblue;
+    @include fixed; height: 90px;
+    @include flexrow;
+    max-height: 0%;
+    line-height: 90px; align-items: center; // vertical centring
+    justify-content: center; // horizontal centring
+  }
 
 	> #panelbottom {
     // background-color: green;
@@ -49,9 +62,8 @@ body {
 
     > .panelleft {
       background-color: lighten(lightgrey, 15%);
-      @include fixed;
+      @include fixed; width: 80px;
       @include scroll;
-      width: 80px;
     }
 
     > #panelright {

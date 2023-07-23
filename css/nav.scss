@@ -5,41 +5,50 @@ input {
 
 $colourtop: DodgerBlue;
 #menu {
-  & label, & div {
-    flex: 0 1 25%;
+  label, #menuTitle, #loadStatus {
+    display: flex;
+    justify-content: center; // horizontal centring
+    align-items: center;     // vertical centring
     border: solid 1px darken($colourtop, 10%);
-    text-align: center;
     font-weight: bold;
     color: white;
+  }
+  label {
     cursor: pointer;
   }
-  & div {
-    padding: 6px 3px 6px 1px;
+
+  > #menuTitle, #loadStatus {
     background: darken($colourtop, 20%);
-    display: inline-block;
-    &:hover {
-      background: darken($colourtop, 30%);
-    }
-    &.help::after {
-      content: "?";
-      backdrop-filter: brightness(60%);
-      float: right;
-      border-radius: 50%;
-      padding-left: 1px !important;
-      height: 100%;
-      aspect-ratio: 1 / 1;
-    }
   }
-  & label {
-    padding: 6px 1px;
-    background: $colourtop;
-    &:hover {
-      background: darken($colourtop, 10%);
+
+  > #menuPages {
+    label {
+      flex: 1;
+      background: $colourtop;
+      &:hover { background: darken($colourtop, 10%) }  
     }
-    & input:checked + label {
-        background: darken($colourtop, 10%);
-    }
+    input:checked + label { background: darken($colourtop, 10%) }
   }
+
+  > #menuToggles {
+    label {
+      flex: 1;
+      background: darken($colourtop, 20%);
+      &:hover { background: darken($colourtop, 30%) }
+    }
+    input:checked + label { background: darken($colourtop, 30%) }
+  }
+}
+
+.circle {
+  //margin: auto;
+  height: 100%; aspect-ratio: 1 / 1; // needed for circle
+  max-height: 20px;   // limits circle height
+  line-height: 20px;  // centres text within circle height
+  text-align: center; // centres text within circle width
+  border-radius: 50%; // circle shape
+  font-size: 14px;
+  backdrop-filter: brightness(60%);
 }
 
 $colourleft: LightGray;

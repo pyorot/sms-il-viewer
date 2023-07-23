@@ -36,25 +36,34 @@ function bindRadioDeselection() {
 
 // loads the top menu
 function loadMenu() {
-  $("#menu").html(`
-    <div class="help" onclick="toggleHelp()">SMS ILs</div>
-    <input type="radio" id="rMenu-aggregate" name="rMenu">
-    <label for="rMenu-aggregate" onclick="${go("a", "pageAggregate.dataIndex")}">Overall</label>
-    <input type="radio" id="rMenu-level" name="rMenu">
-    <label for="rMenu-level" onclick="${go("l", "pageLevel.dataIndex")}">Levels</label>
-    <input type="radio" id="rMenu-player" name="rMenu">
-    <label for="rMenu-player" onclick="${go("p", "pagePlayer.dataIndex")}">Players</label>
-  `)
-  $("#panelbottomoverlay").click(toggleHelp)
+  // bind menu buttons
+  $("#radioPages-a + label").attr("onclick", go('a', 'pageAggregate.dataIndex'))
+  $("#radioPages-l + label").attr("onclick", go('l', 'pageLevel.dataIndex'    ))
+  $("#radioPages-p + label").attr("onclick", go('p', 'pagePlayer.dataIndex'   ))
+  // load menu bar
+  $("#loadStatus"  ).css("display", "none")
+  $("#menuPages"   ).css("display", "flex")
+  $("#menuToggles" ).css("display", "flex")
+  // set panel visibility based on states of toggle controls
+  let helpActive = $('#check-help').is(':checked')
+  $("#panelbottom").css("max-height", helpActive ? "0%" : "none")
+  $("#panelbottomoverlay").css("max-height", helpActive ? "none" : "0%")
+  let settingsActive = $('#check-settings').is(':checked')
+  $("#settings").css("max-height", settingsActive ? "none" : "0%")
 }
 
-// toggles the help panel (bound to some click controls)
+// toggles the help panel (full height) (bound to click toggle)
 function toggleHelp() {
-  let helpActive = $("#panelbottom").css("max-height") == "0%"
-  $("#panelbottom")       .css("max-height", helpActive ? "none" : "0%")
-  $("#panelbottomoverlay").css("max-height", helpActive ? "0%" : "none")
+  let active = $("#panelbottomoverlay").css("max-height") == "none"
+  $("#panelbottom")       .css("max-height", active ? "none" : "0%")
+  $("#panelbottomoverlay").css("max-height", active ? "0%" : "none")
 }
 
+// toggles the settings panel (fixed height) (bound to click toggle)
+function toggleSettings() {
+  let active = $("#settings").css("max-height") == "none"
+  $("#settings").css("max-height", active ? "0%" : "none")
+}
 
 // utility to generate JS commands that navigate to a given leaderboard
 // all navigation between leaderboards is done by running this command
@@ -83,8 +92,8 @@ function loadBodyfromHash() {
   console.log(data)
 
   // load website
-  loadPages()             // creates Page objects (representing tabs in main menu)
   loadMenu()
+  loadPages()             // creates Page objects (representing tabs in main menu)
   bindRadioDeselection()  // binds a UI control
   loadBodyfromHash()      // runs initial navigation (from initial URL)
   window.addEventListener("hashchange", loadBodyfromHash) // binds navigation method

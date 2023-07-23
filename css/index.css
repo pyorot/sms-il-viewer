@@ -24,8 +24,34 @@ body {
 #main > #menu {
   background-color: lightpink;
   flex: 0 0 auto;
+  height: 30px;
   display: flex;
   overflow: hidden;
+}
+#main > #menu > #menuTitle {
+  flex: 1;
+}
+#main > #menu > #menuPages {
+  flex: 3;
+  display: none;
+}
+#main > #menu > #menuToggles {
+  flex: 1;
+  display: none;
+}
+#main > #menu > #loadStatus {
+  flex: 4;
+}
+#main > #settings {
+  background-color: lightskyblue;
+  flex: 0 0 auto;
+  height: 90px;
+  display: flex;
+  overflow: hidden;
+  max-height: 0%;
+  line-height: 90px;
+  align-items: center;
+  justify-content: center;
 }
 #main > #panelbottom {
   flex: 1 1 auto;
@@ -36,10 +62,10 @@ body {
 #main > #panelbottom > .panelleft {
   background-color: #f9f9f9;
   flex: 0 0 auto;
+  width: 80px;
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  width: 80px;
 }
 #main > #panelbottom > #panelright {
   flex: 1 1 auto;
