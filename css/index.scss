@@ -21,6 +21,11 @@ body {
   overflow: hidden;
 }
 
+input {
+  position: absolute;
+  opacity: 0; // hides radio button/checkbox icons
+}
+
 // the flex setup:
 // http://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout
 @mixin flexrow  { display: flex; overflow: hidden; }
@@ -47,11 +52,25 @@ body {
 
   > #settings {
     background-color: lightskyblue;
-    @include fixed; height: 90px;
+    @include fixed;
     @include flexrow;
     max-height: 0%;
-    line-height: 90px; align-items: center; // vertical centring
+    // height: 90px; line-height: 90px; align-items: center; // vertical centring
     justify-content: center; // horizontal centring
+    > .settingsCol {
+      @include fixed; width: 50%;
+      @include flexcol;
+      box-sizing: border-box;
+      padding: 5px;
+      
+      > .settingsRow {
+        @include stretchy;
+        @include flexrow;
+
+        > .settingsLabel { flex: 2 }
+        > label { flex: 1 }
+      }
+    }
   }
 
 	> #panelbottom {

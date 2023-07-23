@@ -1,0 +1,14 @@
+#settings {
+  label, .settingsLabel {
+    display: flex;
+    text-align: center;
+    justify-content: center; // horizontal centring
+    align-items: center;     // vertical centring
+    padding: 10px 5px;
+  }
+  label {
+    border: solid 1px;
+    cursor: pointer;
+  }
+  input:checked + label { background: lightcoral }
+}

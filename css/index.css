@@ -15,6 +15,11 @@ body {
   overflow: hidden;
 }
 
+input {
+  position: absolute;
+  opacity: 0;
+}
+
 #main {
   margin: auto;
   display: flex;
@@ -45,13 +50,30 @@ body {
 #main > #settings {
   background-color: lightskyblue;
   flex: 0 0 auto;
-  height: 90px;
   display: flex;
   overflow: hidden;
   max-height: 0%;
-  line-height: 90px;
-  align-items: center;
   justify-content: center;
+}
+#main > #settings > .settingsCol {
+  flex: 0 0 auto;
+  width: 50%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 5px;
+}
+#main > #settings > .settingsCol > .settingsRow {
+  flex: 1 1 auto;
+  display: flex;
+  overflow: hidden;
+}
+#main > #settings > .settingsCol > .settingsRow > .settingsLabel {
+  flex: 2;
+}
+#main > #settings > .settingsCol > .settingsRow > label {
+  flex: 1;
 }
 #main > #panelbottom {
   flex: 1 1 auto;

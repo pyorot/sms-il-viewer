@@ -1,0 +1,14 @@
+#settings label, #settings .settingsLabel {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 5px;
+}
+#settings label {
+  border: solid 1px;
+  cursor: pointer;
+}
+#settings input:checked + label {
+  background: lightcoral;
+}/*# sourceMappingURL=settings.css.map */

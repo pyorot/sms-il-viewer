@@ -5,6 +5,8 @@
     <title>SMS IL Tracker Viewer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/settings.css">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/title.css">
     <link rel="stylesheet" href="css/table.css">
@@ -38,7 +40,20 @@
       </div>
 
       <div id="settings">
-        what settings m8
+        <div class="settingsCol">
+          <div class="settingsRow">
+            <div class="settingsLabel">Scoring:</div>
+            <input type="radio" id="radioScoring-p" name="radioScoring">
+            <label for="radioScoring-p">p</label>
+            <input type="radio" id="radioScoring-ppct" name="radioScoring">
+            <label for="radioScoring-ppct">p%</label>
+            <input type="radio" id="radioScoring-l1" name="radioScoring">
+            <label for="radioScoring-l1">ℓ<sub>1</sub></label>
+            <input type="radio" id="radioScoring-linf" name="radioScoring">
+            <label for="radioScoring-linf">ℓ<sub>∞</sub></label>
+          </div>
+        </div>
+        <div class="settingsCol"></div>
       </div>
 
       <div id="panelbottom">
