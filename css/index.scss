@@ -41,7 +41,7 @@ input {
 
 	> #menu {
     background-color: lightpink;
-    @include fixed; height: 30px;
+    @include fixed; height: 35px;
     @include flexrow;
 
     > #menuTitle   { flex: 1 }                // always visible

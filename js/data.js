@@ -20,16 +20,17 @@ async function loadData() {
 
 // mutates data into useful form
 function annotateData() {
+  data.levels.entries = [] // add entry count array to levels
   for (let l_ = 0; l_ < data.body.length; l_++) {
     data.body[l_] = data.body[l_].map((entry, p_) => { return {
       p: p_, l: l_, time: entry[0], link: entry[1], note: entry[2], points: null, rank: null
-    }}) // [playerID, levelID, time, link, note, points, rank]
+    }}) // {playerID, levelID, time, link, note, points, rank}
     let sortedData = data.body[l_]
       .filter(x => parseTime(x.time))
       .sort((x,y) => (data.levels.reversed[l_] ? -1 : 1) * (parseTime(x.time) - parseTime(y.time)))
     // recall the standard rank algorithm: given a sorted list,
     // its index+1 is its rank unless its tied (repeated value), whence the rank persists
-      { // ranks
+    { // ranks
       let prevTime, rank
       for (let [i, x] of sortedData.entries()) {
         if (x.time != prevTime) { rank = i+1 } // set rank to index+1 if changed, else persist it
@@ -45,6 +46,7 @@ function annotateData() {
         prevTime = x.time
       }
     }
+    data.levels.entries[l_] = sortedData.length
   }
 }
 

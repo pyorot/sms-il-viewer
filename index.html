@@ -21,11 +21,11 @@
           SMS ILs
         </div>
         <div id="menuPages">
-          <input type="radio" id="radioPages-a" name="radioPages">
+          <input type="radio" id="radioPages-a" name="radioPages" value="a">
           <label for="radioPages-a">Overall</label>
-          <input type="radio" id="radioPages-l" name="radioPages">
+          <input type="radio" id="radioPages-l" name="radioPages" value="l">
           <label for="radioPages-l">Levels</label>
-          <input type="radio" id="radioPages-p" name="radioPages">
+          <input type="radio" id="radioPages-p" name="radioPages" value="p">
           <label for="radioPages-p">Players</label>    
         </div>
         <div id="menuToggles">
@@ -42,15 +42,15 @@
       <div id="settings">
         <div class="settingsCol">
           <div class="settingsRow">
-            <div class="settingsLabel">Scoring:</div>
-            <input type="radio" id="radioScoring-p" name="radioScoring">
-            <label for="radioScoring-p">p</label>
-            <input type="radio" id="radioScoring-ppct" name="radioScoring">
-            <label for="radioScoring-ppct">p%</label>
-            <input type="radio" id="radioScoring-l1" name="radioScoring">
-            <label for="radioScoring-l1">ℓ<sub>1</sub></label>
-            <input type="radio" id="radioScoring-linf" name="radioScoring">
-            <label for="radioScoring-linf">ℓ<sub>∞</sub></label>
+            <div class="settingsLabel">score:</div>
+            <input type="radio" id="radioScoring-p" name="radioScoring" value="p">
+            <label for="radioScoring-p" onclick="Page.scoring = 'p'">p</label>
+            <input type="radio" id="radioScoring-ppct" name="radioScoring" value="ppct">
+            <label for="radioScoring-ppct" onclick="Page.scoring = 'ppct'">p%</label>
+            <input type="radio" id="radioScoring-l1" name="radioScoring" value="l1">
+            <label for="radioScoring-l1" onclick="Page.scoring = 'l1'">ℓ<sub>1</sub></label>
+            <input type="radio" id="radioScoring-linf" name="radioScoring" value="linf">
+            <label for="radioScoring-linf" onclick="Page.scoring = 'linf'">ℓ<sub>∞</sub></label>
           </div>
         </div>
         <div class="settingsCol"></div>

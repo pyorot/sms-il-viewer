@@ -29,7 +29,7 @@ input {
 #main > #menu {
   background-color: lightpink;
   flex: 0 0 auto;
-  height: 30px;
+  height: 35px;
   display: flex;
   overflow: hidden;
 }

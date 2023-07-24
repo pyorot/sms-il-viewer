@@ -8,11 +8,12 @@ class Page {
     $(`.nav.${this.name}`).html(params.loadNav())   // load nav
   }
   // custom fields/methods
-  name              // page name (used as class on nav elements)
-  dataIndex         // index of data to display
-  sortIndex         // column index for table sort
-  sortMethods       // methods for sorting table: { sortIndex: sortLambda }
-  table             // method to generate table
+  name                  // page name (used as class on nav elements)
+  dataIndex             // index of data to display
+  sortIndex             // column index for table sort
+  static scoring        // global scoring setting
+  sortMethods           // methods for sorting table: { sortIndex: sortLambda }
+  table                 // method to generate table
   // standard methods
   loadTable(dataIndex_) {
     this.dataIndex = dataIndex_                     // update own state
@@ -67,4 +68,5 @@ function loadPages() {
     loadNav: navPlayer,
     table: tablePlayer,
   })
+  Page.scoring = $('input[name="radioScoring"]:checked').val() ?? "p"
 }
