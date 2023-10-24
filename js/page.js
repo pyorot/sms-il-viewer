@@ -37,9 +37,14 @@ function loadPages() {
     dataIndex: "Total",
     sortIndex: 2, // default to points sort
     sortMethods: {
-      2: (a,b) => {return b[2] - a[2]}, // points sort
+      2: (a,b) => {
+        switch (Page.scoring) {
+          case "p":  case "ppct": return b.score - a.score;
+          case "l1": case "linf": return a.score - b.score;
+        }
+      }, // points sort
       3: (a,b) => { // medal sort
-        for (let i of [3, 4, 5]) {if (a[i] != b[i]) {return b[i] - a[i]}}
+        for (let i of [0,1,2]) {if (a.medals[i] != b.medals[i]) {return b.medals[i] - a.medals[i]}}
         return 0
       },
     },

@@ -2,6 +2,7 @@
 
 var data              // data from the API is loaded, processed and stored here
 var aggregates = {}   // groups of levels for the overall (aggregate) leaderboards
+var isotopes = {}     // pairs of levels for which only the better is counted for points/ranks
 
 var dataUrl = "https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec"
 // dataUrl = "../data.json" // enable this for debugging
@@ -52,12 +53,14 @@ function annotateData() {
 
 // aggregates are specified here
 function generateAggregates() {
-  let c = data.levels.codes
+  let c = [...data.levels.codes] // copy of full code list
+  isotopes = { "peyg": "peygj", "s6": "s6j" } // { first: second }
+  for (let iso in isotopes) { c.splice(c.indexOf(iso)+1,1) } // removes all second isotopes from c
   aggregates["Total"]    = c
   aggregates["Movement"] = `b3 b3s b4 b6 b6s r1 r2 r3 r4 r4s r5 g1s p2 p2s p3 p6s `
                          + `s2 s2s s3 s4 s4s n1 n2 n6 n6s q3 q4 q6 c`
   aggregates["Any%"]     = `b2 b3 b3s b4 b5 b6 b6s b7 r1 r2 r3 r4 r4s r5 r6 r7 g7 g8 `
-                         + `p1 p2 p2s p3 p4 p6s peyg peygj p7 s1 s2 s2s s3 s4 s4s s5 s6 s6j s7 `
+                         + `p1 p2 p2s p3 p4 p6s peyg p7 s1 s2 s2s s3 s4 s4s s5 s6 s7 `
                          + `n1 n2 n3 n4 n6 n6s n7 q1 q3 q4 q5 q5s q6 q7 a c cb`
   aggregates["NotAny%"]  = `b1 b8 b3r* b3r b6r* b6r b100 r6* r8 r4r* r4r r100 `
                          + `g1 g1s g2 g3 g4 g4s g5 g6 gh g1r* g1r g100 p5 p6 p8 p2r p6r p100 `
