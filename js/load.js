@@ -70,15 +70,21 @@ function toggleSettings() {
 // which sets the URL hash, which the below function handles
 function go(endpoint, index) { return `location.hash=hashes.${endpoint}[${index}]`}
 
+// updates scoring setting and triggers table refresh if needed
+function setScoring(scoring) {
+  Page.scoring = scoring
+  if (Page.active == "a") { $("#lb").html(pageAggregate.table()) } // refresh current table
+}
+
 // event handler bound to URL hash change; runs loadTable method of relevant page
 function loadBodyfromHash() {
   let target = location.hash.substring(1).toLowerCase()
   document.title = "SMS IL Tracker Viewer"
   if (!target) { return pageAggregate.loadTable("Total") }
   document.title += " | " + target
-  if (target in indices.l) { return pageLevel.loadTable(indices.l[target]) }
-  if (target in indices.p) { return pagePlayer.loadTable(indices.p[target]) }
-  if (target in indices.a) { return pageAggregate.loadTable(indices.a[target]) }
+  if (target in indices.l) { Page.active = "l"; return pageLevel.loadTable(indices.l[target]) }
+  if (target in indices.p) { Page.active = "p"; return pagePlayer.loadTable(indices.p[target]) }
+  if (target in indices.a) { Page.active = "a"; return pageAggregate.loadTable(indices.a[target]) }
   return pageAggregate.loadTable("Total")
 }
 

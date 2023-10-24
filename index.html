@@ -44,13 +44,13 @@
           <div class="settingsRow">
             <div class="settingsLabel">score:</div>
             <input type="radio" id="radioScoring-p" name="radioScoring" value="p">
-            <label for="radioScoring-p" onclick="Page.scoring = 'p'">p</label>
+            <label for="radioScoring-p" onclick="setScoring('p')">p</label>
             <input type="radio" id="radioScoring-ppct" name="radioScoring" value="ppct">
-            <label for="radioScoring-ppct" onclick="Page.scoring = 'ppct'">p%</label>
+            <label for="radioScoring-ppct" onclick="setScoring('ppct')">p%</label>
             <input type="radio" id="radioScoring-l1" name="radioScoring" value="l1">
-            <label for="radioScoring-l1" onclick="Page.scoring = 'l1'">ℓ<sub>1</sub></label>
+            <label for="radioScoring-l1" onclick="setScoring('l1')">ℓ<sub>1</sub></label>
             <input type="radio" id="radioScoring-linf" name="radioScoring" value="linf">
-            <label for="radioScoring-linf" onclick="Page.scoring = 'linf'">ℓ<sub>∞</sub></label>
+            <label for="radioScoring-linf" onclick="setScoring('linf')">ℓ<sub>∞</sub></label>
           </div>
         </div>
         <div class="settingsCol"></div>

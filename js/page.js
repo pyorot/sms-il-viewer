@@ -7,11 +7,13 @@ class Page {
     Object.assign(this, params)                     // set fields
     $(`.nav.${this.name}`).html(params.loadNav())   // load nav
   }
+  // static state
+  static active         // currently active page
+  static scoring        // global scoring setting
   // custom fields/methods
   name                  // page name (used as class on nav elements)
   dataIndex             // index of data to display
   sortIndex             // column index for table sort
-  static scoring        // global scoring setting
   sortMethods           // methods for sorting table: { sortIndex: sortLambda }
   table                 // method to generate table
   // standard methods
