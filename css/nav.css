@@ -22,7 +22,7 @@
   transition: all 0.5s;
 }
 .panelleft button {
-  border: solid 1px var(--colBody3);
+  border: solid 1px var(--colBody2Active);
   background: var(--colBody2);
   width: 100%;
   height: 28px;

@@ -1,51 +1,48 @@
 :root {
   // the variables read by the website; a copy of dark by default
   --colBody1:         black;
-  --colBody2:         color-mix(in srgb, firebrick, black 70%);
-  --colBody2Active:   color-mix(in srgb, color-mix(in srgb, firebrick, black 70%), white 10%);
-  --colBody3:         color-mix(in srgb, color-mix(in srgb, firebrick, black 70%), white 20%);
+  --colBody2:         #{darken(indianred, 45%)};
+  --colBody2Active:   #{darken(indianred, 37.5%)};
   --colText:          white;
   --colLink:          #80d9ff;
   --colLinkVisited:   #c58af9;
   --colHighlight:     lightcoral;
-  --colHead1:           color-mix(in srgb, firebrick, black 30%);
-  --colHead1Active:     color-mix(in srgb, firebrick, black 45%);
+  --colHead1:         #{darken(firebrick, 15%)};
+  --colHead1Active:   #{darken(firebrick, 22.5%)};
   --colHead2:         firebrick;
-  --colHead2Active:     color-mix(in srgb, firebrick, black 15%);
-  --colHead3:           color-mix(in srgb, firebrick, white 30%);
-  --colHead3Active:     color-mix(in srgb, firebrick, white 15%);
+  --colHead2Active:   #{darken(firebrick, 7.5%)};
+  --colHead3:         #{lighten(firebrick, 22.5%)};
+  --colHead3Active:   #{lighten(firebrick, 15%)};
 
   // light mode (set by toggleColours)
   --colBody1Light:        white;
   --colBody2Light:        whitesmoke;
-  --colBody2ActiveLight:  color-mix(in srgb, whitesmoke, black 10%);
-  --colBody3Light:        color-mix(in srgb, whitesmoke, black 20%);
+  --colBody2ActiveLight:  #{darken(whitesmoke, 10%)};
   --colTextLight:         black;
   --colLinkLight:         #0066cc;
   --colLinkVisitedLight:  #551a8b;
   --colHighlightLight:    powderblue;
-  --colHead1Light:        color-mix(in srgb, dodgerblue, black 30%);
-  --colHead1ActiveLight:  color-mix(in srgb, dodgerblue, black 45%);
+  --colHead1Light:        #{darken(dodgerblue, 15%)};
+  --colHead1ActiveLight:  #{darken(dodgerblue, 22.5%)};
   --colHead2Light:        dodgerblue;
-  --colHead2ActiveLight:  color-mix(in srgb, dodgerblue, black 15%);
-  --colHead3Light:        color-mix(in srgb, dodgerblue, white 30%);
-  --colHead3ActiveLight:  color-mix(in srgb, dodgerblue, white 15%);
+  --colHead2ActiveLight:  #{darken(dodgerblue, 7.5%)};
+  --colHead3Light:        #{lighten(dodgerblue, 22.5%)};
+  --colHead3ActiveLight:  #{lighten(dodgerblue, 15%)};
 
   // dark mode (set by toggleColours)
   --colBody1Dark:         black;
-  --colBody2Dark:         color-mix(in srgb, firebrick, black 70%);
-  --colBody2ActiveDark:   color-mix(in srgb, color-mix(in srgb, firebrick, black 70%), white 10%);
-  --colBody3Dark:         color-mix(in srgb, color-mix(in srgb, firebrick, black 70%), white 20%);
+  --colBody2Dark:         #{darken(indianred, 45%)};
+  --colBody2ActiveDark:   #{darken(indianred, 37.5%)};
   --colTextDark:          white;
   --colLinkDark:          #80d9ff;
   --colLinkVisitedDark:   #c58af9;
   --colHighlightDark:     lightcoral;
-  --colHead1Dark:           color-mix(in srgb, firebrick, black 30%);
-  --colHead1ActiveDark:     color-mix(in srgb, firebrick, black 45%);
+  --colHead1Dark:         #{darken(firebrick, 15%)};
+  --colHead1ActiveDark:   #{darken(firebrick, 22.5%)};
   --colHead2Dark:         firebrick;
-  --colHead2ActiveDark:     color-mix(in srgb, firebrick, black 15%);
-  --colHead3Dark:           color-mix(in srgb, firebrick, white 30%);
-  --colHead3ActiveDark:     color-mix(in srgb, firebrick, white 15%);
+  --colHead2ActiveDark:   #{darken(firebrick, 7.5%)};
+  --colHead3Dark:         #{lighten(firebrick, 22.5%)};
+  --colHead3ActiveDark:   #{lighten(firebrick, 15%)};
 
   // universal colours
   --colGold:              #e8b600;
