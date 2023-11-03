@@ -77,8 +77,11 @@
         <p>This IL viewer pulls from
         <a href="https://docs.google.com/spreadsheets/d/1M_X3fvZPhbeQ2H1Arm24sHbtwWY5LEozQ4SBcMWiGPw">this IL Tracker</a>;
         the JSON data endpoint is
-        <a href="https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec">here.</a>
-        Here are some tips for fluid use of the app.</p>
+        <a href="https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec">here</a>;
+        the submissions sheet is
+        <a href="https://docs.google.com/spreadsheets/d/1Ibq5m31pU1ZVfh4Dlo2r2Mnmk3WBiZwt6lja5bZSE1Q">here.</a></p>
+        
+        <p>Here are some tips for fluid use of this app.</p>
 
         <h3>URL Navigation</h3>
         <p>Aside from the included menu controls, you can go straight to a
@@ -90,28 +93,42 @@
         <p>Navigating back/forward in the browser flicks through your visited leaderboards,
           but your sorting settings and last-viewed leaderboards on inactive tabs persist.</p>
 
+        <h3>Cross-Links</h3>
+        <p>Any player or level can be clicked to go to an individual leaderboard.</p>
+  
         <h3>Sorting</h3>
         <p>Sortable columns will show up when hovering over their headers on desktop.
           Click them on any device to sort by that column.</p>
         
-        <h3>Cross-Links</h3>
-        <p>Any player or level can be clicked to go to an individual leaderboard.</p>
-
+        <h3>Scoring</h3>
+        <p>Set the scoring algorithm for aggregates (overall leaderboards) in the ⚙️ settings menu. The options are:</p>
+        <ul style="text-align:left">
+          <li><b>p</b>: points (sum of strictly worse runs + 1)</li>
+          <li><b>p%</b>: normalised points % (points / total entries across aggregate)</li>
+          <li><b>ℓ1</b>: ℓ1 norm (sum of strictly better runs)</li>
+          <li><b>ℓ∞</b>: ℓ∞ norm (maximum number of strictly better runs)</li>
+        </ul>
+        
         <h3>Copying Notes</h3>
         <p>To view notes, hover over (desktop) or tap (iOS) the 📝 emoji. To copy them,
-          drag your mouse straight up (if desktop), then double-click the note.</p>
+          drag your mouse straight up (if desktop), then single-click the note.</p>
 
         <h3>Why Times New Roman on iOS?</h3>
         Apple does what it wants.
 
         <h3>Aggregates (Overall Leaderboards)</h3>
-        <p>The level groups are mostly obvious, and respect the rule of counting only
-          the higher of the pairs for s6 and peyg, but individually for medals</p>
-        <p>The movement group is intended to be hover-based movement levels, and was defined in Nov 2020:</p>
+        <p>These sum scores across a selectable group of levels.
+          The <b>n</b> and <b>v</b> columns count number of submitted levels and videos respectively.</p>
+        <p>The scores count only the higher of the version-pairs for s6 and peyg (wherever they are included),
+          but medals count them individually.</p>
+        <p>A <b>'</b> mark in an n/v column means both versions of a version-pair have been detected,
+          in which case the number itself only includes one of them.</p>
+        <p>The level groups are mostly obvious; the <b>movement</b> group is intended to be hover-based movement levels,
+          and was defined in Nov 2020 as:</p>
         <p>b3 b3s b4 b6 b6s r1 r2 r3 r4 r4s r5 g1s p2 p2s p3 p6s<br>s2 s2s s3 s4 s4s n1 n2 n6 n6s q3 q4 q6 c</p>
 
         <br>
-        <p style="color: #e47f3b"><i>this app was made by shoutplenty (<a href='https://github.com/pyorot/sms-il-viewer'>v1.2</a>)</i></p>
+        <p style="color: #e47f3b"><i>this app was made by shoutplenty (<a href='https://github.com/pyorot/sms-il-viewer'>v2.0</a>)</i></p>
       </div>
 
     </div>
