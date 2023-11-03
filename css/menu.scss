@@ -1,10 +1,9 @@
-$colourtop: DodgerBlue;
 #menu {
   label, #menuTitle, #loadStatus {
     display: flex;
     justify-content: center; // horizontal centring
     align-items: center;     // vertical centring
-    border: solid 1px darken($colourtop, 10%);
+    border: solid 1px var(--colHead2Active);
     font-weight: bold;
     color: white;
   }
@@ -13,25 +12,25 @@ $colourtop: DodgerBlue;
   }
 
   > #menuTitle, #loadStatus {
-    background: darken($colourtop, 20%);
+    background: var(--colHead1);
   }
 
   > #menuPages {
     label {
       flex: 1;
-      background: $colourtop;
-      &:hover { background: darken($colourtop, 10%) }  
+      background: var(--colHead2);
+      &:hover { background: var(--colHead2Active) }
     }
-    input:checked + label { background: darken($colourtop, 10%) }
+    input:checked + label { background: var(--colHead2Active) }
   }
 
   > #menuToggles {
     label {
       flex: 1;
-      background: darken($colourtop, 20%);
-      &:hover { background: darken($colourtop, 30%) }
+      background: var(--colHead1);
+      &:hover { background: var(--colHead1Active) }
     }
-    input:checked + label { background: darken($colourtop, 30%) }
+    input:checked + label { background: var(--colHead1Active) }
   }
 }
 

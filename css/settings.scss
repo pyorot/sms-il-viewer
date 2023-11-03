@@ -9,6 +9,7 @@
   label {
     border: solid 1px;
     cursor: pointer;
+    &:hover { background: var(--colHead3Active) };
   }
-  input:checked + label { background: lightcoral }
+  input:checked + label { background: var(--colHead3Active) };
 }

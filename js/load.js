@@ -65,6 +65,17 @@ function toggleSettings() {
   $("#settings").css("max-height", active ? "0%" : "none")
 }
 
+// toggles the colour scheme between light and dark
+function toggleColours() {
+  let ss = document.documentElement.style               // style setter
+  let sg = getComputedStyle(document.documentElement)   // style getter
+  let oldTheme = sg.getPropertyValue("--colBody1") == sg.getPropertyValue("--colBody1Dark") ? "Dark" : "Light"
+  let newTheme = oldTheme == "Dark" ? "Light" : "Dark"  // swap theme
+  let props = ["Body1", "Body2", "Body2Active", "Body3", "Text", "Link", "LinkVisited", "Highlight",
+    "Head1", "Head1Active", "Head2", "Head2Active", "Head3", "Head3Active"]
+  for (let prop of props) { ss.setProperty("--col"+prop, sg.getPropertyValue("--col"+prop+newTheme)) }
+}
+
 // utility to generate JS commands that navigate to a given leaderboard
 // all navigation between leaderboards is done by running this command
 // which sets the URL hash, which the below function handles

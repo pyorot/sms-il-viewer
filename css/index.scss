@@ -7,6 +7,9 @@
   scrollbar-width: none;     // Firefox
 }
 
+:link    { color: var(--colLink)        }
+:visited { color: var(--colLinkVisited) }
+
 html,
 body,
 #main {
@@ -16,9 +19,9 @@ body,
 }
 
 body {
-  // background-color: brown;
 	margin: 0;
   overflow: hidden;
+  background: var(--colBody1);
 }
 
 input {
@@ -35,12 +38,10 @@ input {
 @mixin scroll   { overflow: auto; @include noscrollbar; }
 
 #main {
-  // background-color: lightcoral;
   margin: auto;
 	@include flexcol;
 
 	> #menu {
-    background-color: lightpink;
     @include fixed; height: 35px;
     @include flexrow;
 
@@ -51,9 +52,9 @@ input {
 	}
 
   > #settings {
-    background-color: lightskyblue;
     @include fixed;
     @include flexrow;
+    background: var(--colHead3);
     max-height: 0%;
     // height: 90px; line-height: 90px; align-items: center; // vertical centring
     justify-content: center; // horizontal centring
@@ -74,31 +75,29 @@ input {
   }
 
 	> #panelbottom {
-    // background-color: green;
 		@include stretchy;
     @include flexrow;
     text-align: center;
 
     > .panelleft {
-      background-color: lighten(lightgrey, 15%);
       @include fixed; width: 80px;
       @include scroll;
+      background: var(--colBody2);
     }
 
     > #panelright {
-      // background-color: orange;
       @include stretchy;
       @include flexcol;
   
       > .paneltop {
-        // background-color: indigo;
         @include fixed;
       }
       
       > #lb {
-        // background-color: violet;
         @include stretchy;
         @include scroll;
+        background: var(--colBody1); // appears when table scrolls and in table borders
+        color: var(--colText);
       }
     }
 	}
@@ -107,7 +106,8 @@ input {
     @include stretchy;
     @include scroll;
     max-height: 0%;
-    background-color: LightCyan;
+    background: var(--colBody2);
+    color: var(--colText);
     text-align: center;
     padding: 0px 5% !important;
   }

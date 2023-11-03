@@ -2,6 +2,14 @@
   display: none;
 }
 
+:link {
+  color: var(--colLink);
+}
+
+:visited {
+  color: var(--colLinkVisited);
+}
+
 html,
 body,
 #main {
@@ -13,6 +21,7 @@ body,
 body {
   margin: 0;
   overflow: hidden;
+  background: var(--colBody1);
 }
 
 input {
@@ -27,7 +36,6 @@ input {
   flex-direction: column;
 }
 #main > #menu {
-  background-color: lightpink;
   flex: 0 0 auto;
   height: 35px;
   display: flex;
@@ -48,10 +56,10 @@ input {
   flex: 4;
 }
 #main > #settings {
-  background-color: lightskyblue;
   flex: 0 0 auto;
   display: flex;
   overflow: hidden;
+  background: var(--colHead3);
   max-height: 0%;
   justify-content: center;
 }
@@ -82,12 +90,12 @@ input {
   text-align: center;
 }
 #main > #panelbottom > .panelleft {
-  background-color: #f9f9f9;
   flex: 0 0 auto;
   width: 80px;
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  background: var(--colBody2);
 }
 #main > #panelbottom > #panelright {
   flex: 1 1 auto;
@@ -103,6 +111,8 @@ input {
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  background: var(--colBody1);
+  color: var(--colText);
 }
 #main > #panelbottomoverlay {
   flex: 1 1 auto;
@@ -110,7 +120,8 @@ input {
   -ms-overflow-style: none;
   scrollbar-width: none;
   max-height: 0%;
-  background-color: LightCyan;
+  background: var(--colBody2);
+  color: var(--colText);
   text-align: center;
   padding: 0px 5% !important;
 }

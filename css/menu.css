@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 1px #0077ea;
+  border: solid 1px var(--colHead2Active);
   font-weight: bold;
   color: white;
 }
@@ -10,27 +10,27 @@
   cursor: pointer;
 }
 #menu > #menuTitle, #menu #loadStatus {
-  background: #005db7;
+  background: var(--colHead1);
 }
 #menu > #menuPages label {
   flex: 1;
-  background: DodgerBlue;
+  background: var(--colHead2);
 }
 #menu > #menuPages label:hover {
-  background: #0077ea;
+  background: var(--colHead2Active);
 }
 #menu > #menuPages input:checked + label {
-  background: #0077ea;
+  background: var(--colHead2Active);
 }
 #menu > #menuToggles label {
   flex: 1;
-  background: #005db7;
+  background: var(--colHead1);
 }
 #menu > #menuToggles label:hover {
-  background: #004384;
+  background: var(--colHead1Active);
 }
 #menu > #menuToggles input:checked + label {
-  background: #004384;
+  background: var(--colHead1Active);
 }
 
 .circle {

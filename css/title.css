@@ -1,5 +1,5 @@
 .paneltop {
-  background: linear-gradient(35deg, MediumSlateBlue, MediumTurquoise);
+  background: linear-gradient(35deg, var(--colHead1), var(--colHead3));
 }
 .paneltop > select, .paneltop > div {
   -webkit-appearance: none;
@@ -21,7 +21,7 @@
 }
 .paneltop > select option {
   color: inherit;
-  background-color: MidnightBlue;
+  background: var(--colHead1);
   font-size: 16px;
 }
 .paneltop > select:focus {

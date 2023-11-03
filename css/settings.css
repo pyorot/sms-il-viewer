@@ -9,6 +9,9 @@
   border: solid 1px;
   cursor: pointer;
 }
+#settings label:hover {
+  background: var(--colHead3Active);
+}
 #settings input:checked + label {
-  background: lightcoral;
+  background: var(--colHead3Active);
 }/*# sourceMappingURL=settings.css.map */

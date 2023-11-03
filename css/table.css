@@ -4,10 +4,10 @@ table {
 }
 
 tr:nth-child(odd) {
-  background-color: white;
+  background: var(--colBody1);
 }
 tr:nth-child(even) {
-  background-color: whitesmoke;
+  background: var(--colBody2);
 }
 
 th, td {
@@ -18,25 +18,25 @@ th.selectable, td.selectable {
   cursor: pointer;
 }
 th.selectable:hover, td.selectable:hover {
-  background: PowderBlue;
+  background: var(--colHighlight);
 }
 th.gold, td.gold {
   font-weight: bold;
-  color: #e8b600;
+  color: var(--colGold);
 }
 th.silver, td.silver {
   font-weight: bold;
-  color: #999999;
+  color: var(--colSilver);
 }
 th.bronze, td.bronze {
   font-weight: bold;
-  color: #b35c00;
+  color: var(--colBronze);
 }
 
 th {
   position: sticky;
   top: 0;
-  background-color: white;
+  background: var(--colBody1);
   z-index: 1;
 }
 
@@ -97,15 +97,15 @@ td.cell-a1 {
 }
 td.cell-a4 {
   font-weight: bold;
-  color: #e8b600;
+  color: var(--colGold);
 }
 td.cell-a5 {
   font-weight: bold;
-  color: #999999;
+  color: var(--colSilver);
 }
 td.cell-a6 {
   font-weight: bold;
-  color: #b35c00;
+  color: var(--colBronze);
 }
 td.cell-a7 {
   font-style: italic;
@@ -130,5 +130,5 @@ td.cell-p5 {
 #tableFooter {
   font-size: 90%;
   font-style: italic;
-  color: #e47f3b;
+  color: var(--colFooterText);
 }/*# sourceMappingURL=table.css.map */
