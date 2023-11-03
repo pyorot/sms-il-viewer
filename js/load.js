@@ -66,14 +66,15 @@ function toggleSettings() {
 }
 
 // toggles the colour scheme between light and dark
-function toggleColours() {
-  let ss = document.documentElement.style               // style setter
-  let sg = getComputedStyle(document.documentElement)   // style getter
+function toggleColours(override) {
+  let ss = document.documentElement.style                           // style setter
+  let sg = getComputedStyle(document.documentElement)               // style getter
   let oldTheme = sg.getPropertyValue("--colBody1") == sg.getPropertyValue("--colBody1Dark") ? "Dark" : "Light"
-  let newTheme = oldTheme == "Dark" ? "Light" : "Dark"  // swap theme
+  let newTheme = override ?? (oldTheme == "Dark" ? "Light" : "Dark")  // swap theme if not overridden
   let props = ["Body1", "Body2", "Body2Active", "Text", "Link", "LinkVisited", "Highlight",
     "Head1", "Head1Active", "Head2", "Head2Active", "Head3", "Head3Active"]
   for (let prop of props) { ss.setProperty("--col"+prop, sg.getPropertyValue("--col"+prop+newTheme)) }
+  localStorage.setItem("theme", newTheme)
 }
 
 // utility to generate JS commands that navigate to a given leaderboard
@@ -100,6 +101,9 @@ function loadBodyfromHash() {
 
 // script that runs on webpage load
 (async() => {
+  // set styles
+  toggleColours(localStorage.getItem("theme") ?? "Dark")
+
   // load data
   await loadData()        // blocking data load
   annotateData()          // convert data into useful (and final) form
