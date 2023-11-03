@@ -19,6 +19,8 @@ body,
 }
 
 body {
+  position: fixed; // prevents body from sliding around viewport when navLevel expands
+  width: 100%;
 	margin: 0;
   overflow: hidden;
   background: var(--colBody1);
