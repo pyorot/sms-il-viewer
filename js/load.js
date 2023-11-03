@@ -20,10 +20,10 @@ function generateHashes() {
   }
 }
 
-// binds deselect routine to all radio button sets
+// binds deselect routine to rd radio button set
 // see https://stackoverflow.com/a/27476660/6149041
 function bindRadioDeselection() {
-  $("input:radio").on("click", function (e) {
+  $("input:radio[name='rd']").on("click", function (e) {
     let inp = $(this) // cache the selector
     if (inp.is(".theone")) { // if it has the "selected" class
       inp.prop("checked",false).removeClass("theone") // deselect it
@@ -45,32 +45,29 @@ function loadMenu() {
   $("#menuPages"   ).css("display", "flex")
   $("#menuToggles" ).css("display", "flex")
   // set panel visibility based on states of toggle controls
-  let helpActive = $('#check-help').is(':checked')
-  $("#panelbottom").css("max-height", helpActive ? "0%" : "none")
-  $("#panelbottomoverlay").css("max-height", helpActive ? "none" : "0%")
-  let settingsActive = $('#check-settings').is(':checked')
-  $("#settings").css("max-height", settingsActive ? "none" : "0%")
+  toggleHelp    ($('#check-help')    .is(':checked'))
+  toggleSettings($('#check-settings').is(':checked'))
 }
 
 // toggles the help panel (full height) (bound to click toggle)
-function toggleHelp() {
-  let active = $("#panelbottomoverlay").css("max-height") == "none"
-  $("#panelbottom")       .css("max-height", active ? "none" : "0%")
-  $("#panelbottomoverlay").css("max-height", active ? "0%" : "none")
+function toggleHelp(override) {
+  let newState = override ?? ($("#panelbottomoverlay").css("max-height") == "0%") // swap setting if not overridden
+  $("#panelbottom")       .css("max-height", newState ? "0%" : "none")
+  $("#panelbottomoverlay").css("max-height", newState ? "none" : "0%")
 }
 
 // toggles the settings panel (fixed height) (bound to click toggle)
-function toggleSettings() {
-  let active = $("#settings").css("max-height") == "none"
-  $("#settings").css("max-height", active ? "0%" : "none")
+function toggleSettings(override) {
+  let newState = override ?? ($("#settings").css("max-height") == "0%") // swap setting if not overridden
+  $("#settings").css("max-height", newState ? "none" : "0%")
 }
 
 // toggles the colour scheme between light and dark
-function toggleColours(override) {
-  let ss = document.documentElement.style                           // style setter
-  let sg = getComputedStyle(document.documentElement)               // style getter
+function toggleTheme(override) {
+  let ss = document.documentElement.style                             // style setter
+  let sg = getComputedStyle(document.documentElement)                 // style getter
   let oldTheme = sg.getPropertyValue("--colBody1") == sg.getPropertyValue("--colBody1Dark") ? "Dark" : "Light"
-  let newTheme = override ?? (oldTheme == "Dark" ? "Light" : "Dark")  // swap theme if not overridden
+  let newTheme = override ?? (oldTheme == "Dark" ? "Light" : "Dark")  // swap setting if not overridden
   let props = ["Body1", "Body2", "Body2Active", "Text", "Link", "LinkVisited", "Highlight",
     "Head1", "Head1Active", "Head2", "Head2Active", "Head3", "Head3Active"]
   for (let prop of props) { ss.setProperty("--col"+prop, sg.getPropertyValue("--col"+prop+newTheme)) }
@@ -93,16 +90,18 @@ function loadBodyfromHash() {
   let target = location.hash.substring(1).toLowerCase()
   console.log("target hash:", target)
   document.title = "SMS IL Tracker Viewer | " + target
-  if (target in indices.l) { Page.active = "l"; return     pageLevel.loadTable(indices.l[target]) }
-  if (target in indices.p) { Page.active = "p"; return    pagePlayer.loadTable(indices.p[target]) }
-  if (target in indices.a) { Page.active = "a"; return pageAggregate.loadTable(indices.a[target]) }
-  location.hash = "total" // else, retrigger this function with default hash
+  if      (target in indices.l) { Page.active = "l";     pageLevel.loadTable(indices.l[target]) }
+  else if (target in indices.p) { Page.active = "p";    pagePlayer.loadTable(indices.p[target]) }
+  else if (target in indices.a) { Page.active = "a"; pageAggregate.loadTable(indices.a[target]) }
+  else { location.hash = "total"; return } // else, retrigger this function with default hash
+  // sync active-page state with radio buttons
+  $("#radioPages-"+Page.active).prop("checked", true) // set value in navigation bar
 }
 
 // script that runs on webpage load
 (async() => {
   // set styles
-  toggleColours(localStorage.getItem("theme") ?? "Dark")
+  toggleTheme(localStorage.getItem("theme") ?? "Dark")
 
   // load data
   await loadData()        // blocking data load

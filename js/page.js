@@ -75,5 +75,7 @@ function loadPages() {
     loadNav: navPlayer,
     table: tablePlayer,
   })
-  Page.scoring = $('input[name="radioScoring"]:checked').val() ?? "p"
+  // sync scoring state with radio buttons
+  Page.scoring = $('input[name="radioScoring"]:checked').val() ?? "p" // get value from settings
+  $("#radioScoring-"+Page.scoring).prop("checked", true)              // set value in settings
 }
