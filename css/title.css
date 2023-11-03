@@ -16,7 +16,7 @@
   color: white;
 }
 .paneltop > select {
-  background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg) no-repeat right 0.3em center/1.4em, linear-gradient(to left, rgba(255, 255, 255, 0.3) 2em, rgba(255, 255, 255, 0.2) 2em);
+  background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg) no-repeat right 0.3em center/1.4em, linear-gradient(to left, rgba(255, 255, 255, 0.2) 2em, rgba(255, 255, 255, 0) 2em);
   cursor: pointer;
 }
 .paneltop > select option {

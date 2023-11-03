@@ -1,5 +1,5 @@
+$clear: rgba(255, 255, 255, 0);
 $glass: rgba(255, 255, 255, 0.2);
-$glass-icon: rgba(255, 255, 255, 0.3);
 
 .paneltop {
   background: linear-gradient(35deg, var(--colHead1), var(--colHead3));
@@ -22,7 +22,7 @@ $glass-icon: rgba(255, 255, 255, 0.3);
   > select {
     background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg)
       no-repeat right 0.3em center / 1.4em,
-      linear-gradient(to left, $glass-icon 2em, $glass 2em);
+      linear-gradient(to left, $glass 2em, $clear 2em);
     cursor: pointer;
     option { // <option> colours
       color: inherit;

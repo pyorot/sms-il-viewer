@@ -55,7 +55,7 @@ function loadPages() {
   })
   pageLevel = new Page({
     name: "level",
-    dataIndex: Math.floor(Math.random()*data.levels.names.length), // random level
+    dataIndex: Object.keys(hashes.l)[Math.floor(Math.random()*Object.keys(hashes.l).length)], // random valid level
     sortIndex: 0, // default to rank sort (the only sort)
     sortMethods: {
       0: (x,y) => {return x.rank - y.rank}, // rank sort

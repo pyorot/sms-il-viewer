@@ -11,8 +11,8 @@ function generateHashes() {
   for (let [p_, player] of data.players.names.entries()) {
     hashes.p[p_] = enc(player);    indices.p[enc(player)] = p_
   }
-  hashes.l = data.levels.codes
   for (let [l_, level] of data.levels.codes.entries()) {
+    if (level == "") { continue } // skips dividers
     hashes.l[l_] = enc(level);     indices.l[enc(level)] = l_
   }
   for (let s_ of Object.keys(aggregates)) {
@@ -38,8 +38,8 @@ function bindRadioDeselection() {
 function loadMenu() {
   // bind menu buttons
   $("#radioPages-a + label").attr("onclick", go('a', 'pageAggregate.dataIndex'))
-  $("#radioPages-l + label").attr("onclick", go('l', 'pageLevel.dataIndex'    ))
-  $("#radioPages-p + label").attr("onclick", go('p', 'pagePlayer.dataIndex'   ))
+  $("#radioPages-l + label").attr("onclick", go('l',     'pageLevel.dataIndex'))
+  $("#radioPages-p + label").attr("onclick", go('p',    'pagePlayer.dataIndex'))
   // load menu bar
   $("#loadStatus"  ).css("display", "none")
   $("#menuPages"   ).css("display", "flex")
@@ -90,13 +90,12 @@ function setScoring(scoring) {
 // event handler bound to URL hash change; runs loadTable method of relevant page
 function loadBodyfromHash() {
   let target = location.hash.substring(1).toLowerCase()
-  document.title = "SMS IL Tracker Viewer"
-  if (!target) { return pageAggregate.loadTable("Total") }
-  document.title += " | " + target
-  if (target in indices.l) { Page.active = "l"; return pageLevel.loadTable(indices.l[target]) }
-  if (target in indices.p) { Page.active = "p"; return pagePlayer.loadTable(indices.p[target]) }
+  console.log("target hash:", target)
+  document.title = "SMS IL Tracker Viewer | " + target
+  if (target in indices.l) { Page.active = "l"; return     pageLevel.loadTable(indices.l[target]) }
+  if (target in indices.p) { Page.active = "p"; return    pagePlayer.loadTable(indices.p[target]) }
   if (target in indices.a) { Page.active = "a"; return pageAggregate.loadTable(indices.a[target]) }
-  return pageAggregate.loadTable("Total")
+  location.hash = "total" // else, retrigger this function with default hash
 }
 
 // script that runs on webpage load
