@@ -6,7 +6,7 @@
 function tableFooterHTML(tableWidth) {
   // colspans that are larger than the table width cause extra scrollable whitespace on Gecko only
   return `<tr><td colspan="${tableWidth}" id="tableFooter">
-    this app was made by shoutplenty (<a href='https://github.com/pyorot/sms-il-viewer'>v1.2</a>)
+    this app was made by <a href='https://shoutplenty.netlify.app/sms'>shoutplenty</a> (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: <a href='https://gogopenguin.bandcamp.com/track/murmuration-2'>v2.0</a>)
   </td></tr>`
 }
 function tooltipHTML(note) {
