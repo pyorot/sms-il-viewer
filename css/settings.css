@@ -6,7 +6,7 @@
   padding: 10px 5px;
 }
 #settings label {
-  border: solid 1px;
+  border: solid 1px var(--colHead2);
   cursor: pointer;
 }
 #settings label:hover {

@@ -28,7 +28,7 @@ body {
 
 input {
   position: absolute;
-  opacity: 0; // hides radio button/checkbox icons
+  display: none; // removes radio button/checkbox elements
 }
 
 // the flex setup:
