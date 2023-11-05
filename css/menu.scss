@@ -3,12 +3,14 @@
     display: flex;
     justify-content: center; // horizontal centring
     align-items: center;     // vertical centring
-    border: solid 1px var(--colHead2Active);
     font-weight: bold;
     color: white;
   }
   label {
     cursor: pointer;
+  }
+  input + label { // set interior borders between buttons only
+    border-left: solid 1px var(--colHead2Active);
   }
 
   > #menuTitle, #loadStatus {

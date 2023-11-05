@@ -69,21 +69,25 @@ function toggleTheme(override) {
   let oldTheme = sg.getPropertyValue("--colBody1") == sg.getPropertyValue("--colBody1Dark") ? "Dark" : "Light"
   let newTheme = override ?? (oldTheme == "Dark" ? "Light" : "Dark")  // swap setting if not overridden
   let props = ["Body1", "Body2", "Body2Active", "Text", "Link", "LinkVisited", "Highlight",
-    "Head1", "Head1Active", "Head2", "Head2Active", "Head3", "Head3Active"]
+    "Head1", "Head1Active", "Head2", "Head2Active", "Head3"]
   for (let prop of props) { ss.setProperty("--col"+prop, sg.getPropertyValue("--col"+prop+newTheme)) }
+  $('meta[name=theme-color]').attr("content", newTheme == "Dark" ? sg.getPropertyValue("--colHead1Dark") : sg.getPropertyValue("--colHead1Light")) // colours top of screen on iPhone
   localStorage.setItem("theme", newTheme)
+}
+
+// updates scoring setting and triggers table refresh if needed
+function toggleScoring(scoring) {
+  Page.scoring = scoring
+  if (Page.active == "a") { $("#lb").html(pageAggregate.table()) } // refresh table
+  // sync scoring state with radio buttons and persisted state
+  $("#radioScoring-"+Page.scoring).prop("checked", true) // set value in settings bar
+  localStorage.setItem("scoring", scoring)
 }
 
 // utility to generate JS commands that navigate to a given leaderboard
 // all navigation between leaderboards is done by running this command
 // which sets the URL hash, which the below function handles
 function go(endpoint, index) { return `location.hash=hashes.${endpoint}[${index}]`}
-
-// updates scoring setting and triggers table refresh if needed
-function setScoring(scoring) {
-  Page.scoring = scoring
-  if (Page.active == "a") { $("#lb").html(pageAggregate.table()) } // refresh current table
-}
 
 // event handler bound to URL hash change; runs loadTable method of relevant page
 function loadBodyfromHash() {
@@ -100,7 +104,7 @@ function loadBodyfromHash() {
 
 // script that runs on webpage load
 (async() => {
-  // set styles
+  // load persistent theme
   toggleTheme(localStorage.getItem("theme") ?? "Dark")
 
   // load data
@@ -116,4 +120,6 @@ function loadBodyfromHash() {
   bindRadioDeselection()  // binds a UI control
   loadBodyfromHash()      // runs initial navigation (from initial URL)
   window.addEventListener("hashchange", loadBodyfromHash) // binds navigation method
+  toggleScoring(localStorage.getItem("scoring") ?? "p")   // loads other persistent settings
+  // document.addEventListener('touchmove', event => event.scale !== 1 && event.preventDefault(), { passive: false }) // to disable zooming
 })()

@@ -2,12 +2,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 1px var(--colHead2Active);
   font-weight: bold;
   color: white;
 }
 #menu label {
   cursor: pointer;
+}
+#menu input + label {
+  border-left: solid 1px var(--colHead2Active);
 }
 #menu > #menuTitle, #menu #loadStatus {
   background: var(--colHead1);

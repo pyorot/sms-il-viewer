@@ -5,11 +5,12 @@
     justify-content: center; // horizontal centring
     align-items: center;     // vertical centring
     padding: 10px 5px;
+    color: white;
   }
   label {
     border: solid 1px var(--colHead2);
     cursor: pointer;
-    &:hover { background: var(--colHead3Active) };
+    &:hover { background: var(--colHead1) };
   }
-  input:checked + label { background: var(--colHead3Active) };
+  input:checked + label { background: var(--colHead1) };
 }

@@ -6,13 +6,12 @@
   --colText:          white;
   --colLink:          #80d9ff;
   --colLinkVisited:   #c58af9;
-  --colHighlight:     lightcoral;
+  --colHighlight:     #a94747;
   --colHead1:         #{darken(firebrick, 15%)};
   --colHead1Active:   #{darken(firebrick, 25%)};
   --colHead2:         firebrick;
   --colHead2Active:   #{darken(firebrick, 7.5%)};
   --colHead3:         #{lighten(firebrick, 20%)};
-  --colHead3Active:   #{lighten(firebrick, 10%)};
 
   // light mode (set by toggleTheme)
   --colBody1Light:        white;
@@ -27,7 +26,6 @@
   --colHead2Light:        dodgerblue;
   --colHead2ActiveLight:  #{darken(dodgerblue, 7.5%)};
   --colHead3Light:        #{lighten(dodgerblue, 20%)};
-  --colHead3ActiveLight:  #{lighten(dodgerblue, 10%)};
 
   // dark mode (set by toggleTheme)
   --colBody1Dark:         black;
@@ -36,13 +34,12 @@
   --colTextDark:          white;
   --colLinkDark:          #80d9ff;
   --colLinkVisitedDark:   #c58af9;
-  --colHighlightDark:     lightcoral;
+  --colHighlightDark:     #a94747;
   --colHead1Dark:         #{darken(firebrick, 15%)};
   --colHead1ActiveDark:   #{darken(firebrick, 25%)};
   --colHead2Dark:         firebrick;
   --colHead2ActiveDark:   #{darken(firebrick, 7.5%)};
   --colHead3Dark:         #{lighten(firebrick, 20%)};
-  --colHead3ActiveDark:   #{lighten(firebrick, 10%)};
 
   // universal colours
   --colGold:              #e8b600;

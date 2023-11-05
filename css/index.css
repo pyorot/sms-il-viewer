@@ -61,7 +61,7 @@ input {
   flex: 0 0 auto;
   display: flex;
   overflow: hidden;
-  background: var(--colHead3);
+  background: var(--colHead1Active);
   max-height: 0%;
   justify-content: center;
 }

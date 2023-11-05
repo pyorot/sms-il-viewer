@@ -56,7 +56,7 @@ input {
   > #settings {
     @include fixed;
     @include flexrow;
-    background: var(--colHead3);
+    background: var(--colHead1Active);
     max-height: 0%;
     // height: 90px; line-height: 90px; align-items: center; // vertical centring
     justify-content: center; // horizontal centring
