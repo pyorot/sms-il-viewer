@@ -12,7 +12,8 @@ th, td {
   padding: 0px;
   &.selectable {
     cursor: pointer;
-    &:hover { background: var(--colHighlight) }
+    @media (hover: hover) { &:hover  { background: var(--colHighlight) } }
+    @media (hover: none ) { &:active { background: var(--colHighlight) } }
   }
   &.gold   { font-weight: bold; color: var(--colGold)   }
   &.silver { font-weight: bold; color: var(--colSilver) }

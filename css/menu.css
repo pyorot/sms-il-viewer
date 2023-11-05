@@ -18,8 +18,15 @@
   flex: 1;
   background: var(--colHead2);
 }
-#menu > #menuPages label:hover {
-  background: var(--colHead2Active);
+@media (hover: hover) {
+  #menu > #menuPages label:hover {
+    background: var(--colHead2Active);
+  }
+}
+@media (hover: none) {
+  #menu > #menuPages label:active {
+    background: var(--colHead2Active);
+  }
 }
 #menu > #menuPages input:checked + label {
   background: var(--colHead2Active);
@@ -28,8 +35,15 @@
   flex: 1;
   background: var(--colHead1);
 }
-#menu > #menuToggles label:hover {
-  background: var(--colHead1Active);
+@media (hover: hover) {
+  #menu > #menuToggles label:hover {
+    background: var(--colHead1Active);
+  }
+}
+@media (hover: none) {
+  #menu > #menuToggles label:active {
+    background: var(--colHead1Active);
+  }
 }
 #menu > #menuToggles input:checked + label {
   background: var(--colHead1Active);

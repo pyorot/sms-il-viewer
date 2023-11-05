@@ -12,7 +12,8 @@ $animation: 0.5s;
       justify-content: space-between;
       padding: 6px;
       cursor: pointer;
-      &:hover { filter: saturate(200%) }
+      @media (hover: hover) { &:hover  { filter: saturate(200%) } }
+      @media (hover: none ) { &:active { filter: saturate(200%) } }
       &::after { content: "\276F"; transition: all $animation } // icon
     }
     &-content { max-height: 0; transition: all $animation }
@@ -24,7 +25,8 @@ $animation: 0.5s;
     height: 28px;
     font-size: 14px;
     cursor: pointer;
-    &:hover { background: var(--colBody2Active) }
+    @media (hover: hover) { &:hover  { background: var(--colBody2Active) } }
+    @media (hover: none ) { &:active { background: var(--colBody2Active) } }
   }
   & input:checked ~ .tab { // checked state; selects next tab elements
     &-label {

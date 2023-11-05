@@ -17,8 +17,15 @@ th, td {
 th.selectable, td.selectable {
   cursor: pointer;
 }
-th.selectable:hover, td.selectable:hover {
-  background: var(--colHighlight);
+@media (hover: hover) {
+  th.selectable:hover, td.selectable:hover {
+    background: var(--colHighlight);
+  }
+}
+@media (hover: none) {
+  th.selectable:active, td.selectable:active {
+    background: var(--colHighlight);
+  }
 }
 th.gold, td.gold {
   font-weight: bold;

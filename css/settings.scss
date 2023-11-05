@@ -10,7 +10,8 @@
   label {
     border: solid 1px var(--colHead2);
     cursor: pointer;
-    &:hover { background: var(--colHead1) };
+    @media (hover: hover) { &:hover  { background: var(--colHead1) } }
+    @media (hover: none ) { &:active { background: var(--colHead1) } }
   }
   input:checked + label { background: var(--colHead1) };
 }

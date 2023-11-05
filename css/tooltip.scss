@@ -36,6 +36,7 @@
   }
 
   &:hover .tooltipbox, &:active .tooltipbox {
+    // opted against @media (hover) cases so that tooltip can be copied on mobile
     visibility: visible;
     opacity: 1;
   }

@@ -21,7 +21,8 @@
     label {
       flex: 1;
       background: var(--colHead2);
-      &:hover { background: var(--colHead2Active) }
+      @media (hover: hover) { &:hover  { background: var(--colHead2Active) } }
+      @media (hover: none ) { &:active { background: var(--colHead2Active) } }
     }
     input:checked + label { background: var(--colHead2Active) }
   }
@@ -30,7 +31,8 @@
     label {
       flex: 1;
       background: var(--colHead1);
-      &:hover { background: var(--colHead1Active) }
+      @media (hover: hover) { &:hover  { background: var(--colHead1Active) } }
+      @media (hover: none ) { &:active { background: var(--colHead1Active) } }
     }
     input:checked + label { background: var(--colHead1Active) }
   }

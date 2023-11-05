@@ -10,8 +10,15 @@
   border: solid 1px var(--colHead2);
   cursor: pointer;
 }
-#settings label:hover {
-  background: var(--colHead1);
+@media (hover: hover) {
+  #settings label:hover {
+    background: var(--colHead1);
+  }
+}
+@media (hover: none) {
+  #settings label:active {
+    background: var(--colHead1);
+  }
 }
 #settings input:checked + label {
   background: var(--colHead1);

@@ -10,8 +10,15 @@
   padding: 6px;
   cursor: pointer;
 }
-.panelleft .tab-label:hover {
-  filter: saturate(200%);
+@media (hover: hover) {
+  .panelleft .tab-label:hover {
+    filter: saturate(200%);
+  }
+}
+@media (hover: none) {
+  .panelleft .tab-label:active {
+    filter: saturate(200%);
+  }
 }
 .panelleft .tab-label::after {
   content: "❯";
@@ -29,8 +36,15 @@
   font-size: 14px;
   cursor: pointer;
 }
-.panelleft button:hover {
-  background: var(--colBody2Active);
+@media (hover: hover) {
+  .panelleft button:hover {
+    background: var(--colBody2Active);
+  }
+}
+@media (hover: none) {
+  .panelleft button:active {
+    background: var(--colBody2Active);
+  }
 }
 .panelleft input:checked ~ .tab-label {
   filter: saturate(200%);
