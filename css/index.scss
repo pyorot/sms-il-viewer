@@ -55,23 +55,24 @@ input {
 
   > #settings {
     @include fixed;
-    @include flexrow;
+    @include flexcol;
     background: var(--colHead1Active);
     max-height: 0%;
     // height: 90px; line-height: 90px; align-items: center; // vertical centring
-    justify-content: center; // horizontal centring
-    > .settingsCol {
-      @include fixed; width: 50%;
-      @include flexcol;
-      box-sizing: border-box;
-      padding: 5px;
+    justify-content: center; // horizontal centring  
+    > .settingsRow {
+      @include fixed;
+      @include flexrow;
       
-      > .settingsRow {
+      > .settingsBlock {
         @include stretchy;
         @include flexrow;
-
-        > .settingsLabel { flex: 2 }
-        > label { flex: 1 }
+        padding: 5px;
+        &#blockScoring { flex: 2   }
+        &#blockSep     { flex: 0.05 }
+        &#blockTheme   { flex: 1   }
+        > .settingsLabel { flex: 1; padding: 10px 8px }
+        > label          { flex: 1; padding: 10px 5px }
       }
     }
   }
