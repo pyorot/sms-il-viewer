@@ -75,7 +75,7 @@ input {
   flex: 1 1 auto;
   display: flex;
   overflow: hidden;
-  padding: 5px;
+  padding: 4px;
 }
 #main > #settings > .settingsRow > .settingsBlock#blockScoring {
   flex: 2;
@@ -88,11 +88,11 @@ input {
 }
 #main > #settings > .settingsRow > .settingsBlock > .settingsLabel {
   flex: 1;
-  padding: 10px 8px;
+  padding: 8px;
 }
 #main > #settings > .settingsRow > .settingsBlock > label {
   flex: 1;
-  padding: 10px 5px;
+  padding: 8px 5px;
 }
 #main > #panelbottom {
   flex: 1 1 auto;
@@ -102,7 +102,7 @@ input {
 }
 #main > #panelbottom > .panelleft {
   flex: 0 0 auto;
-  width: 80px;
+  width: 75px;
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -135,10 +135,10 @@ input {
   background: var(--colBody2);
   color: var(--colText);
   text-align: center;
-  padding: 0px 5% !important;
+  padding: 0px 3% !important;
 }
 
-@media screen and (min-width: 600px) {
+@media (width > 600px) {
   #main {
     width: 600px;
   }

@@ -67,12 +67,12 @@ input {
       > .settingsBlock {
         @include stretchy;
         @include flexrow;
-        padding: 5px;
+        padding: 4px;
         &#blockScoring { flex: 2   }
         &#blockSep     { flex: 0.05 }
         &#blockTheme   { flex: 1   }
-        > .settingsLabel { flex: 1; padding: 10px 8px }
-        > label          { flex: 1; padding: 10px 5px }
+        > .settingsLabel { flex: 1; padding: 8px }
+        > label          { flex: 1; padding: 8px 5px }
       }
     }
   }
@@ -83,7 +83,7 @@ input {
     text-align: center;
 
     > .panelleft {
-      @include fixed; width: 80px;
+      @include fixed; width: 75px;
       @include scroll;
       background: var(--colBody2);
       display: none;
@@ -113,12 +113,10 @@ input {
     background: var(--colBody2);
     color: var(--colText);
     text-align: center;
-    padding: 0px 5% !important;
+    padding: 0px 3% !important;
   }
 }
 
-@media screen and (min-width: 600px) {
-  #main {
-    width: 600px;
-  }
+@media (width > 600px) {
+  #main { width: 600px }
 }

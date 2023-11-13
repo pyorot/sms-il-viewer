@@ -73,3 +73,11 @@ td {
   font-style: italic;
   color: var(--colFooterText);
 }
+
+@media (width < 390px) { // reduce table body font sizes by 10%-pts
+  th, td {
+    font-size: 90%;
+    &.cell-a7, &.cell-a8, &.cell-l4 { font-size: 80% }
+  }
+  #tableFooter { font-size: 80% }
+}

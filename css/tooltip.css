@@ -4,18 +4,18 @@
 }
 .tooltip .tooltipbox {
   visibility: hidden;
-  width: 300px;
+  width: 278px;
   background: #555;
   color: #fff;
   font-size: 14px;
   text-align: center;
   border-radius: 6px;
-  padding: 5px;
+  padding: 5px 2px;
   position: absolute;
   z-index: 10;
   bottom: 125%;
   left: 50%;
-  margin-left: -290px;
+  margin-left: -261px;
   opacity: 0;
   transition: opacity 0.3s;
   -webkit-user-select: all;
