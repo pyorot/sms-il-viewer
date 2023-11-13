@@ -36,6 +36,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.tooltip .tooltipbox.flip {
+  bottom: auto;
+  top: 125%;
+}
+.tooltip .tooltipbox.flip::after {
+  top: auto;
+  bottom: 100%;
+  border-color: transparent transparent #555 transparent;
+}
 .tooltip:hover .tooltipbox, .tooltip:active .tooltipbox {
   visibility: visible;
   opacity: 1;

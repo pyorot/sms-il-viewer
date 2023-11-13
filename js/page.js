@@ -23,10 +23,22 @@ class Page {
     $(".nav").css("display", "none")                // hide all nav, then
     $(`.${this.name}`).css("display", "block")      // show relevant nav
     $("#lb").html(this.table())                     // load table
+    Page.orientTooltips()
   }
   sortTable(sortIndex_) {
     this.sortIndex = sortIndex_                     // update own state
     $("#lb").html(this.table())                     // load table
+    Page.orientTooltips()
+  }
+  // since this basic css feature (anchor positioning) is apparently still missing
+  // in 2023, we need to run this routine after every table load to flip the tooltips
+  // that would overflow off the top of the table so that they render below their icon
+  static orientTooltips() {
+    let yBase = $("table")[0].getBoundingClientRect().y // absolute y-coord of table
+    for (let tooltipbox of $(".tooltipbox")) {
+      let y = tooltipbox.getBoundingClientRect().y // absolute y-coord of tooltip top
+      if (y < yBase) { tooltipbox.classList.add("flip") }
+    }
   }
 }
 

@@ -33,6 +33,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    &.flip { // downward facing tooltip (overrides the above)
+      bottom: auto; top: 125%;
+      &::after {
+        top: auto; bottom: 100%;
+        border-color: transparent transparent #555 transparent;
+      }
+    }    
   }
 
   &:hover .tooltipbox, &:active .tooltipbox {
@@ -41,4 +49,3 @@
     opacity: 1;
   }
 }
-
