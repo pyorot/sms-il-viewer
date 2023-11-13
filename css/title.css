@@ -12,7 +12,7 @@
   height: 100%;
   text-align: center;
   padding: 5px;
-  font-size: 24px;
+  font-size: 1.5rem;
   color: white;
 }
 .paneltop > select {
@@ -22,7 +22,7 @@
 .paneltop > select option {
   color: inherit;
   background: var(--colHead1);
-  font-size: 16px;
+  font-size: 1rem;
 }
 .paneltop > select:focus {
   outline: none;

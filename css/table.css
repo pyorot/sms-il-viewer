@@ -138,16 +138,4 @@ td.cell-p5 {
   font-size: 90%;
   font-style: italic;
   color: var(--colFooterText);
-}
-
-@media (width < 390px) {
-  th, td {
-    font-size: 90%;
-  }
-  th.cell-a7, th.cell-a8, th.cell-l4, td.cell-a7, td.cell-a8, td.cell-l4 {
-    font-size: 80%;
-  }
-  #tableFooter {
-    font-size: 80%;
-  }
 }/*# sourceMappingURL=table.css.map */

@@ -15,7 +15,6 @@ body,
 #main {
 	height: 100%;
   font-family: Tahoma;
-  font-size: 16px;
 }
 
 body {
@@ -83,7 +82,7 @@ input {
     text-align: center;
 
     > .panelleft {
-      @include fixed; width: 75px;
+      @include fixed; width: 80px;
       @include scroll;
       background: var(--colBody2);
       display: none;
@@ -119,4 +118,8 @@ input {
 
 @media (width > 600px) {
   #main { width: 600px }
+}
+@media (width < 390px) {
+  html { font-size: 14px } // sets rem to 14px
+  .panelleft { max-width: 70px }
 }
