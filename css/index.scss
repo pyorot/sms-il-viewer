@@ -86,6 +86,7 @@ input {
       @include fixed; width: 80px;
       @include scroll;
       background: var(--colBody2);
+      display: none;
     }
 
     > #panelright {

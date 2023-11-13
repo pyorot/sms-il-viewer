@@ -10,6 +10,7 @@ function tableFooterHTML(tableWidth) {
   </td></tr>`
 }
 function tooltipHTML(note) {
+  note = note.replace(/\n/g, "<br>").replace(/(https?\:\/\/\S+)/g, `<a href="$1">$1</a>`) // render newlines and hyperlinks
   return `<div class="tooltip">📝<div class="tooltipbox"><div class="tooltiptext">${note}</div></div></div>`
 }
 

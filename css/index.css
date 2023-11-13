@@ -107,6 +107,7 @@ input {
   -ms-overflow-style: none;
   scrollbar-width: none;
   background: var(--colBody2);
+  display: none;
 }
 #main > #panelbottom > #panelright {
   flex: 1 1 auto;
