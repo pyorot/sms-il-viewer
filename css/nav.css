@@ -3,6 +3,9 @@
   width: 100%;
   color: white;
   overflow: hidden;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 .panelleft .tab-label {
   display: flex;
