@@ -9,6 +9,7 @@
 
 :link    { color: var(--colLink)        }
 :visited { color: var(--colLinkVisited) }
+code     { font-size: 1rem } // why is this sometimes smaller by default?
 
 html,
 body,

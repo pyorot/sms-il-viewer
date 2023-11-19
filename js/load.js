@@ -114,6 +114,7 @@ function loadBodyfromHash() {
   console.log(data)
 
   // load website
+  $("#helpHTML").html(data.levels.helpHTML)
   loadMenu()
   loadPages()             // creates Page objects (representing tabs in main menu)
   bindRadioDeselection()  // binds a UI control
