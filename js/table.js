@@ -51,10 +51,12 @@ function tableAggregate() {
     for (let l_ of levelIDs) {
       // x is the main entry; y the isotope entry where applicable (assumed to have index l_+1)
       let x = data.body[l_][p_]
-      let y = data.levels.isotopes[data.levels.codes[l_]] ? data.body[l_+1][p_] : {points: null, rank: null}
+      let xCode = data.levels.codes[l_]
+      let y = data.levels.isotopes[xCode] ? data.body[l_+1][p_] : {points: null, rank: null}
+      let yCode = data.levels.isotopes[xCode] ? data.levels.codes[l_+1] : undefined
       // entries = highest entry count of all isotopes
       x.entries = data.levels.entries[l_]
-      y.entries = data.levels.isotopes[data.levels.codes[l_]] ? data.levels.entries[l_+1] : null
+      y.entries = data.levels.isotopes[xCode] ? data.levels.entries[l_+1] : null
       table[p_].entries += Math.max(x.entries, y.entries ?? 0)
       // points, submissions, videos
       if (x.time || y.time) { table[p_].n[0]++ }
@@ -67,7 +69,8 @@ function tableAggregate() {
       table[p_].l1 += rankPenalty
       table[p_].linf = Math.max(table[p_].linf, rankPenalty)
       // medals treat the isotopes as separate levels
-      for (let r of [x.rank, y.rank]) { if ([1,2,3].includes(r)) { table[p_].medals[r-1]++ } }
+      if ([1,2,3].includes(x.rank) && !data.levels.medalless.includes(xCode)) {table[p_].medals[x.rank-1]++}
+      if ([1,2,3].includes(y.rank) && !data.levels.medalless.includes(yCode)) {table[p_].medals[y.rank-1]++}
     }
     // score is the statistic that will be displayed
     table[p_].score = {
