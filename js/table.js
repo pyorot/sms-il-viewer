@@ -17,9 +17,10 @@ function tooltipHTML(note) {
 // generates table html; depends on class properties:
 // this.dataIndex, this.sortIndex, Page.scoring
 function tableAggregate() {
-  // isotopes complicate the design of this algorithm
+  // aggregates are sets of levels by which the leaderboard viewer can be filtered
+  // isotopes (pairs for which only the better is counted for points/ranks) complicate the design of this algorithm
   // they are handled simultaneously, so are not listed separately in levelIDs
-  let levelIDs = levelListToIDs(aggregates[this.dataIndex])
+  let levelIDs = levelListToIDs(data.levels.aggregates[this.dataIndex])
   let scoringName = {"p": "points", "ppct": "pts %", "l1": "ℓ<sub>1</sub>", "linf": "ℓ<sub>∞</sub>"}[Page.scoring]
   let html = `<table><tr>
       <th class="cell-a1">#</th>
@@ -50,10 +51,10 @@ function tableAggregate() {
     for (let l_ of levelIDs) {
       // x is the main entry; y the isotope entry where applicable (assumed to have index l_+1)
       let x = data.body[l_][p_]
-      let y = isotopes[data.levels.codes[l_]] ? data.body[l_+1][p_] : {points: null, rank: null}
+      let y = data.levels.isotopes[data.levels.codes[l_]] ? data.body[l_+1][p_] : {points: null, rank: null}
       // entries = highest entry count of all isotopes
       x.entries = data.levels.entries[l_]
-      y.entries = isotopes[data.levels.codes[l_]] ? data.levels.entries[l_+1] : null
+      y.entries = data.levels.isotopes[data.levels.codes[l_]] ? data.levels.entries[l_+1] : null
       table[p_].entries += Math.max(x.entries, y.entries ?? 0)
       // points, submissions, videos
       if (x.time || y.time) { table[p_].n[0]++ }

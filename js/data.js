@@ -1,9 +1,6 @@
 // 1. DATA LOADING
 
-var data              // data from the API is loaded, processed and stored here
-var aggregates = {}   // groups of levels for the overall (aggregate) leaderboards
-var isotopes = {}     // pairs of levels for which only the better is counted for points/ranks
-
+var data      // data from the API is loaded, processed and stored here
 var dataUrl = "https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec"
 // dataUrl = "../data.json" // enable this for debugging
 
@@ -51,44 +48,15 @@ function annotateData() {
   }
 }
 
-// aggregates are specified here
-function generateAggregates() {
-  let c = [...data.levels.codes] // copy of full code list
-  isotopes = { "peyg": "peygj", "s6": "s6j" } // { first: second }
-  for (let iso in isotopes) { c.splice(c.indexOf(iso)+1,1) } // removes all second isotopes from c
-  aggregates["Total"]    = c
-  aggregates["Movement"] = `b3 b3s b4 b6 b6s r1 r2 r3 r4 r4s r5 g1s p2 p2s p3 p6s `
-                         + `s2 s2s s3 s4 s4s n1 n2 n6 n6s q3 q4 q6 c`
-  aggregates["Any%"]     = `b2 b3 b3s b4 b5 b6 b6s b7 r1 r2 r3 r4 r4s r5 r6 r7 g7 g8 `
-                         + `p1 p2 p2s p3 p4 p6s peyg p7 s1 s2 s2s s3 s4 s4s s5 s6 s7 `
-                         + `n1 n2 n3 n4 n6 n6s n7 q1 q3 q4 q5 q5s q6 q7 a c cb`
-  aggregates["NotAny%"]  = `b1 b8 b3r* b3r b6r* b6r b100 r6* r8 r4r* r4r r100 `
-                         + `g1 g1s g2 g3 g4 g4s g5 g6 gh g1r* g1r g100 p5 p6 p8 p2r p6r p100 `
-                         + `s8 s2r s4r s100 n5 n8 nh n6r* n6r n100 q2 q8 q5r qh q100 ar* ar a100 `
-                         + `bp beach box1 box2 box3 chuck gbird grass jail lbell light lily pach rbell sgate ubell`
-  aggregates["Secrets"]  = `b3s b6s r4s g1s p2s p6s s2s s4s n6s q5s`
-  aggregates["SMs"]      = `b7 r7 g7 p7 s7 n7 q7`
-  aggregates["Bianco"]   = c.slice(c.indexOf("b1"), c.indexOf("r1"))
-  aggregates["Ricco"]    = c.slice(c.indexOf("r1"), c.indexOf("g1"))
-  aggregates["Gelato"]   = c.slice(c.indexOf("g1"), c.indexOf("p1"))
-  aggregates["Pinna"]    = c.slice(c.indexOf("p1"), c.indexOf("s1"))
-  aggregates["Sirena"]   = c.slice(c.indexOf("s1"), c.indexOf("n1"))
-  aggregates["Noki"]     = c.slice(c.indexOf("n1"), c.indexOf("q1"))
-  aggregates["Pianta"]   = c.slice(c.indexOf("q1"), c.indexOf("a"))
-  aggregates["Delfino"]  = c.slice(c.indexOf("a"))
-  aggregates["SecretReds"] = c.filter(code => code[2] == "r")
-  aggregates["100s"]       = c.filter(code => code.slice(1) == "100")
-}
-
 // utility to convert list of level codes into list of IDs (linear time)
 function levelListToIDs(list) {
-  let slice = typeof(list) == "string" ? list.split(" ") : list;   let i = 0;
-  let full  = data.levels.codes;                                   let j = 0;
+  let full  = data.levels.codes
+  let [i,j] = [0,0]
   let output = []
-  while (i < slice.length) { // zip algorithm (linear time)
-    while (slice[i] != full[j]) {
+  while (i < list.length) { // zip algorithm (linear time)
+    while (list[i] != full[j]) {
       j++
-      if (j >= full.length) { throw `invalid level code: ${slice[i]}` }
+      if (j >= full.length) { throw `invalid level code: ${list[i]}` }
     }
     output.push(j)
     i++

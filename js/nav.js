@@ -25,7 +25,7 @@ function navLevel() {
 function navAggregate() {
   let valueCmd = `$('select.${this.name}').val()` // to pull value from select
   return `<select class="${this.name}" onchange="${go("a",valueCmd)}">
-    ${Object.keys(aggregates).map(s_ => `<option value="${s_}">${s_}</option>`).join('')}
+    ${Object.keys(data.levels.aggregates).map(s_ => `<option value="${s_}">${s_}</option>`).join('')}
   </select>`
 }
 

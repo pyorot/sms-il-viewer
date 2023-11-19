@@ -15,7 +15,7 @@ function generateHashes() {
     if (level == "") { continue } // skips dividers
     hashes.l[l_] = enc(level);     indices.l[enc(level)] = l_
   }
-  for (let s_ of Object.keys(aggregates)) {
+  for (let s_ of Object.keys(data.levels.aggregates)) {
     hashes.a[s_] = enc(s_);        indices.a[enc(s_)] = s_
   }
 }
@@ -110,7 +110,6 @@ function loadBodyfromHash() {
   // load data
   await loadData()        // blocking data load
   annotateData()          // convert data into useful (and final) form
-  generateAggregates()    // aggregates are used to filter the overall leaderboards
   generateHashes()        // hashes are used for navigation via URL changing
   console.log(data)
 
