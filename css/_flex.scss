@@ -1,0 +1,14 @@
+// disable scrollbars
+::-webkit-scrollbar { display: none } // Chrome, Safari, Opera
+@mixin noscrollbar {
+  -ms-overflow-style: none;  // IE and Edge
+  scrollbar-width: none;     // Firefox
+}
+
+// the flex setup:
+// http://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout
+@mixin flexrow  { display: flex ; overflow: hidden }
+@mixin flexcol  { display: flex ; overflow: hidden ; flex-direction: column }
+@mixin fixed    { flex: 0 0 auto }
+@mixin stretchy { flex: 1 1 auto }
+@mixin scroll   { overflow: auto ; @include noscrollbar }

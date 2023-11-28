@@ -1,29 +1,18 @@
 @charset "UTF-8";
-
-// disable scrollbars
-::-webkit-scrollbar { display: none; } // Chrome, Safari, Opera
-@mixin noscrollbar {
-  -ms-overflow-style: none;  // IE and Edge
-  scrollbar-width: none;     // Firefox
-}
+@use "flex" as *;
 
 :link    { color: var(--colLink)        }
 :visited { color: var(--colLinkVisited) }
 code     { font-size: 1rem } // why is this sometimes smaller by default?
 
-html,
-body,
-#main {
-	height: 100%;
-  font-family: Tahoma;
-}
-
 body {
   position: fixed; // prevents body from sliding around viewport when navLevel expands
+  height: 100%;
   width: 100%;
 	margin: 0;
   overflow: hidden;
   background: var(--colBody1);
+  font-family: Tahoma;
 }
 
 input {
@@ -31,15 +20,9 @@ input {
   display: none; // removes radio button/checkbox elements
 }
 
-// the flex setup:
-// http://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout
-@mixin flexrow  { display: flex; overflow: hidden; }
-@mixin flexcol  { display: flex; overflow: hidden; flex-direction: column; }
-@mixin fixed    { flex: 0 0 auto; }
-@mixin stretchy { flex: 1 1 auto;	}
-@mixin scroll   { overflow: auto; @include noscrollbar; }
-
 #main {
+  height: 100%;
+  max-width: 600px; // caps width on big screens
   margin: auto;
 	@include flexcol;
 
@@ -53,46 +36,10 @@ input {
     > #loadStatus  { flex: 4 }                // invisible after load
 	}
 
-  > #settings {
+  > #settings {       // this is styled in settings.scss
     @include fixed;
-    @include flexcol;
     background: var(--colHead1Active);
     max-height: 0%;
-    
-    > .settingsRow {
-      @include fixed;
-      @include flexrow;
-      justify-content: center; // horizontal centring
-    
-      > #blockScoring {
-        @include stretchy;
-        @include flexrow;
-      }
-
-      > .settingsBlock {
-        padding: 4px 8px;
-        &#blockScoring { flex: 3 }
-        &#blockTheme   { flex: 1 }
-        &#blockAnon    { flex: 1 }
-        &.blockSep     { flex: 0 }
-        > .settingsLabel { flex: 1; padding: 8px }
-        > label          { flex: 1; padding: 8px 5px }
-      }
-
-      > #blockAnonPrompt {
-        display: none;
-        padding: 0px 8px;
-
-        > #anonPromptButtons {
-          padding-bottom: 8px;
-          @include flexrow;
-          > label {
-            padding: 5px;
-            flex: 1;
-          }
-        }
-      }
-    }
   }
 
 	> #panelbottom {
@@ -118,7 +65,7 @@ input {
       > #lb {
         @include stretchy;
         @include scroll;
-        background: var(--colBody1); // appears when table scrolls and in table borders
+        background: var(--colBody1); // appears when table scrolls and in cell borders
         color: var(--colText);
       }
     }
@@ -135,10 +82,7 @@ input {
   }
 }
 
-@media (width > 600px) {
-  #main { width: 600px }
-}
-@media (width < 390px) {
-  html { font-size: 14px } // sets rem to 14px
+@media (width < 390px) {          // make things smaller on small screens
+  html { font-size: 14px }        // sets rem to 14px
   .panelleft { max-width: 70px }
 }

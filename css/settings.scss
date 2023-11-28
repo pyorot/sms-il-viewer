@@ -1,20 +1,48 @@
+@use "flex" as *; // flex mixins
+
 #settings {
+  * {box-sizing: border-box }   // required for height: 100% to do the intuitive thing
+  @include flexcol;
   color: white;
-  label, .settingsLabel {
-    display: flex;
-    text-align: center;
-    justify-content: center; // horizontal centring
-    align-items: center;     // vertical centring
+
+  > .settingsRow {
+    @include fixed;
+    @include flexrow;
+    justify-content: center;    // horizontal centring
+  
+    > .settingsBlock { padding: 4px 8px }
+
+    &#settingsRowMain .settingsItem { height: 100%; padding: 8px 5px }
+
+    > #blockScoring { flex: 3 ; @include flexrow }
+    > #blockTheme   { flex: 1 }
+    > #blockAnon    { flex: 1 }
+
+    > #blockAnonPrompt {
+      display: none;
+      padding: 0px 8px;         // vertical padding achieved by <p> tag
+      border-top: solid 1px var(--colHead2);
+
+      > #anonPromptButtons {
+        @include flexrow;
+        padding-bottom: 8px;
+        > .promptItem { padding: 5px }
+      }
+    }
   }
-  label {
+
+  // general item styles
+  .settingsItem, .promptItem {  // these are units on the settings menus
+    display: flex;
+    flex: 1;
+    justify-content: center;    // horizontal centring
+    align-items: center;        // vertical centring
+  }
+  label {                       // these are buttons
     border: solid 1px var(--colHead2);
     cursor: pointer;
     @media (hover: hover) { &:hover  { background: var(--colHead1) } }
     @media (hover: none ) { &:active { background: var(--colHead1) } }
   }
   input:checked + label { background: var(--colHead1) }
-
-  #blockAnonPrompt {
-    border-top: solid 1px var(--colHead2);
-  }
 }

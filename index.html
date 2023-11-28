@@ -6,7 +6,7 @@
     <meta name="description" content="Super Mario Sunshine Individual Level Speedruns: Accurate Leaderboard Viewer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="kjiY3vqv_Q5J4yUW4W7ec1YJrlNk4xWinHBJfNgST-g">
-    <!-- imports -->
+    <!-- style imports -->
     <link rel="stylesheet" href="css/colour.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/menu.css">
@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="css/title.css">
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/tooltip.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <!-- favicons (from https://realfavicongenerator.net/) -->
     <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon.png?v=2">
     <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png?v=2">
@@ -56,31 +55,31 @@
       </div>
 
       <div id="settings">
-        <div class="settingsRow">
+        <div class="settingsRow" id="settingsRowMain">
           <div class="settingsBlock" id="blockScoring">
-            <div class="settingsLabel">score:</div>
+            <div class="settingsItem">score:</div>
             <input type="radio" id="radioScoring-p" name="radioScoring" value="p">
-            <label for="radioScoring-p" onclick="setScoring('p')">p</label>
+            <label class="settingsItem" for="radioScoring-p" onclick="setScoring('p')">p</label>
             <input type="radio" id="radioScoring-ppct" name="radioScoring" value="ppct">
-            <label for="radioScoring-ppct" onclick="setScoring('ppct')">p%</label>
+            <label class="settingsItem" for="radioScoring-ppct" onclick="setScoring('ppct')">p%</label>
             <input type="radio" id="radioScoring-l1" name="radioScoring" value="l1">
-            <label for="radioScoring-l1" onclick="setScoring('l1')">ℓ<sub>1</sub></label>
+            <label class="settingsItem" for="radioScoring-l1" onclick="setScoring('l1')">ℓ<sub>1</sub></label>
             <input type="radio" id="radioScoring-linf" name="radioScoring" value="linf">
-            <label for="radioScoring-linf" onclick="setScoring('linf')">ℓ<sub>∞</sub></label>
+            <label class="settingsItem" for="radioScoring-linf" onclick="setScoring('linf')">ℓ<sub>∞</sub></label>
           </div>
           <div class="settingsBlock" id="blockTheme">
-            <label id="themeButton" class="settingsLabel" onclick="toggleTheme()">theme</label>
+            <label class="settingsItem" id="themeButton" onclick="toggleTheme()">theme</label>
           </div>
           <div class="settingsBlock" id="blockAnon">
-            <label id="anonButton" class="settingsLabel" onclick="toggleAnon()">anon</label>
+            <label class="settingsItem" id="anonButton" onclick="toggleAnon()">anon</label>
           </div>
         </div>
         <div class="settingsRow">
           <div id="blockAnonPrompt">
             <div id="anonHTML"></div>
             <div id="anonPromptButtons">
-              <label onclick="toggleAnon(false)">show names</label>
-              <label onclick="toggleAnon(true)">keep initials</label>
+              <label class="promptItem" onclick="toggleAnon(false)">show names</label>
+              <label class="promptItem" onclick="toggleAnon(true)">keep initials</label>
             </div>
           </div>
         </div>
@@ -157,7 +156,8 @@
 
     </div>
 
-    <!-- more imports -->
+    <!-- script imports -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript" src="js/data.js"></script>
     <script type="text/javascript" src="js/hash.js"></script>
     <script type="text/javascript" src="js/load.js"></script>

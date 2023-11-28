@@ -1,9 +1,56 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
 #settings {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
   color: white;
 }
-#settings label, #settings .settingsLabel {
+#settings * {
+  box-sizing: border-box;
+}
+#settings > .settingsRow {
+  flex: 0 0 auto;
   display: flex;
-  text-align: center;
+  overflow: hidden;
+  justify-content: center;
+}
+#settings > .settingsRow > .settingsBlock {
+  padding: 4px 8px;
+}
+#settings > .settingsRow#settingsRowMain .settingsItem {
+  height: 100%;
+  padding: 8px 5px;
+}
+#settings > .settingsRow > #blockScoring {
+  flex: 3;
+  display: flex;
+  overflow: hidden;
+}
+#settings > .settingsRow > #blockTheme {
+  flex: 1;
+}
+#settings > .settingsRow > #blockAnon {
+  flex: 1;
+}
+#settings > .settingsRow > #blockAnonPrompt {
+  display: none;
+  padding: 0px 8px;
+  border-top: solid 1px var(--colHead2);
+}
+#settings > .settingsRow > #blockAnonPrompt > #anonPromptButtons {
+  display: flex;
+  overflow: hidden;
+  padding-bottom: 8px;
+}
+#settings > .settingsRow > #blockAnonPrompt > #anonPromptButtons > .promptItem {
+  padding: 5px;
+}
+#settings .settingsItem, #settings .promptItem {
+  display: flex;
+  flex: 1;
   justify-content: center;
   align-items: center;
 }
@@ -23,7 +70,4 @@
 }
 #settings input:checked + label {
   background: var(--colHead1);
-}
-#settings #blockAnonPrompt {
-  border-top: solid 1px var(--colHead2);
 }/*# sourceMappingURL=settings.css.map */
