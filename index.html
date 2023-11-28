@@ -97,20 +97,21 @@
 
       <div id="panelbottomoverlay">
         <h2>Super Mario Sunshine Individual Level Speedruns: Accurate Leaderboard Viewer</h2>
-        <p>This app reads from
-        <a href="https://docs.google.com/spreadsheets/d/1M_X3fvZPhbeQ2H1Arm24sHbtwWY5LEozQ4SBcMWiGPw">this IL Tracker</a>;
-        the JSON data endpoint is
-        <a href="https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec">here</a>;
-        the submissions sheet is
-        <a href="https://docs.google.com/spreadsheets/d/1Ibq5m31pU1ZVfh4Dlo2r2Mnmk3WBiZwt6lja5bZSE1Q">here</a>.</p>
+        <p>This app reads from a tracker that monitors these two sources:
+          <a href="https://docs.google.com/spreadsheets/d/12wDUXjLqmcUuWSEXWc1fHNJc24KlfyCh0pvibZYEQM0">1</a>,
+          <a href="https://docs.google.com/spreadsheets/d/1Ibq5m31pU1ZVfh4Dlo2r2Mnmk3WBiZwt6lja5bZSE1Q">2</a>.
+          The data is also viewable in tabular form
+          <a href="https://docs.google.com/spreadsheets/d/1M_X3fvZPhbeQ2H1Arm24sHbtwWY5LEozQ4SBcMWiGPw">here</a>
+          and as raw JSON
+          <a href="https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec">here</a>.</p>
         <p>Here are some tips for fluid use of this app.</p>
 
         <h3>URL Navigation</h3>
         <p>Aside from the menu buttons, you can go straight to a
           leaderboard by adding its code to the main URL, after a <i>#</i>. E.g.:<br>
           <a href="#s4s" target="_self">https://smsilview.netlify.app#s4s</a></p>
-        <p>These codes are formed from the short codes in the level menu, and
-          full player/aggregate group names, with some characters modified;
+        <p>These codes are formed from the short codes in the level menu and
+          full player/aggregate group names <i>(spaces become _ and non-alphanumeric/_/./-/+/* characters are stripped)</i>;
           navigate to your desired page via the menus to check the code in the address bar.</p>
         <p>Navigating back/forward in the browser flicks through your visited leaderboards,
           but your sorting settings and last-viewed leaderboards on inactive tabs persist.</p>
@@ -130,6 +131,13 @@
           <li><b>ℓ1</b>: ℓ1 norm (sum of strictly better runs)</li>
           <li><b>ℓ∞</b>: ℓ∞ norm (maximum number of strictly better runs)</li>
         </ul>
+
+        <h3>Note Link Formatting</h3>
+        <p>Valid URLs in notes are converted to clickable links;
+          links in the format <nobr>[text](link)</nobr> are converted to clickable links with custom text.
+          All URLs must include <code>http(s)://</code> to be detected.</p>
+        <p><i>Certain characters (./@/:/;) are excluded if they appear at the end of a URL;
+          if you need them included, appending a # to the URL usually works.</i></p>
         
         <h3>Copying Notes</h3>
         <p>To view notes, hover over (desktop) or tap (iOS) the 📝 emoji. To copy them,

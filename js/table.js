@@ -3,15 +3,36 @@
 // convention: x,y denote individual runs; p,l are player/level indices rsp.
 // they depend on class properties: this.dataIndex, this.sortIndex, Page.scoring
 
-// aux html generators
+// footer html generator
 function tableFooterHTML(tableWidth) {
   // colspans that are larger than the table width cause extra scrollable whitespace on Gecko only
   return `<tr><td colspan="${tableWidth}" id="tableFooter">
-    this app was made by <a href='https://shoutplenty.netlify.app/sms'>shoutplenty</a> (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: <a href='https://gogopenguin.bandcamp.com/track/murmuration-2'>v2.0</a>)
+    this app was made by <a href='https://shoutplenty.netlify.app/sms'>shoutplenty</a> 
+    (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: 
+    <a href='https://gogopenguin.bandcamp.com/track/murmuration-2'>v2.0</a>)
   </td></tr>`
 }
+
+
+// note parser
+const HTMLEscape  = {"&": "&amp;", "<": "&lt;", ">": "&gt;"}  // HTML sanitisation (notes are used as tag content, never attributes)
+const URLMedial   = /\w\-\+\*\/\?\&\=\#\.\@\:\;/              // valid URL characters
+const URLFinal    = /\w\-\+\*\/\?\&\=\#/                      // as above but with some characters banned
+const URLRegex    = new RegExp(`(?<!<a href=")https?\:\/\/[${URLMedial.source}]*[${URLFinal.source}]`,"g")
+// ^ (ignores already-formatted urls with <a> tag) http(s):// + any combo of medials + one final
+const MDLinkRegex = new RegExp(`\\[(.+)\\]\\(\\s*(${URLRegex.source})\\s*\\)`,"g")  // [a](b), where a non-empty and b valid URL inside spaces
 function tooltipHTML(note) {
-  note = note.trim().replace(/(https?\:\/\/\S+)/g, `<a href="$1">$1</a>`).replace(/\n/g, "<br>") // render newlines and hyperlinks
+  note = note.trim()
+          .replace(/[&<>]/g, match => HTMLEscape[match])      // sanitise HTML in notes
+          .replace(/\n/g, "<br>")                             // render newlines
+          .replace(MDLinkRegex, (match, text, link) => {      // format markdown URLs (text/link params are 1st/2nd capture groups)
+            try {new URL(link)} catch (_){return match}       // skip URLs that fail validation (more secure)
+            return `<a href="${link}">${text}</a>`
+          })
+          .replace(URLRegex, match => {                       // format raw URLs (match param is entire match)
+            try {new URL(match)} catch (_){return match}      // skip URLs that fail validation (more secure)
+            return `<a href="${match}">${match}</a>`
+          })
   return `<div class="tooltip">📝<div class="tooltipbox"><div class="tooltiptext">${note}</div></div></div>`
 }
 

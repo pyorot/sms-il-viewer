@@ -65,10 +65,10 @@ function levelListToIDs(list) {
 }
 
 // validates and converts time strings into floats (in seconds)
-const regex = /^(?!0)(?:(?:(\d?\d)\:(?=\d\d))?([0-5]?\d)\:(?=\d\d))?([0-5]?\d)(?:\.(\d\d?|xx))?$/
+const timeRegex = /^(?!0)(?:(?:(\d?\d)\:(?=\d\d))?([0-5]?\d)\:(?=\d\d))?([0-5]?\d)(?:\.(\d\d?|xx))?$/
 function parseTime(input) {
   // run regex, validate and convert values
-  let matches = input.match(regex) // returns null or [fullMatch, hrs, mins, secs, centisecs]
+  let matches = input.match(timeRegex) // returns null or [fullMatch, hrs, mins, secs, centisecs]
   if      (!matches)               {return null}
   else if (!matches[4])            {return null}
   else if (matches[4] == 'xx')     {return null}

@@ -4,7 +4,7 @@
 
 // encodes hashes from strings in data to url-compatible strings
 function encodeHash(text) {
-  return text.toLowerCase().replace(/\s/g ,'_').replace(/[^\w\.\*]/g ,'')
+  return text.toLowerCase().replace(/\s/g ,'_').replace(/[^\w\-\+\*\.]/g ,'')
 }
 
 // custom Page methods, run in constructor; generate hash index from data
@@ -34,7 +34,7 @@ function go(endpoint, index) {
 // navigation receiver
 // event handler bound to URL hash change; runs loadTable method of relevant page
 function onHashChange() {
-  let target = location.hash.substring(1).toLowerCase()
+  let target = encodeHash(location.hash.substring(1))
   console.log("navigating:", target)
   document.title = "SMS IL Tracker Viewer | " + target
   // select Page object
