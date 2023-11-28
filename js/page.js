@@ -8,7 +8,7 @@ class Page {
     $(`.nav.${this.name}`).html(params.loadNav())   // load nav
   }
   // static state
-  static active         // currently active page
+  static active         // currently active page object
   static scoring        // global scoring setting
   // custom fields/methods
   name                  // page name (used as class on nav elements)
@@ -17,18 +17,20 @@ class Page {
   sortMethods           // methods for sorting table: { sortIndex: sortLambda }
   table                 // method to generate table
   // standard methods
+  refreshTable() {
+    $("#lb").html(this.table())                     // generate and paste table
+    Page.orientTooltips()                           // sort out OoB tooltips
+  }
   loadTable(dataIndex_) {
     this.dataIndex = dataIndex_                     // update own state
     $(`select.${this.name}`).val(dataIndex_)        // sync selector if it has one
     $(".nav").css("display", "none")                // hide all nav, then
     $(`.${this.name}`).css("display", "block")      // show relevant nav
-    $("#lb").html(this.table())                     // load table
-    Page.orientTooltips()
+    this.refreshTable()
   }
   sortTable(sortIndex_) {
     this.sortIndex = sortIndex_                     // update own state
-    $("#lb").html(this.table())                     // load table
-    Page.orientTooltips()
+    this.refreshTable()
   }
   // since this basic css feature (anchor positioning) is apparently still missing
   // in 2023, we need to run this routine after every table load to flip the tooltips

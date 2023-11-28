@@ -1,10 +1,10 @@
 #settings {
+  color: white;
   label, .settingsLabel {
     display: flex;
     text-align: center;
     justify-content: center; // horizontal centring
     align-items: center;     // vertical centring
-    color: white;
   }
   label {
     border: solid 1px var(--colHead2);
@@ -12,5 +12,9 @@
     @media (hover: hover) { &:hover  { background: var(--colHead1) } }
     @media (hover: none ) { &:active { background: var(--colHead1) } }
   }
-  input:checked + label { background: var(--colHead1) };
+  input:checked + label { background: var(--colHead1) }
+
+  #blockAnonPrompt {
+    border-top: solid 1px var(--colHead2);
+  }
 }

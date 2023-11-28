@@ -60,17 +60,28 @@
           <div class="settingsBlock" id="blockScoring">
             <div class="settingsLabel">score:</div>
             <input type="radio" id="radioScoring-p" name="radioScoring" value="p">
-            <label for="radioScoring-p" onclick="toggleScoring('p')">p</label>
+            <label for="radioScoring-p" onclick="setScoring('p')">p</label>
             <input type="radio" id="radioScoring-ppct" name="radioScoring" value="ppct">
-            <label for="radioScoring-ppct" onclick="toggleScoring('ppct')">p%</label>
+            <label for="radioScoring-ppct" onclick="setScoring('ppct')">p%</label>
             <input type="radio" id="radioScoring-l1" name="radioScoring" value="l1">
-            <label for="radioScoring-l1" onclick="toggleScoring('l1')">ℓ<sub>1</sub></label>
+            <label for="radioScoring-l1" onclick="setScoring('l1')">ℓ<sub>1</sub></label>
             <input type="radio" id="radioScoring-linf" name="radioScoring" value="linf">
-            <label for="radioScoring-linf" onclick="toggleScoring('linf')">ℓ<sub>∞</sub></label>
+            <label for="radioScoring-linf" onclick="setScoring('linf')">ℓ<sub>∞</sub></label>
           </div>
-          <div class="settingsBlock" id="blockSep"></div>
           <div class="settingsBlock" id="blockTheme">
-            <label class="settingsLabel" onclick="toggleTheme()">light / dark</label>
+            <label id="themeButton" class="settingsLabel" onclick="toggleTheme()">theme</label>
+          </div>
+          <div class="settingsBlock" id="blockAnon">
+            <label id="anonButton" class="settingsLabel" onclick="toggleAnon()">anon</label>
+          </div>
+        </div>
+        <div class="settingsRow">
+          <div id="blockAnonPrompt">
+            <div id="anonHTML"></div>
+            <div id="anonPromptButtons">
+              <label onclick="toggleAnon(false)">show names</label>
+              <label onclick="toggleAnon(true)">keep initials</label>
+            </div>
           </div>
         </div>
       </div>
@@ -151,6 +162,7 @@
     <script type="text/javascript" src="js/load.js"></script>
     <script type="text/javascript" src="js/page.js"></script>
     <script type="text/javascript" src="js/nav.js"></script>
+    <script type="text/javascript" src="js/settings.js"></script>
     <script type="text/javascript" src="js/table.js"></script>
   </body>
 </html>

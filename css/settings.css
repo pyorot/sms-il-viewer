@@ -1,9 +1,11 @@
+#settings {
+  color: white;
+}
 #settings label, #settings .settingsLabel {
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
-  color: white;
 }
 #settings label {
   border: solid 1px var(--colHead2);
@@ -21,4 +23,7 @@
 }
 #settings input:checked + label {
   background: var(--colHead1);
+}
+#settings #blockAnonPrompt {
+  border-top: solid 1px var(--colHead2);
 }/*# sourceMappingURL=settings.css.map */

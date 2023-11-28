@@ -67,27 +67,32 @@ input {
   flex-direction: column;
   background: var(--colHead1Active);
   max-height: 0%;
-  justify-content: center;
 }
 #main > #settings > .settingsRow {
   flex: 0 0 auto;
   display: flex;
   overflow: hidden;
+  justify-content: center;
 }
-#main > #settings > .settingsRow > .settingsBlock {
+#main > #settings > .settingsRow > #blockScoring {
   flex: 1 1 auto;
   display: flex;
   overflow: hidden;
-  padding: 4px;
+}
+#main > #settings > .settingsRow > .settingsBlock {
+  padding: 4px 8px;
 }
 #main > #settings > .settingsRow > .settingsBlock#blockScoring {
-  flex: 2;
-}
-#main > #settings > .settingsRow > .settingsBlock#blockSep {
-  flex: 0.05;
+  flex: 3;
 }
 #main > #settings > .settingsRow > .settingsBlock#blockTheme {
   flex: 1;
+}
+#main > #settings > .settingsRow > .settingsBlock#blockAnon {
+  flex: 1;
+}
+#main > #settings > .settingsRow > .settingsBlock.blockSep {
+  flex: 0;
 }
 #main > #settings > .settingsRow > .settingsBlock > .settingsLabel {
   flex: 1;
@@ -96,6 +101,19 @@ input {
 #main > #settings > .settingsRow > .settingsBlock > label {
   flex: 1;
   padding: 8px 5px;
+}
+#main > #settings > .settingsRow > #blockAnonPrompt {
+  display: none;
+  padding: 0px 8px;
+}
+#main > #settings > .settingsRow > #blockAnonPrompt > #anonPromptButtons {
+  padding-bottom: 8px;
+  display: flex;
+  overflow: hidden;
+}
+#main > #settings > .settingsRow > #blockAnonPrompt > #anonPromptButtons > label {
+  padding: 5px;
+  flex: 1;
 }
 #main > #panelbottom {
   flex: 1 1 auto;
