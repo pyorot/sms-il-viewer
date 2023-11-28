@@ -38,11 +38,11 @@
         </div>
         <div id="menuPages">
           <input type="radio" id="radioPages-a" name="radioPages" value="a">
-          <label for="radioPages-a">Overall</label>
+          <label for="radioPages-a" onclick="go('a', pageAggregate.dataIndex)">Overall</label>
           <input type="radio" id="radioPages-l" name="radioPages" value="l">
-          <label for="radioPages-l">Levels</label>
+          <label for="radioPages-l" onclick="go('l', pageLevel.dataIndex)">Levels</label>
           <input type="radio" id="radioPages-p" name="radioPages" value="p">
-          <label for="radioPages-p">Players</label>    
+          <label for="radioPages-p" onclick="go('p', pagePlayer.dataIndex)">Players</label>    
         </div>
         <div id="menuToggles">
           <input type="checkbox" id="check-help" name="checkToggles">
@@ -159,6 +159,7 @@
 
     <!-- more imports -->
     <script type="text/javascript" src="js/data.js"></script>
+    <script type="text/javascript" src="js/hash.js"></script>
     <script type="text/javascript" src="js/load.js"></script>
     <script type="text/javascript" src="js/page.js"></script>
     <script type="text/javascript" src="js/nav.js"></script>

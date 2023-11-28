@@ -1,17 +1,20 @@
-// 3. PAGE CLASS
+// 5. PAGE CLASS
 // a Page is an abstraction of a tab, which is a type of leaderboard
 // each persists its own state and has its own table generator and sorting methods 
 
 class Page {
   constructor(params) {
-    Object.assign(this, params)                     // set fields
-    $(`.nav.${this.name}`).html(params.loadNav())   // load nav
+    Object.assign(this, params)                   // set fields
+    this.loadHashes()
+    $(`.nav.${this.name}`).html(this.loadNav())   // load nav
   }
   // static state
   static active         // currently active page object
   static scoring        // global scoring setting
   // custom fields/methods
   name                  // page name (used as class on nav elements)
+  hashes = {}           // navigation: indices → hashes
+  indices = {}          // navigation: hashes → indices
   dataIndex             // index of data to display
   sortIndex             // column index for table sort
   sortMethods           // methods for sorting table: { sortIndex: sortLambda }
@@ -46,7 +49,7 @@ class Page {
 
 // objects: the 3 Pages and their initial states
 // the loadNav and table methods are specified on nav.js and table.js respectively
-var pageAggregate, pageLevel, pagePlayer
+var pages, pageAggregate, pageLevel, pagePlayer   // global variables
 function loadPages() {
   pageAggregate = new Page({
     name: "aggregate",
@@ -64,16 +67,18 @@ function loadPages() {
         return 0
       },
     },
+    loadHashes: hashAggregate,
     loadNav: navAggregate,
     table: tableAggregate,
   })
   pageLevel = new Page({
     name: "level",
-    dataIndex: Object.keys(hashes.l)[Math.floor(Math.random()*Object.keys(hashes.l).length)], // random valid level
+    dataIndex: random(data.levels.codes.map((v,i)=>[i,v]).filter(x=>x[1]!="").map(x=>x[0])), // random valid level
     sortIndex: 0, // default to rank sort (the only sort)
     sortMethods: {
       0: (x,y) => {return x.rank - y.rank}, // rank sort
     },
+    loadHashes: hashLevel,
     loadNav: navLevel,
     table: tableLevel,
   })
@@ -86,10 +91,14 @@ function loadPages() {
       1: (x,y) => {return x.rank   - y.rank  }, // rank sort
       2: (x,y) => {return y.points - x.points}, // points sort
     },
+    loadHashes: hashPlayer,
     loadNav: navPlayer,
     table: tablePlayer,
   })
+  pages = {'a': pageAggregate, 'l': pageLevel, 'p': pagePlayer}
   // sync scoring state with radio buttons
   Page.scoring = $('input[name="radioScoring"]:checked').val() ?? "p" // get value from settings
   $("#radioScoring-"+Page.scoring).prop("checked", true)              // set value in settings
 }
+
+function random(array) { return array[Math.floor(Math.random()*array.length)] }

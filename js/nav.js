@@ -1,4 +1,4 @@
-// 4. PAGE NAV METHODS
+// 6. PAGE NAV METHODS
 // these return html for the navigation components of each Page
 
 function navLevel() {
@@ -16,7 +16,7 @@ function navLevel() {
         <div class="tab-content">`
     }
     let code = data.levels.codes[l_]
-    html += `<button class="T${world}" onclick="${go("l",l_)}" tabindex="-1">${code}</button>`
+    html += `<button class="T${world}" onclick="go('l',${l_})" tabindex="-1">${code}</button>`
   }
   html += "</div></div>"
   return html
@@ -24,14 +24,14 @@ function navLevel() {
 
 function navAggregate() {
   let valueCmd = `$('select.${this.name}').val()` // to pull value from select
-  return `<select class="${this.name}" onchange="${go("a",valueCmd)}">
+  return `<select class="${this.name}" onchange="go('a',${valueCmd})">
     ${Object.keys(data.levels.aggregates).map(s_ => `<option value="${s_}">${s_}</option>`).join('')}
   </select>`
 }
 
 function navPlayer() {
   let valueCmd = `$('select.${this.name}').val()` // to pull value from select
-  return `<select class="${this.name}" onchange="${go("p",valueCmd)}">
+  return `<select class="${this.name}" onchange="go('p',${valueCmd})">
     ${data.players.names.map((name,p_) => `<option value="${p_}">${name}</option>`).join('')}
   </select>`
 }

@@ -1,4 +1,4 @@
-// 6. SETTINGS SET ROUTINES
+// 4. SETTINGS SET ROUTINES
 
 // runs on webpage load
 function loadSettings() {

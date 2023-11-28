@@ -1,6 +1,7 @@
-// 5. PAGE TABLE METHODS
+// 7. PAGE TABLE METHODS
 // these return html for the table components of each Page
 // convention: x,y denote individual runs; p,l are player/level indices rsp.
+// they depend on class properties: this.dataIndex, this.sortIndex, Page.scoring
 
 // aux html generators
 function tableFooterHTML(tableWidth) {
@@ -14,8 +15,7 @@ function tooltipHTML(note) {
   return `<div class="tooltip">📝<div class="tooltipbox"><div class="tooltiptext">${note}</div></div></div>`
 }
 
-// generates table html; depends on class properties:
-// this.dataIndex, this.sortIndex, Page.scoring
+
 function tableAggregate() {
   // aggregates are sets of levels by which the leaderboard viewer can be filtered
   // isotopes (pairs for which only the better is counted for points/ranks) complicate the design of this algorithm
@@ -93,7 +93,7 @@ function tableAggregate() {
     prevValue = value
     // generate display code
     html += `<tr><td class="cell-a1">${entry.rank}</td>`
-          + `<td class="cell-a2 selectable" onclick="${go("p",entry.p)}">${entry.name}</td>`
+          + `<td class="cell-a2 selectable" onclick="go('p',${entry.p})">${entry.name}</td>`
           + `<td class="cell-a3">${entry.score}</td>`
           + `<td class="cell-a4">${entry.medals[0]}</td>`
           + `<td class="cell-a5">${entry.medals[1]}</td>`
@@ -124,7 +124,7 @@ function tableLevel() {
     let noteHTML = x.note ? tooltipHTML(x.note) : ``
     html += `<tr>
       <td class="cell-l1 ${colourClass}">${x.rank}</td>
-      <td class="cell-l2 selectable" onclick="${go("p",x.p)}">${data.players.names[x.p]}</td>
+      <td class="cell-l2 selectable" onclick="go('p',${x.p})">${data.players.names[x.p]}</td>
       <td class="cell-l3">${timeHTML}</td>
       <td class="cell-l4">${noteHTML}</td>
     </tr>`
@@ -151,7 +151,7 @@ function tablePlayer() {
     let timeHTML = x.link ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
     let noteHTML = x.note ? tooltipHTML(x.note) : ``
     html += `<tr>
-      <td class="cell-p1 selectable" onclick="${go("l",x.l)}">${data.levels.codes[x.l]}</td>
+      <td class="cell-p1 selectable" onclick="go('l',${x.l})">${data.levels.codes[x.l]}</td>
       <td class="cell-p2 ${colourClass}">${x.rank}</td>
       <td class="cell-p3">${x.points}</td>
       <td class="cell-p4">${timeHTML}</td>
