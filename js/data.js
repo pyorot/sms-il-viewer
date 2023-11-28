@@ -18,33 +18,40 @@ async function loadData() {
 
 // mutates data into useful form
 function annotateData() {
-  data.levels.entries = [] // add entry count array to levels
-  for (let l_ = 0; l_ < data.body.length; l_++) {
-    data.body[l_] = data.body[l_].map((entry, p_) => { return {
-      p: p_, l: l_, time: entry[0], link: entry[1], note: entry[2], points: null, rank: null
-    }}) // {playerID, levelID, time, link, note, points, rank}
-    let sortedData = data.body[l_]
-      .filter(x => parseTime(x.time))
-      .sort((x,y) => (data.levels.reversed[l_] ? -1 : 1) * (parseTime(x.time) - parseTime(y.time)))
+  data.levels.entries = [] // add entry counts
+  data.levels.cutoffs = [] // add video cutoffs (this will be the row index rather than the actual time)
+  for (let l = 0; l < data.body.length; l++) {
+    data.body[l] = data.body[l].map((entry, p) => { return {
+      p: p, l: l,                                                             // { playerID, levelID,
+      value: entry[0], link: entry[1], note: entry[2],                        //   value, link, note,
+      time: parseTime(entry[0]), points: null, rank: null, rankQuality: null, //   time, points, rank, rankQuality }
+    }})
+    let series = data.body[l]
+      .filter(x => x.time)
+      .sort((x,y) => (data.levels.reversed[l] ? -1 : 1) * (x.time - y.time))
     // recall the standard rank algorithm: given a sorted list,
     // its index+1 is its rank unless its tied (repeated value), whence the rank persists
     { // ranks
       let prevTime, rank
-      for (let [i, x] of sortedData.entries()) {
+      for (let [i, x] of series.entries()) {
         if (x.time != prevTime) { rank = i+1 } // set rank to index+1 if changed, else persist it
         x.rank = rank
+        x.rankQuality = 1 - (x.rank-1)/series.length
         prevTime = x.time
       }
     }
     { // points
       let prevTime, points
-      for (let [i, x] of sortedData.reverse().entries()) {
+      for (let [i, x] of series.slice().reverse().entries()) { // slice just makes a copy
         if (x.time != prevTime) { points = i+1 }
         x.points = points
         prevTime = x.time
       }
     }
-    data.levels.entries[l_] = sortedData.length
+    // entry counts + cutoffs
+    data.levels.entries[l] = series.length
+    let rqCount = series.filter(x => x.rankQuality >= 0.85).length  // number of times with ≥0.85 rankQuality
+    data.levels.cutoffs[l] = Math.max(rqCount, 3) - 1               // cutoff index (out-of-range means no cutoff)
   }
 }
 

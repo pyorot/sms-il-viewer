@@ -27,6 +27,9 @@ th.selectable, td.selectable {
     background: var(--colHighlight);
   }
 }
+th.cutoff, td.cutoff {
+  border-bottom: 2px solid var(--colHead2);
+}
 th.gold, td.gold {
   font-weight: bold;
   color: var(--colGold);

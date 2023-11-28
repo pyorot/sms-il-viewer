@@ -131,6 +131,7 @@ function tableAggregate() {
 
 function tableLevel() {
   let table = data.body[this.dataIndex].filter(x => !!x.rank).sort(this.sortMethods[this.sortIndex])
+  let cutoffIndex = data.levels.cutoffs[this.dataIndex]
   $("#titleLevel").html(`<div>${data.levels.names[this.dataIndex]}</div>`)
   let html = `<table><tr>
       <th class="cell-l1">#</th>
@@ -138,16 +139,17 @@ function tableLevel() {
       <th class="cell-l3">time</th>
       <th class="cell-l4">note</th>
     </tr>`
-  for (let x of table) {
-    let colourClass = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] // html class annotation for colouring
-    if (!colourClass) { colourClass = "" }
-    let timeHTML = x.link ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
+  for (let [i,x] of table.entries()) {
+    let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] // html class annotation for colouring
+    if (!colour) { colour = "" }
+    let valueHTML = x.link ? `<a href=${x.link}>${x.value}</a>` : `${x.value}`
     let noteHTML = x.note ? tooltipHTML(x.note) : ``
+    let cutoff = i == cutoffIndex && this.sortIndex == 0 ? `cutoff` : `` // cutoff appears as bottom border
     html += `<tr>
-      <td class="cell-l1 ${colourClass}">${x.rank}</td>
-      <td class="cell-l2 selectable" onclick="go('p',${x.p})">${data.players.names[x.p]}</td>
-      <td class="cell-l3">${timeHTML}</td>
-      <td class="cell-l4">${noteHTML}</td>
+      <td class="cell-l1 ${cutoff} ${colour}">${x.rank}</td>
+      <td class="cell-l2 ${cutoff} selectable" onclick="go('p',${x.p})">${data.players.names[x.p]}</td>
+      <td class="cell-l3 ${cutoff}">${valueHTML}</td>
+      <td class="cell-l4 ${cutoff}">${noteHTML}</td>
     </tr>`
   }
   // include footer iff it would stay near the bottom of the screen. 28 is current row height in stylesheet
@@ -169,13 +171,13 @@ function tablePlayer() {
   for (let x of table) {
     let colourClass = {1: "gold", 2: "silver", 3: "bronze"}[x.rank]  // html class annotation for colouring
     if (!colourClass) { colourClass = "" }
-    let timeHTML = x.link ? `<a href=${x.link}>${x.time}</a>` : `${x.time}`
+    let valueHTML = x.link ? `<a href=${x.link}>${x.value}</a>` : `${x.value}`
     let noteHTML = x.note ? tooltipHTML(x.note) : ``
     html += `<tr>
       <td class="cell-p1 selectable" onclick="go('l',${x.l})">${data.levels.codes[x.l]}</td>
       <td class="cell-p2 ${colourClass}">${x.rank}</td>
       <td class="cell-p3">${x.points}</td>
-      <td class="cell-p4">${timeHTML}</td>
+      <td class="cell-p4">${valueHTML}</td>
       <td class="cell-p5">${noteHTML}</td>
     </tr>`
   }

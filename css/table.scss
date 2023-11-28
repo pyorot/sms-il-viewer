@@ -15,6 +15,7 @@ th, td {
     @media (hover: hover) { &:hover  { background: var(--colHighlight) } }
     @media (hover: none ) { &:active { background: var(--colHighlight) } }
   }
+  &.cutoff { border-bottom: 2px solid var(--colHead2) }
   &.gold   { font-weight: bold; color: var(--colGold)   }
   &.silver { font-weight: bold; color: var(--colSilver) }
   &.bronze { font-weight: bold; color: var(--colBronze) }
