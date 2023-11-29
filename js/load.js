@@ -16,6 +16,7 @@ function bindRadioDeselection() {
 
 // script that runs on webpage load
 (async() => {
+  toggleTheme(localStorage.getItem("theme") ?? "Dark")  // has to be run eagerly to style load screen
   // load data
   await loadData()        // blocking data load
   annotateData()          // convert data into useful (and final) form

@@ -1,7 +1,6 @@
 @use "flex" as *; // flex mixins
 
 #settings {
-  * {box-sizing: border-box }   // required for height: 100% to do the intuitive thing
   @include flexcol;
   color: white;
 

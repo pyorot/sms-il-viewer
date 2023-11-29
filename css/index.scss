@@ -1,6 +1,7 @@
 @charset "UTF-8";
 @use "flex" as *;
 
+*, *:before, *:after { box-sizing: border-box } // makes %-based width/height behave intuitively
 :link    { color: var(--colLink)        }
 :visited { color: var(--colLinkVisited) }
 code     { font-size: 1rem } // why is this sometimes smaller by default?

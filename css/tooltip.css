@@ -4,7 +4,7 @@
 }
 .tooltip .tooltipbox {
   visibility: hidden;
-  width: 270px;
+  width: 280px;
   background: var(--colHighlight);
   color: var(--colText);
   font-size: 0.875rem;
@@ -13,7 +13,7 @@
   padding: 5px;
   position: absolute;
   z-index: 10;
-  bottom: 140%;
+  bottom: 135%;
   left: 50%;
   margin-left: -262px;
   opacity: 0;
@@ -38,7 +38,7 @@
 }
 .tooltip .tooltipbox.flip {
   bottom: auto;
-  top: 140%;
+  top: 148%;
 }
 .tooltip .tooltipbox.flip::after {
   top: auto;

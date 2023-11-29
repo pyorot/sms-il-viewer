@@ -8,9 +8,6 @@
   flex-direction: column;
   color: white;
 }
-#settings * {
-  box-sizing: border-box;
-}
 #settings > .settingsRow {
   flex: 0 0 auto;
   display: flex;

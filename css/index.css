@@ -2,6 +2,10 @@
   display: none;
 }
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 :link {
   color: var(--colLink);
 }

@@ -21,7 +21,7 @@ const URLFinal    = /\w\-\+\*\/\?\&\=\#/                      // as above but wi
 try { // USES REGEX LOOKBEHIND SO REQUIRES SAFARI/IOS 16.4 (2023/03) OR OTHER BROWSERS POST–2020/08
   var URLRegex    = new RegExp(`(?<!<a href=")https?\:\/\/[${URLMedial.source}]*[${URLFinal.source}]`,"g")
   // ^ (ignores already-formatted urls with <a> tag) http(s):// + any combo of medials + one final
-  var MDLinkRegex = new RegExp(`\\[(.+)\\]\\(\\s*(${URLRegex.source})\\s*\\)`,"g")  // [a](b), where a non-empty and b valid URL inside spaces
+  var MDLinkRegex = new RegExp(`\\[([^\\[\\]]+)\\]\\(\\s*(${URLRegex.source})\\s*\\)`,"g")  // [a](b), where a non-empty non-][ and b valid URL inside spaces
 } catch (e) { // hobbled lookbehind-free version of URLRegex; delete this shit in like 2027
   console.warn(e, e.stack)
   var URLRegex    = new RegExp(              `https?\:\/\/[${URLMedial.source}]*[${URLFinal.source}]`,"g")  // as above but no lookbehind
