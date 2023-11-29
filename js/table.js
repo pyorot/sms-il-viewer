@@ -18,19 +18,29 @@ function tableFooterHTML(tableWidth) {
 const HTMLEscape  = {"&": "&amp;", "<": "&lt;", ">": "&gt;"}  // HTML sanitisation (notes are used as tag content, never attributes)
 const URLMedial   = /\w\-\+\*\/\?\&\=\#\.\@\:\;/              // valid URL characters
 const URLFinal    = /\w\-\+\*\/\?\&\=\#/                      // as above but with some characters banned
-const URLRegex    = new RegExp(`(?<!<a href=")https?\:\/\/[${URLMedial.source}]*[${URLFinal.source}]`,"g")
-// ^ (ignores already-formatted urls with <a> tag) http(s):// + any combo of medials + one final
-const MDLinkRegex = new RegExp(`\\[(.+)\\]\\(\\s*(${URLRegex.source})\\s*\\)`,"g")  // [a](b), where a non-empty and b valid URL inside spaces
+try { // USES REGEX LOOKBEHIND SO REQUIRES SAFARI/IOS 16.4 (2023/03) OR OTHER BROWSERS POST–2020/08
+  var URLRegex    = new RegExp(`(?<!<a href=")https?\:\/\/[${URLMedial.source}]*[${URLFinal.source}]`,"g")
+  // ^ (ignores already-formatted urls with <a> tag) http(s):// + any combo of medials + one final
+  var MDLinkRegex = new RegExp(`\\[(.+)\\]\\(\\s*(${URLRegex.source})\\s*\\)`,"g")  // [a](b), where a non-empty and b valid URL inside spaces
+} catch (e) { // hobbled lookbehind-free version of URLRegex; delete this shit in like 2027
+  console.warn(e, e.stack)
+  var URLRegex    = new RegExp(              `https?\:\/\/[${URLMedial.source}]*[${URLFinal.source}]`,"g")  // as above but no lookbehind
+}
+
 function tooltipHTML(note) {
   note = note.trim()
           .replace(/[&<>]/g, match => HTMLEscape[match])      // sanitise HTML in notes
           .replace(/\n/g, "<br>")                             // render newlines
-          .replace(MDLinkRegex, (match, text, link) => {      // format markdown URLs (text/link params are 1st/2nd capture groups)
-            try {new URL(link)} catch (_){return match}       // skip URLs that fail validation (more secure)
-            return `<a href="${link}">${text}</a>`
-          })
-          .replace(URLRegex, match => {                       // format raw URLs (match param is entire match)
-            try {new URL(match)} catch (_){return match}      // skip URLs that fail validation (more secure)
+  if (URLRegex.source.slice(0,4) == "(?<!") { // checks for lookbehind
+    // we cannot run the URLRegex twice without the lookbehind else it would format markdown URLs twice
+    // so this must be skipped in that case; delete this shit in like 2027
+    note = note.replace(MDLinkRegex, (match, text, link) => { // format markdown URLs (text/link params are 1st/2nd capture groups)
+              try {new URL(link)} catch (_){return match}     // skip URLs that fail validation (more secure)
+              return `<a href="${link}">${text}</a>`
+            })
+  }
+  note = note.replace(URLRegex, match => {                      // format raw URLs (match param is entire match)
+            try {new URL(match)} catch (_){return match}        // skip URLs that fail validation (more secure)
             return `<a href="${match}">${match}</a>`
           })
   return `<div class="tooltip">📝<div class="tooltipbox"><div class="tooltiptext">${note}</div></div></div>`

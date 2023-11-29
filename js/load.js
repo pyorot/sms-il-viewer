@@ -19,7 +19,7 @@ function bindRadioDeselection() {
   // load data
   await loadData()        // blocking data load
   annotateData()          // convert data into useful (and final) form
-  console.log(data)
+  console.log("data:", data)
   // load frontend
   $("#helpHTML").html(data.levels.helpHTML)
   $("#anonHTML").html(data.players.anonHTML)
