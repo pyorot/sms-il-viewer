@@ -9,7 +9,7 @@ function tableFooterHTML(tableWidth) {
   return `<tr><td colspan="${tableWidth}" id="tableFooter">
     this app was made by <a href='https://shoutplenty.netlify.app/sms'>shoutplenty</a> 
     (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: 
-    <a href='https://gogopenguin.bandcamp.com/track/murmuration-2'>v2.0</a>)
+    <a href='https://youtu.be/WKX8yJ4dx9k'>v2.0</a>)
   </td></tr>`
 }
 
@@ -152,7 +152,7 @@ function tableLevel() {
   for (let [i,x] of table.entries()) {
     let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] // html class annotation for colouring
     if (!colour) { colour = "" }
-    let valueHTML = x.link ? `<a href=${x.link}>${x.value}</a>` : `${x.value}`
+    let valueHTML = x.link ? `<a href="${x.link}">${x.value}</a>` : `${x.value}`
     let noteHTML = x.note ? tooltipHTML(x.note) : ``
     let cutoff = i == cutoffIndex && this.sortIndex == 0 ? `cutoff` : `` // cutoff appears as bottom border
     html += `<tr>
@@ -181,7 +181,7 @@ function tablePlayer() {
   for (let x of table) {
     let colourClass = {1: "gold", 2: "silver", 3: "bronze"}[x.rank]  // html class annotation for colouring
     if (!colourClass) { colourClass = "" }
-    let valueHTML = x.link ? `<a href=${x.link}>${x.value}</a>` : `${x.value}`
+    let valueHTML = x.link ? `<a href="${x.link}">${x.value}</a>` : `${x.value}`
     let noteHTML = x.note ? tooltipHTML(x.note) : ``
     html += `<tr>
       <td class="cell-p1 selectable" onclick="go('l',${x.l})">${data.levels.codes[x.l]}</td>
