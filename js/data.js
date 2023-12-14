@@ -1,8 +1,7 @@
 // 1. DATA LOADING
 
 var data      // data from the API is loaded, processed and stored here
-var dataUrl = "https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec"
-// dataUrl = "../data.json" // enable this for debugging
+// dataUrl is defined in the html files
 
 // fetches data from API
 async function loadData() {

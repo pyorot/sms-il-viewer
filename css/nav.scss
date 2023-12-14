@@ -27,6 +27,8 @@ $animation: 0.5s;
     background: var(--colBody2);
     width: 100%;
     height: 28px;
+    padding: 1px 4px;
+    white-space: nowrap;
     font-size: 0.875rem;
     cursor: pointer;
     @media (hover: hover) { &:hover  { background: var(--colBody2Active) } }

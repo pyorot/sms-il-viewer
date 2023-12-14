@@ -4,7 +4,7 @@
 
 // encodes hashes from strings in data to url-compatible strings
 function encodeHash(text) {
-  return text.toLowerCase().replace(/\s/g ,'_').replace(/[^\w\-\+\*\.]/g ,'')
+  return text.toLowerCase().replace(/\s/g ,'_').replace(/[^\w\-\+\*\.]/g ,'-')
 }
 
 // custom Page methods, run in constructor; generate hash index from data
@@ -46,6 +46,6 @@ function onHashChange() {
     Page.active.loadTable(Page.active.indices[target])          // load table
     $("#radioPages-"+Page.active.name[0]).prop("checked", true) // set active page in navigation bar  
   } else {
-    location.hash = "total"
+    location.hash = "all" in pageAggregate.indices ? "all" : "total" // total is for backward compat.
   }
 }
