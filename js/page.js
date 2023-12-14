@@ -27,7 +27,7 @@ class Page {
   loadTable(dataIndex_) {
     this.dataIndex = dataIndex_                     // update own state
     $(`select.${this.name}`).val(dataIndex_)        // sync selector if it has one
-    $(".nav").css("display", "none")                // hide all nav, then
+    $(`.page`).css("display", "none")               // hide all page elements, then
     $(`.${this.name}`).css("display", "block")      // show relevant nav
     this.refreshTable()
   }
@@ -96,9 +96,6 @@ function loadPages() {
     table: tablePlayer,
   })
   pages = {'a': pageAggregate, 'l': pageLevel, 'p': pagePlayer}
-  // sync scoring state with radio buttons
-  Page.scoring = $('input[name="radioScoring"]:checked').val() ?? "p" // get value from settings
-  $("#radioScoring-"+Page.scoring).prop("checked", true)              // set value in settings
 }
 
 function random(array) { return array[Math.floor(Math.random()*array.length)] }

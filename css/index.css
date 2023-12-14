@@ -89,6 +89,7 @@ input {
 }
 #main > #panelbottom > #panelright > .paneltop {
   flex: 0 0 auto;
+  display: none;
 }
 #main > #panelbottom > #panelright > #lb {
   flex: 1 1 auto;
