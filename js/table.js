@@ -139,6 +139,21 @@ function tableAggregate() {
           + `<td class="cell-a8">${String(entry.n[0])+"'".repeat(entry.n[1])}</td></tr>`
   }
 
+  // total entries at foot of table
+  let totalEntries = levelIDs.map(l_ => data.levels.entries[l_]).reduce((a, b) => a + b, 0) // only includes 1st isotopes
+  let scorableEntries = totalEntries // levels available for scoring; will adjust isotopes as below:
+  for (let code in data.levels.isotopes) {
+    let l_ = data.levels.codes.indexOf(code)
+    if (levelIDs.includes(l_)) {
+      let [xEntries, yEntries] = [data.levels.entries[l_], data.levels.entries[l_+1]]
+      totalEntries += yEntries // add 2nd isotopes to total
+      // total possible score includes larger isotope's entry count for points-based scoring and smaller for rank-based scoring
+      scorableEntries += -xEntries +(["p", "ppct"].includes(Page.scoring) ? Math.max(xEntries, yEntries) : Math.min(xEntries, yEntries))
+    }
+  }
+  html += `<tr><td colspan="8" id="totalEntries">total entries:
+           ${totalEntries}${scorableEntries < totalEntries ? ` (${scorableEntries} available for ${scoringName})` : ""}</td></tr>`
+
   // include footer iff it would stay near the bottom of the screen. 28 is current row height in stylesheet
   let includeFooter = 28 * (table.length + 2) >= parseInt($("#lb").css("height"),10) - 5
   return html + (includeFooter ? tableFooterHTML(8) : "") + "</table>"

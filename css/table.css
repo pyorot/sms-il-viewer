@@ -137,8 +137,14 @@ td.cell-p5 {
           user-select: none;
 }
 
-#tableFooter {
+#totalEntries, #tableFooter {
   font-size: 90%;
   font-style: italic;
+}
+#totalEntries sub, #tableFooter sub {
+  vertical-align: text-bottom;
+}
+
+#tableFooter {
   color: var(--colFooterText);
 }/*# sourceMappingURL=table.css.map */

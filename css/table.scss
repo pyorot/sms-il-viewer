@@ -69,8 +69,11 @@ td {
   }
 }
 
-#tableFooter {
+#totalEntries, #tableFooter {
   font-size: 90%;
   font-style: italic;
+  sub { vertical-align: text-bottom }
+}
+#tableFooter {
   color: var(--colFooterText);
 }
