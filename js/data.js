@@ -47,10 +47,12 @@ function annotateData() {
         prevTime = x.time
       }
     }
-    // entry counts + cutoffs
+    // entry counts
     data.levels.entries[l] = series.length
-    let rqCount = series.filter(x => x.rankQuality >= 0.85).length  // number of times with ≥0.85 rankQuality
-    data.levels.cutoffs[l] = Math.max(rqCount, 3) - 1               // cutoff index (out-of-range means no cutoff)
+    // video cutoffs
+    let rqCount = series.filter(x => x.rankQuality >= data.levels.cutoffLimits?.rq).length
+    let rCount  = series.filter(x => x.rank        <= data.levels.cutoffLimits?.r ).length
+    data.levels.cutoffs[l] = Math.max(rqCount, rCount) - 1  // cutoff index (out-of-range means no cutoff)
   }
 }
 
