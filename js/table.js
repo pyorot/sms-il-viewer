@@ -55,13 +55,13 @@ function tableAggregate() {
   let scoringName = {"p": "points", "ppct": "pts %", "l1": "ℓ<sub>1</sub>", "linf": "ℓ<sub>∞</sub>"}[Page.scoring]
   let html = `<table><tr>
       <th class="cell-a1">#</th>
-      <th class="cell-a2">player</th>
+      <th class="cell-a2 selectable" onclick="pageAggregate.sortTable(1)">player</th>
       <th class="cell-a3 selectable" onclick="pageAggregate.sortTable(2)">${scoringName}</th>
       <th class="cell-a4 selectable" onclick="pageAggregate.sortTable(3)">🥇</th>
       <th class="cell-a5">🥈</th>
       <th class="cell-a6">🥉</th>
-      <th class="cell-a7">v</th>
-      <th class="cell-a8">n</th>
+      <th class="cell-a7 selectable" onclick="pageAggregate.sortTable(6)">v</th>
+      <th class="cell-a8 selectable" onclick="pageAggregate.sortTable(7)">n</th>
     </tr>`
   
   let table = [] // this is for raw data; it'll be reformatted for display later
@@ -118,12 +118,18 @@ function tableAggregate() {
   let prevValue, rank
   for (let [i,entry] of table.entries()) {
     // calculate ranks
-    let value = {2: entry.score, 3: entry.medals.toString()}[this.sortIndex] // depends on sort setting
+    let value = { // depends on sort setting; these need to uniquely id sorts but needn't sort correctly themselves
+      1: undefined,
+      2: entry.score,
+      3: entry.medals.toString(),
+      6: entry.v.concat(...entry.n).toString(),
+      7: entry.n.concat(...entry.v).toString(),
+    }[this.sortIndex] 
     if (value != prevValue) { rank = i + 1 }
     entry.rank = rank
     prevValue = value
     // generate display code
-    html += `<tr><td class="cell-a1">${entry.rank}</td>`
+    html += `<tr><td class="cell-a1">${entry.rank ?? ""}</td>`
           + `<td class="cell-a2 selectable" onclick="go('p',${entry.p})">${entry.name}</td>`
           + `<td class="cell-a3">${entry.score}</td>`
           + `<td class="cell-a4">${entry.medals[0]}</td>`
