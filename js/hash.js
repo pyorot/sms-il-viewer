@@ -36,7 +36,7 @@ function go(endpoint, index) {
 function onHashChange() {
   let target = encodeHash(location.hash.substring(1))
   console.log("navigating:", target)
-  document.title = "SMS IL Accurate Leaderboards | " + target
+  document.title = document.title.split(" |")[0] + " | " + target
   // select Page object
   let targetPage
   for (let page of Object.values(pages)) { if (target in page.indices) { targetPage = page } }

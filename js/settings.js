@@ -5,7 +5,7 @@ function loadSettings() {
   toggleHelp    ($('#check-help')    .is(':checked'))
   toggleSettings($('#check-settings').is(':checked'))
   // toggleTheme is called explicitly before data load
-  setScoring    (localStorage.getItem("scoring") ?? "p"   )
+  setScoring    (localStorage.getItem("scoring") ?? $('meta[name=default-sort]').attr("content"))
   setAnon       (JSON.parse(localStorage.getItem("anon") ?? "true")) // localStorage is always string 
 }
 
