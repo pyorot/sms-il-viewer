@@ -14,6 +14,11 @@ function bindRadioDeselection() {
   })
 }
 
+// binds caching of scoll state to #lb
+function bindScrollState() {
+  $("#lb").on("scrollend", function (e) {Page.active.scroll = $(this).scrollTop()})
+}
+
 // script that runs on webpage load
 (async() => {
   toggleTheme(localStorage.getItem("theme") ?? "Dark")  // has to be run eagerly to style load screen
@@ -31,6 +36,7 @@ function bindRadioDeselection() {
   loadPages()                                           // Pages represent main tabs
   loadSettings()                                        // applies settings (mostly persisted)
   bindRadioDeselection()                                // binds a UI control
+  bindScrollState()                                     // binds a UI control
   // document.addEventListener('touchmove', event => event.scale !== 1 && event.preventDefault(), { passive: false }) // to disable zooming
   window.addEventListener("hashchange", onHashChange)   // binds navigation method
   // start app

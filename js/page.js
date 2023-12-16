@@ -15,6 +15,7 @@ class Page {
   name                  // page name (used as class on nav elements)
   hashes = {}           // navigation: indices → hashes
   indices = {}          // navigation: hashes → indices
+  scroll = 0            // scroll state (need to track so pages remember own scroll position)
   dataIndex             // index of data to display
   sortIndex             // column index for table sort
   sortMethods           // methods for sorting table: { sortIndex: sortLambda }
@@ -30,6 +31,7 @@ class Page {
     $(`.page`).css("display", "none")               // hide all page elements, then
     $(`.${this.name}`).css("display", "block")      // show relevant nav
     this.refreshTable()
+    $("#lb").scrollTop(this.scroll)                 // scrolls table to where it was last for this page
   }
   sortTable(sortIndex_) {
     this.sortIndex = sortIndex_                     // update own state
