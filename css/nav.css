@@ -1,7 +1,6 @@
 @charset "UTF-8";
 .panelleft .tab {
   width: 100%;
-  color: white;
   overflow: hidden;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -13,6 +12,32 @@
   padding: 6px;
   cursor: pointer;
 }
+.panelleft .tab-label::after {
+  content: "❯";
+  transition: all 0.5s;
+}
+.panelleft .tab-content {
+  max-height: 0;
+  transition: all 0.5s;
+}
+.panelleft button {
+  width: 100%;
+  height: 28px;
+  padding: 1px 4px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.panelleft input:checked ~ .tab-label::after {
+  transform: rotate(90deg);
+}
+.panelleft input:checked ~ .tab-content {
+  max-height: none;
+}
+
+.panelleft .tab-label {
+  color: var(--colText);
+}
 @media (hover: hover) {
   .panelleft .tab-label:hover {
     filter: saturate(200%);
@@ -23,104 +48,99 @@
     filter: saturate(200%);
   }
 }
-.panelleft .tab-label::after {
-  content: "❯";
-  transition: all 0.5s;
+.panelleft .tab:nth-child(odd) {
+  background: var(--colBody3);
 }
-.panelleft .tab-content {
-  max-height: 0;
-  transition: all 0.5s;
+.panelleft .tab:nth-child(even) {
+  background: var(--colBody4);
 }
 .panelleft button {
-  border: solid 1px var(--colBody2Active);
+  color: var(--colText);
   background: var(--colBody2);
-  width: 100%;
-  height: 28px;
-  padding: 1px 4px;
-  white-space: nowrap;
-  font-size: 0.875rem;
-  cursor: pointer;
+  border: solid 1px var(--colBody3);
 }
 @media (hover: hover) {
   .panelleft button:hover {
-    background: var(--colBody2Active);
+    background: var(--colBody3);
   }
 }
 @media (hover: none) {
   .panelleft button:active {
-    background: var(--colBody2Active);
+    background: var(--colBody3);
   }
 }
-.panelleft input:checked ~ .tab-label {
+.panelleft input:checked ~ .tab {
   filter: saturate(200%);
 }
-.panelleft input:checked ~ .tab-label::after {
-  transform: rotate(90deg);
-}
-.panelleft input:checked ~ .tab-content {
-  max-height: none;
-}
 
-.BBianco {
+#BBianco {
+  color: white;
   background: #86bb6f;
 }
 
-.BRicco {
+#BRicco {
+  color: white;
   background: #6795e1;
 }
 
-.BGelato {
+#BGelato {
+  color: white;
   background: #f4d062;
 }
 
-.BPinna {
+#BPinna {
+  color: white;
   background: #e19dc2;
 }
 
-.BSirena {
+#BSirena {
+  color: white;
   background: #ecaa65;
 }
 
-.BNoki {
+#BNoki {
+  color: white;
   background: #836dbb;
 }
 
-.BPianta {
+#BPianta {
+  color: white;
   background: red;
 }
 
-.BDelfino {
+#BDelfino {
+  color: white;
   background: #2b6cd5;
 }
 
-.TBianco {
+#TBianco {
   color: #6aa84f;
 }
 
-.TRicco {
+#TRicco {
   color: #3c78d8;
 }
 
-.TGelato {
+#TGelato {
   color: #f1c232;
 }
 
-.TPinna {
+#TPinna {
   color: #d576aa;
 }
 
-.TSirena {
+#TSirena {
   color: #e69138;
 }
 
-.TNoki {
+#TNoki {
   color: #674ea7;
 }
 
-.TPianta {
+#TPianta {
   color: #cc0000;
 }
 
-.TDelfino {
+#TDelfino {
   color: #2256aa;
 }/*# sourceMappingURL=nav.css.map */

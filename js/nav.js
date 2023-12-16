@@ -12,11 +12,11 @@ function navLevel() {
       html += `</div></div>
       <div class="tab" tabindex="-1">
         <input type="radio" id="rd-${world}" name="rd">
-        <label class="tab-label B${world}" for="rd-${world}">${world}</label>
+        <label class="tab-label" id="B${world}" for="rd-${world}">${world}</label>
         <div class="tab-content">`
     }
     let code = data.levels.codes[l_]
-    html += `<button class="T${world}" onclick="go('l',${l_})" tabindex="-1">${code}</button>`
+    html += `<button id="T${world}" onclick="go('l',${l_})" tabindex="-1">${code}</button>`
   }
   html += "</div></div>"
   return html

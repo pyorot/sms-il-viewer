@@ -31,7 +31,7 @@ function toggleTheme(override) {
   let oldTheme = sg.getPropertyValue("--colBody1") == sg.getPropertyValue("--colBody1Dark") ? "Dark" : "Light"
   let newTheme = override ?? (oldTheme == "Dark" ? "Light" : "Dark")  // swap setting if not overridden
   console.log("setting theme:", newTheme)
-  let props = ["Body1", "Body2", "Body2Active", "Text", "Link", "LinkVisited", "Highlight",
+  let props = ["Body1", "Body2", "Body3", "Body4", "Text", "Link", "LinkVisited", "Highlight",
                "Head1", "Head1Active", "Head2", "Head2Active", "Head3"]
   for (let prop of props) { ss.setProperty("--col"+prop, sg.getPropertyValue("--col"+prop+newTheme)) }  // sets css variables
   $('meta[name=theme-color]').attr("content", sg.getPropertyValue("--colHead1"+newTheme))               // colours iOS Safari screen top
