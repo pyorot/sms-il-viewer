@@ -5,7 +5,7 @@ function loadSettings() {
   toggleHelp    ($('#check-help')    .is(':checked'))
   toggleSettings($('#check-settings').is(':checked'))
   // toggleTheme is called explicitly before data load
-  setScoring    (localStorage.getItem("scoring") ?? $('meta[name=default-sort]').attr("content"))
+  setScoring    (localStorage.getItem("scoring"+window.location.pathname.split(".")[0]) ?? $('meta[name=default-sort]').attr("content"))
   setAnon       (JSON.parse(localStorage.getItem("anon") ?? "true")) // localStorage is always string 
 }
 
@@ -45,7 +45,7 @@ function setScoring(scoring) {
   Page.scoring = scoring
   Page.active?.refreshTable()
   $("#radioScoring-"+Page.scoring).prop("checked", true) // set value in settings bar
-  localStorage.setItem("scoring", scoring)
+  localStorage.setItem("scoring"+window.location.pathname.split(".")[0], scoring)
 }
 
 // toggles anon prompt state

@@ -6,11 +6,12 @@
 | <!DOCTYPE html>
 | <html>
 |   <head>
+|     <!-- page properties -->
 |     <base target="_blank" rel="noopener noreferrer">
 |     <title>#{title}</title>
 |     <meta name="description" content="#{fullTitle}">
-|     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-|     <meta name="google-site-verification" content="#{googleSiteVerification}">
+|     <meta name="theme-color" content="#721616">
+|     <meta name="default-sort" content="#{defaultSort}">
 |     <!-- style imports -->
 |     <link rel="stylesheet" href="/css/colour.css">
 |     <link rel="stylesheet" href="/css/index.css">
@@ -20,19 +21,7 @@
 |     <link rel="stylesheet" href="/css/title.css">
 |     <link rel="stylesheet" href="/css/table.css">
 |     <link rel="stylesheet" href="/css/tooltip.css">
-|     <!-- favicons (from https://realfavicongenerator.net/) -->
-|     <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon.png?v=2">
-|     <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png?v=2">
-|     <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png?v=2">
-|     <link rel="manifest" href="/icon/site.webmanifest?v=2">
-|     <link rel="mask-icon" href="/icon/safari-pinned-tab.svg?v=2" color="#5bbad5">
-|     <link rel="shortcut icon" href="/icon/favicon.ico?v=2">
-|     <meta name="apple-mobile-web-app-title" content="#{shortTitle}">
-|     <meta name="application-name" content="#{shortTitle}">
-|     <meta name="msapplication-TileColor" content="#da532c">
-|     <meta name="msapplication-config" content="/icon/browserconfig.xml?v=2">
-|     <meta name="theme-color" content="#721616">
-|     <meta name="default-sort" content="#{defaultSort}">
+include headSite.pug
 |   </head>
 |   <body ontouchstart><!-- ontouchstart binds :active psuedoclass to touch+hold event on iOS -->
 |     <div id="main">
