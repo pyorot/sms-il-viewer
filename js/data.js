@@ -19,12 +19,15 @@ async function loadData() {
 function annotateData() {
   data.levels.entries = [] // add entry counts
   data.levels.cutoffs = [] // add video cutoffs (this will be the row index rather than the actual time)
+  data.players.names = data.players.names.map(sanitise)
   for (let l = 0; l < data.body.length; l++) {
-    data.body[l] = data.body[l].map((entry, p) => { return {
-      p: p, l: l,                                                             // { playerID, levelID,
-      value: entry[0], link: entry[1], note: entry[2],                        //   value, link, note,
-      time: parseTime(entry[0]), points: null, rank: null, rankQuality: null, //   time, points, rank, rankQuality }
-    }})
+    data.body[l] = data.body[l].map((entry, p) => {
+      let clean = entry.map(sanitise)
+      return {
+        p: p, l: l, value: clean[0], link: clean[1], note: clean[2],            // { playerID, levelID, value, link, note,
+        time: parseTime(clean[0]), points: null, rank: null, rankQuality: null, //   time, points, rank, rankQuality }
+      }
+    })
     let series = data.body[l]
       .filter(x => x.time)
       .sort((x,y) => (data.levels.reversed[l] ? -1 : 1) * (x.time - y.time))
@@ -85,3 +88,7 @@ function parseTime(input) {
   for (let i=1; i<matches.length; i++) { matches[i] = matches[i] ? parseInt(matches[i]) : 0 }
   return parseInt(matches[1]*60*60 + matches[2]*60 + matches[3]) + matches[4]/100
 }
+
+// sanitises input text in data to prevent injection attacks
+const HTMLEscape = {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;"}
+function sanitise(text) { return text.trim().replace(/[&<>'"]/g, match => HTMLEscape[match]) }

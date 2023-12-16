@@ -9,13 +9,12 @@ function tableFooterHTML(tableWidth) {
   return `<tr><td colspan="${tableWidth}" id="tableFooter">
     this app was made by <a href='https://shoutplenty.netlify.app/sms'>shoutplenty</a> 
     (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: 
-    <a href='https://youtu.be/WKX8yJ4dx9k'>v2.0</a>)
+    <a href='https://youtu.be/WKX8yJ4dx9k'>v2.1</a>)
   </td></tr>`
 }
 
 
 // note parser
-const HTMLEscape  = {"&": "&amp;", "<": "&lt;", ">": "&gt;"}  // HTML sanitisation (notes are used as tag content, never attributes)
 const URLMedial   = /\w\-\+\*\/\?\&\=\#\.\@\:\;/              // valid URL characters
 const URLFinal    = /\w\-\+\*\/\?\&\=\#/                      // as above but with some characters banned
 try { // USES REGEX LOOKBEHIND SO REQUIRES SAFARI/IOS 16.4 (2023/03) OR OTHER BROWSERS POST–2020/08
@@ -28,18 +27,16 @@ try { // USES REGEX LOOKBEHIND SO REQUIRES SAFARI/IOS 16.4 (2023/03) OR OTHER BR
 }
 
 function tooltipHTML(note) {
-  note = note.trim()
-          .replace(/[&<>]/g, match => HTMLEscape[match])      // sanitise HTML in notes
-          .replace(/\n/g, "<br>")                             // render newlines
-  if (URLRegex.source.slice(0,4) == "(?<!") { // checks for lookbehind
+  note = note.replace(/\n/g, "<br>")                          // render newlines
+  if (URLRegex.source.slice(0,4) == "(?<!") {                 // checks for lookbehind
     // we cannot run the URLRegex twice without the lookbehind else it would format markdown URLs twice
     // so this must be skipped in that case; delete this shit in like 2027
-    note = note.replace(MDLinkRegex, (match, text, link) => { // format markdown URLs (text/link params are 1st/2nd capture groups)
+    note =  note.replace(MDLinkRegex, (match, text, link) => { // format markdown URLs (text/link params are 1st/2nd capture groups)
               try {new URL(link)} catch (_){return match}     // skip URLs that fail validation (more secure)
               return `<a href="${link}">${text}</a>`
             })
   }
-  note = note.replace(URLRegex, match => {                      // format raw URLs (match param is entire match)
+  note =  note.replace(URLRegex, match => {                      // format raw URLs (match param is entire match)
             try {new URL(match)} catch (_){return match}        // skip URLs that fail validation (more secure)
             return `<a href="${match}">${match}</a>`
           })

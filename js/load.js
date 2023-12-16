@@ -16,7 +16,8 @@ function bindRadioDeselection() {
 
 // binds caching of scoll state to #lb
 function bindScrollState() {
-  $("#lb").on("scrollend", function (e) {Page.active.scroll = $(this).scrollTop()})
+  // should use scrollend but not implemented on safari yet again.....
+  $("#lb").on("scroll", function (e) {Page.active.scroll = $(this).scrollTop()})
 }
 
 // script that runs on webpage load
