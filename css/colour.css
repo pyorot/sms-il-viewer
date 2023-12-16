@@ -6,7 +6,7 @@
   --colText: white;
   --colLink: #80d9ff;
   --colLinkVisited: #c58af9;
-  --colHighlight: #a94747a0;
+  --colHighlight: #6a2d2d;
   --colHead1: #721616;
   --colHead1Active: #470e0e;
   --colHead2: firebrick;
@@ -19,7 +19,7 @@
   --colTextLight: black;
   --colLinkLight: #0066cc;
   --colLinkVisitedLight: #551a8b;
-  --colHighlightLight: #b0e0e6c0;
+  --colHighlightLight: #c4e8ec;
   --colHead1Light: #006ad1;
   --colHead1ActiveLight: #00509e;
   --colHead2Light: dodgerblue;
@@ -32,7 +32,7 @@
   --colTextDark: white;
   --colLinkDark: #80d9ff;
   --colLinkVisitedDark: #c58af9;
-  --colHighlightDark: #a94747a0;
+  --colHighlightDark: #6a2d2d;
   --colHead1Dark: #721616;
   --colHead1ActiveDark: #470e0e;
   --colHead2Dark: firebrick;

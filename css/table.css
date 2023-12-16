@@ -47,6 +47,7 @@ th {
   position: sticky;
   top: 0;
   background: var(--colBody1);
+  filter: opacity(90%);
   z-index: 1;
 }
 
