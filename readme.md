@@ -1,6 +1,6 @@
 # SMS IL Tracker Viewer
 
-This is a simple web project made with no libraries beyond jQuery. It's a **leaderboard viewer** for Super Mario Sunshine individual-level speedruns, and is currently live [here](https://smsilview.netlify.app).
+This is a simple web project made with no libraries beyond jQuery. It's a **leaderboard viewer** for Super Mario Sunshine individual-level speedruns, and is currently live [here](https://smsilview.netlify.app). See also its sister project [**il-leaderboard-2023**](https://github.com/pyorot/il-leaderboard-2023), which generates the data it uses.
 
 ### Publication
 
@@ -11,7 +11,7 @@ Past versions of this app are accessible on branch subdomains:
 * v0.2: <https://v0--smsilview.netlify.app>
 * v1.2: <https://v1--smsilview.netlify.app>
 
-The current version with a fixed data snapshot is available here *(the [data](data.json) is from 2023/12/16 16:00 UTC)*:
+The current version with a fixed data snapshot is available here *(the [data](data.json) is from 2024/01/01 16:00 UTC)*:
 * <https://perma--smsilview.netlify.app>
 
 ### Development Environment
