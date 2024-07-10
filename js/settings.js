@@ -71,7 +71,7 @@ function toggleAnon(override) {
 function setAnon(anon) {
   console.log("setting anon:", anon)
   let translation = {} // name change: {from: to}
-  for (let [initial, name] of Object.entries(data.players.anon)) {
+  for (let [initial, name] of Object.entries(data.players.anon ?? {})) {
     translation[anon ? name : initial] = anon ? initial : name
   }
   for (let [p,player] of data.players.names.entries()) {                        // swap names per anon dict
