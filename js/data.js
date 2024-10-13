@@ -18,7 +18,8 @@ async function loadData() {
 // mutates data into useful form
 function annotateData() {
   data.levels.entries = [] // add entry counts
-  data.levels.cutoffs = [] // add video cutoffs (this will be the row index rather than the actual time)
+  let cutoffsIncluded = !!data.levels.cutoffs       // api cutoffs will be converted in-place to rank (index) form
+  if (!cutoffsIncluded) {data.levels.cutoffs = []}  // unless they don't exist, whence they'll be calced from api cutoffLimits
   data.players.names = data.players.names.map(sanitise)
   for (let l = 0; l < data.body.length; l++) {
     data.body[l] = data.body[l].map((entry, p) => {
@@ -53,9 +54,13 @@ function annotateData() {
     // entry counts
     data.levels.entries[l] = series.length
     // video cutoffs
-    let rqCount = series.filter(x => x.rankQuality >= data.levels.cutoffLimits?.rq).length
-    let rCount  = series.filter(x => x.rank        <= data.levels.cutoffLimits?.r ).length
-    data.levels.cutoffs[l] = Math.max(rqCount, rCount) - 1  // cutoff index (out-of-range means no cutoff)
+    if (cutoffsIncluded) {   // current ≥v2.2 data format (api cutoff (times) → internal cutoff (indices))
+      data.levels.cutoffs[l] = series.map(x => x.time).lastIndexOf(data.levels.cutoffs[l])
+    } else {                 // legacy <v2.2 data format (api cutoffLimits → internal cutoff indices)
+      let rqCount = series.filter(x => x.rankQuality >= data.levels.cutoffLimits?.rq).length
+      let rCount  = series.filter(x => x.rank        <= data.levels.cutoffLimits?.r ).length
+      data.levels.cutoffs[l] = Math.max(rqCount, rCount) - 1  // cutoff index (out-of-range means no cutoff)        
+    }
   }
 }
 
