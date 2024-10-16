@@ -8,8 +8,7 @@ function tableFooterHTML(tableWidth) {
   // colspans that are larger than the table width cause extra scrollable whitespace on Gecko only
   return `<tr><td colspan="${tableWidth}" id="tableFooter">
     this app was made by <a href='https://shoutplenty.netlify.app/sms'>shoutplenty</a> 
-    (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: 
-    <a href='https://youtu.be/WKX8yJ4dx9k'>v2.1</a>)
+    (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: v2.2)
   </td></tr>`
 }
 
