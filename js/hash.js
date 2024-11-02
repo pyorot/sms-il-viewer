@@ -4,7 +4,10 @@
 
 // encodes hashes from strings in data to url-compatible strings
 function encodeHash(text) {
-  return text.toLowerCase().replace(/\s/g ,'_').replace(/[^\w\-\+\*\.]/g ,'-')
+  return decodeURIComponent(text.replace(/%(?![0-9a-fA-F]{2})/g,"%25"))   // parses url-encoded chars
+             .normalize("NFKD").replace(/[\u0300-\u036f]/g, "")           // strips diacritics
+             .toLowerCase().replace(/\s/g ,'_')                           // space → _
+             .replace(/[^\w\-\+\*\.~!]/g ,'-')                            // rejected chars → - 
 }
 
 // custom Page methods, run in constructor; generate hash index from data
