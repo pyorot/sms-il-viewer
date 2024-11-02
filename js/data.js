@@ -78,11 +78,14 @@ function levelListToIDs(list) {
   let [i,j] = [0,0]
   let output = []
   while (i < list.length) { // zip algorithm (linear time)
-    while (list[i] != full[j]) {
+    let [code, weit, medal] = list[i].split(":")
+    while (code != full[j]) {
       j++
       if (j >= full.length) { throw `invalid level code: ${list[i]}` }
     }
-    output.push(j)
+    weit = weit?.split("/") ?? ["1"]
+    if (weit[0] === "") { weit[0] = "1" }
+    output.push([j, parseFloat(weit[0]/(weit?.[1]??1)), medal != "0"])
     i++
   }
   return output

@@ -91,7 +91,7 @@ function tableAggregate() {
       n: [0,0],         // level count [0: unique levels, 1: redundant isotopes]
     }
     // iterate level-by-level to populate stats (isotopes are handled simultaneously)
-    for (let l_ of levelIDs) {
+    for (let [l_, weit, medal] of levelIDs) {
       // x is the main entry; y the isotope entry where applicable (assumed to have index l_+1)
       let x = data.body[l_][p_]
       let xCode = data.levels.codes[l_]
@@ -100,29 +100,35 @@ function tableAggregate() {
       // entries = highest entry count of all isotopes
       x.entries = data.levels.entries[l_]
       y.entries = data.levels.isotopes[xCode] ? data.levels.entries[l_+1] : null
-      table[p_].ptsEntries += Math.max(x.entries, y.entries ?? 0)
-      table[p_].rkEntries  += Math.min(x.entries, y.entries ?? Infinity)
-      // submissions, videos
+      table[p_].ptsEntries += weit * Math.max(x.entries, y.entries ?? 0)
+      table[p_].rkEntries  += weit * Math.min(x.entries, y.entries ?? Infinity)
+      // points, submissions, videos
       if (x.time || y.time) { table[p_].n[0]++ }
       if (x.time && y.time) { table[p_].n[1]++ }
       if (x.link || y.link) { table[p_].v[0]++ }
       if (x.link && y.link) { table[p_].v[1]++ }
       // scores
-      table[p_].score.p += Math.max(x.points ?? 0, y.points ?? 0)
+      table[p_].score.p += weit * Math.max(x.points ?? 0, y.points ?? 0)
       // l1/linf count the best rank across isotopes, counting rank = entries for unsubmitted levels
       let rankPenalty = Math.min(x.rank ?? x.entries + 1, y.rank ?? (y.entries ?? Infinity) + 1) - 1
-      table[p_].score.l1 += rankPenalty
-      table[p_].score.linf = Math.max(table[p_].score.linf, rankPenalty)
+      table[p_].score.l1 += weit * rankPenalty
+      table[p_].score.linf = Math.max(table[p_].score.linf, weit * rankPenalty)
       // medals treat the isotopes as separate levels
-      if ([1,2,3].includes(x.rank) && !data.levels.medalless.includes(xCode)) {table[p_].medals[x.rank-1]++}
-      if ([1,2,3].includes(y.rank) && !data.levels.medalless.includes(yCode)) {table[p_].medals[y.rank-1]++}
+      if ([1,2,3].includes(x.rank) && medal) {table[p_].medals[x.rank-1]++}
+      if ([1,2,3].includes(y.rank) && medal) {table[p_].medals[y.rank-1]++}
     }
     // normalised scores
     table[p_].score.ppct =     table[p_].score.p  / table[p_].ptsEntries
     table[p_].score.rpct = 1 - table[p_].score.l1 / table[p_].rkEntries
     // display scores
     table[p_].scoreText = Object.fromEntries(Object.entries(table[p_].score).map(([key, score]) => {
-      return [key, key.includes("pct") ? smd(pct(score, 2)) : String(score)]
+      if (key.includes("pct")) {                                  // % format
+        score = pct(score, 2)
+      } else {                                                    // integer format
+        score = score.toFixed(2).replace(/\.?0+$/g,"")            // trim trailing zeros
+                                .replace(/^(\d+)\.5$/,"　$1．")   // replace 0.5 with .
+      }
+      return [key, smd(score)]
     }))
   }
   table.sort(this.sortMethods[this.sortIndex])
@@ -155,19 +161,25 @@ function tableAggregate() {
   }
 
   // total entries at foot of table
-  let totalEntries = levelIDs.map(l_ => data.levels.entries[l_]).reduce((a, b) => a + b, 0) // only includes 1st isotopes
+  let totalEntries  = levelIDs.map( x    =>      data.levels.entries[x[0]]).reduce((a, b) => a + b, 0) // only includes 1st isotopes
+  let weitedEntries = levelIDs.map((x,i) => x[1]*data.levels.entries[x[0]]).reduce((a, b) => a + b, 0)
   let scorableEntries = totalEntries // levels available for scoring; will adjust isotopes as below:
+  let weitedScorableEntries = weitedEntries
   for (let code in data.levels.isotopes) {
     let l_ = data.levels.codes.indexOf(code)
-    if (levelIDs.includes(l_)) {
+    let a_ = levelIDs.map(x => x[0]).indexOf(l_)
+    if (a_ >= 0) {
       let [xEntries, yEntries] = [data.levels.entries[l_], data.levels.entries[l_+1]]
       totalEntries += yEntries // add 2nd isotopes to total
+      weitedEntries += levelIDs[a_][1] * yEntries
       // total possible score includes larger isotope's entry count for points-based scoring and smaller for rank-based scoring
-      scorableEntries += -xEntries +(["p", "ppct"].includes(Page.scoring) ? Math.max(xEntries, yEntries) : Math.min(xEntries, yEntries))
+      let adj = (["p", "ppct"].includes(Page.scoring) ? Math.max(xEntries, yEntries) : Math.min(xEntries, yEntries))
+      scorableEntries += -xEntries + adj
+      weitedScorableEntries += levelIDs[a_][1] * (-xEntries + adj)
     }
   }
   html += `<tr><td colspan="8" id="totalEntries">total entries:
-           ${totalEntries}${scorableEntries < totalEntries ? ` (${scorableEntries} available for ${scoringName})` : ""}</td></tr>`
+           ${totalEntries} [${weitedEntries}] ${scorableEntries < totalEntries ? ` (${scorableEntries} [${weitedScorableEntries}] available for ${scoringName})` : ""}</td></tr>`
 
   // include footer iff it would stay near the bottom of the screen. 28 is current row height in stylesheet
   let includeFooter = 28 * (table.length + 2) >= parseInt($("#lb").css("height"),10) - 5
