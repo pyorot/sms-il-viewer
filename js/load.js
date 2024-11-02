@@ -24,9 +24,9 @@ function bindScrollState() {
 (async() => {
   toggleTheme(localStorage.getItem("theme") ?? "Dark")  // has to be run eagerly to style load screen
   // load data
-  await loadData()        // blocking data load
-  annotateData()          // convert data into useful (and final) form
-  console.log("data:", data)
+  await fetchData()       // blocking data load
+  parseData()             // convert data into useful (and final) form
+  console.log("data loaded:", data)
   // load frontend
   $("#helpHTML").html(data.levels.helpHTML)
   $("#anonHTML").html(data.players.anonHTML)
