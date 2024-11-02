@@ -47,7 +47,7 @@ function tableAggregate() {
   // aggregates are sets of levels by which the leaderboard viewer can be filtered
   // isotopes (pairs for which only the better is counted for points/ranks) complicate the design of this algorithm
   // they are handled simultaneously, so are not listed separately in levelIDs
-  let levelIDs = levelListToIDs(data.levels.aggregates[this.dataIndex])
+  let levelIDs = data.levels.aggregateIndices[this.dataIndex]
   let scoringName = {"p": "points", "ppct": "pts %", "l1": "ℓ<sub>1</sub>", "linf": "ℓ<sub>∞</sub>"}[Page.scoring]
   let html = `<table><tr>
       <th class="cell-a1">#</th>
@@ -158,7 +158,7 @@ function tableAggregate() {
 
 function tableLevel() {
   let table = data.body[this.dataIndex].filter(x => !!x.rank).sort(this.sortMethods[this.sortIndex])
-  let cutoffIndex = data.levels.cutoffs[this.dataIndex]
+  let cutoffIndex = data.levels.cutoffIndices[this.dataIndex]
   $("#titleLevel").html(`<div>${data.levels.names[this.dataIndex]}</div>`)
   let html = `<table><tr>
       <th class="cell-l1">#</th>

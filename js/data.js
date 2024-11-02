@@ -18,10 +18,10 @@ function parseData() {
   try {
     for (let field of ["levels", "players", "body"]) {if (!data[field]) {throw `data missing ${field} field`}}
     // in a future major version, change "level.body" to "level.runs"
-    data.levels.entries = [] // add entry counts
-    let cutoffsIncluded = !!data.levels.cutoffs       // api cutoffs will be converted in-place to rank (index) form
-    if (!cutoffsIncluded) {data.levels.cutoffs = []}  // unless they don't exist, whence they'll be calced from api cutoffLimits
     data.players.names = data.players.names.map(sanitise)
+    // process levels
+    data.levels.entries = [] // add entry counts
+    data.levels.cutoffIndices = [] // and cutoffs in row index form
     for (let l = 0; l < data.body.length; l++) {
       data.body[l] = data.body[l].map((run, p) => {
         run = run.map(sanitise)
@@ -55,14 +55,16 @@ function parseData() {
       // entry counts
       data.levels.entries[l] = series.length
       // video cutoffs
-      if (cutoffsIncluded) {   // current ≥v2.2 data format (api cutoff (times) → internal cutoff (indices))
-        data.levels.cutoffs[l] = series.map(x => x.time).lastIndexOf(data.levels.cutoffs[l])
-      } else {                 // legacy <v2.2 data format (api cutoffLimits → internal cutoff indices)
+      if (!!data.levels.cutoffs) {    // current ≥v2.2 data format (api cutoff (times) → internal cutoff indices)
+        data.levels.cutoffIndices[l] = series.map(x => x.time).lastIndexOf(data.levels.cutoffs[l])
+      } else {                        // legacy <v2.2 data format (api cutoffLimits → internal cutoff indices)
         let rqCount = series.filter(x => x.rankQuality >= data.levels.cutoffLimits?.rq).length
         let rCount  = series.filter(x => x.rank        <= data.levels.cutoffLimits?.r ).length
-        data.levels.cutoffs[l] = Math.max(rqCount, rCount) - 1  // cutoff index (out-of-range means no cutoff)        
+        data.levels.cutoffIndices[l] = Math.max(rqCount, rCount) - 1  // cutoff index (out-of-range means no cutoff)        
       }
     }
+    // pre-compute mapping of aggregates to level indices (can better handle not-found errors on load)
+    data.levels.aggregateIndices = Object.fromEntries(Object.entries(data.levels.aggregates).map(([k, v]) => [k, levelListToIDs(v)]))
   } catch(error) {
     $("#loadStatus").html("❌ | data parse failed | see console"); throw(error)
   }
