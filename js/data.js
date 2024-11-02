@@ -5,6 +5,7 @@ var data      // data from the API is loaded, processed and stored here
 
 // fetches data from API
 async function fetchData() {
+  console.log(`data address: ${dataUrl}`)
   try {
     let res = await fetch(dataUrl)
     data = await res.json()
@@ -86,19 +87,26 @@ function levelListToIDs(list) {
   return output
 }
 
-// validates and converts time strings into floats (in seconds)
-const timeRegex = /^(?!0)(?:(?:(\d?\d)\:(?=\d\d))?([0-5]?\d)\:(?=\d\d))?([0-5]?\d)(?:\.(\d\d?|xx))?$/
+// converts time string into float (in seconds); returns undefined if invalid time
+const timeRegex = /^(?!0)(?:(?:(\d?\d)\:(?=\d\d))?([0-5]?\d)\:(?=\d\d))?([0-5]?\d)(\.\d\d\d?)$/ // 2dp/3dp required
 function parseTime(input) {
-  // run regex, validate and convert values
-  let matches = input.match(timeRegex) // returns null or [fullMatch, hrs, mins, secs, centisecs]
-  if      (!matches)               {return null}
-  else if (!matches[4])            {return null}
-  else if (matches[4] == 'xx')     {return null}
-  else if (matches[4].length == 1) {return null}
-  // return result in seconds
-  for (let i=1; i<matches.length; i++) { matches[i] = matches[i] ? parseInt(matches[i]) : 0 }
-  return parseInt(matches[1]*60*60 + matches[2]*60 + matches[3]) + matches[4]/100
+  let match = input.match(timeRegex)?.map(x => x ?? 0) // returns null or [fullMatch, hrs, mins, secs, centi/millisecs]
+  if (match) { return parseInt(match[1])*60*60 + parseInt(match[2])*60 + parseInt(match[3]) + parseFloat(match[4]) }
 }
+// == regex explanation ==
+/*
+(?!0)				   // no leading zero
+(?:            // optional minutes+hours block
+	(?:          // optional hours block
+		(\d?\d)		 // hours digits
+		\:(?=\d\d) // : (only if two digits follow)
+	)?
+	([0-5]?\d)	 // mins digits
+	\:(?=\d\d)	 // : (only if two digits follow)
+)?
+([0-5]?\d)		 // secs digits
+(\.\d\d\d?)	   // . followed by centisecs or millisecs digits
+*/
 
 // sanitises input text in data to prevent injection attacks; forces input string-type requirement
 const HTMLEscape = {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;"}

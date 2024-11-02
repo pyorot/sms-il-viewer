@@ -167,8 +167,7 @@ function tableLevel() {
       <th class="cell-l4">note</th>
     </tr>`
   for (let [i,x] of table.entries()) {
-    let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] // html class annotation for colouring
-    if (!colour) { colour = "" }
+    let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] ?? `` // html class annotation for colouring
     let valueHTML = x.link ? `<a href="${x.link}">${x.value}</a>` : `${x.value}`
     let noteHTML = x.note ? tooltipHTML(x.note) : ``
     let cutoff = i == cutoffIndex && this.sortIndex == 0 ? `cutoff` : `` // cutoff appears as bottom border
@@ -196,13 +195,12 @@ function tablePlayer() {
       <th class="cell-p5">note</th>
     </tr>`
   for (let x of table) {
-    let colourClass = {1: "gold", 2: "silver", 3: "bronze"}[x.rank]  // html class annotation for colouring
-    if (!colourClass) { colourClass = "" }
+    let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] ?? ``  // html class annotation for colouring
     let valueHTML = x.link ? `<a href="${x.link}">${x.value}</a>` : `${x.value}`
     let noteHTML = x.note ? tooltipHTML(x.note) : ``
     html += `<tr>
       <td class="cell-p1 selectable" onclick="go('l',${x.l})">${data.levels.codes[x.l]}</td>
-      <td class="cell-p2 ${colourClass}">${x.rank}</td>
+      <td class="cell-p2 ${colour}">${x.rank}</td>
       <td class="cell-p3">${x.points}</td>
       <td class="cell-p4">${valueHTML}</td>
       <td class="cell-p5">${noteHTML}</td>
