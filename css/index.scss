@@ -79,8 +79,9 @@ input {
     max-height: 0%;
     background: var(--colBody2);
     color: var(--colText);
-    text-align: center;
     padding: 0px 3% !important;
+    text-align: justify;
+    > h2, h3 { text-align: center }
   }
 }
 

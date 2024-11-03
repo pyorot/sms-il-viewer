@@ -1,10 +1,10 @@
 .tooltip {
   position: relative;
   display: inline-block;
+  width: 100%;
 
   .tooltipbox {
     visibility: hidden;
-    width: 280px;
     background: var(--colHighlight);
     color: var(--colText);
     font-size: 0.875rem;
@@ -15,7 +15,6 @@
     z-index: 10;
     bottom: 135%;
     left: 50%;
-    margin-left: -262px;
     opacity: 0;
     transition: opacity 0.3s;
     user-select: all; // doesn't work on iOS
@@ -23,7 +22,6 @@
       content: "";
       position: absolute;
       top: 100%;
-      right: 11px;
       margin-left: -5px;
       border-width: 8px;
       border-style: solid;
@@ -32,7 +30,12 @@
     > .tooltiptext {
       overflow: hidden;
       text-overflow: ellipsis;
+      font-weight: normal;
     }
+
+    // positioning
+    &.note  { width: 280px; margin-left: -262px; &::after {right: 11px} }
+    &.score { width: 100px; margin-left:  -14px; &::after { left: 11px} }
 
     &.flip { // downward facing tooltip (overrides the above)
       bottom: auto; top: 148%;
@@ -40,7 +43,7 @@
         top: auto; bottom: 100%;
         border-color: transparent transparent var(--colHighlight) transparent;
       }
-    }    
+    }
   }
 
   &:hover .tooltipbox {

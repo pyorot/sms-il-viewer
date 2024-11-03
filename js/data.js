@@ -28,7 +28,7 @@ function parseData() {
         run = run.map(sanitise)
         return {
           p: p, l: l, value: run[0]??"", link: run[1]??"", note: run[2]??"",          // { playerID, levelID, value, link, note,
-          time: parseTime(run[0]??""), points: null, rank: null, rankQuality: null,   //   time, points, rank, rankQuality }
+          time: parseTime(run[0]??""), points: null, rank: null, pQ: null, rQ: null,  //   time, points, rank, ptsQuality, rkQuality }
         }
       })
       let series = data.body[l]
@@ -41,7 +41,7 @@ function parseData() {
         for (let [i, x] of series.entries()) {
           if (x.time != prevTime) { rank = i+1 } // set rank to index+1 if changed, else persist it
           x.rank = rank
-          x.rankQuality = 1 - (x.rank-1)/series.length
+          x.rQ = 1 - (rank-1)/series.length
           prevTime = x.time
         }
       }
@@ -50,6 +50,7 @@ function parseData() {
         for (let [i, x] of series.slice().reverse().entries()) { // slice just makes a copy
           if (x.time != prevTime) { points = i+1 }
           x.points = points
+          x.pQ = points/series.length
           prevTime = x.time
         }
       }
@@ -59,8 +60,8 @@ function parseData() {
       if (!!data.levels.cutoffs) {    // current ≥v2.2 data format (api cutoff (times) → internal cutoff indices)
         data.levels.cutoffIndices[l] = series.map(x => x.time).lastIndexOf(data.levels.cutoffs[l])
       } else {                        // legacy <v2.2 data format (api cutoffLimits → internal cutoff indices)
-        let rqCount = series.filter(x => x.rankQuality >= data.levels.cutoffLimits?.rq).length
-        let rCount  = series.filter(x => x.rank        <= data.levels.cutoffLimits?.r ).length
+        let rqCount = series.filter(x => x.rQ   >= data.levels.cutoffLimits?.rq).length
+        let rCount  = series.filter(x => x.rank <= data.levels.cutoffLimits?.r ).length
         data.levels.cutoffIndices[l] = Math.max(rqCount, rCount) - 1  // cutoff index (out-of-range means no cutoff)        
       }
     }

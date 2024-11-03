@@ -100,7 +100,7 @@ include headSite.pug
 |           leaderboard by adding its code to the main URL, after a <i>#</i>. E.g.:<br>
 |           <a href="#{exampleHash}" target="_self">#{url}#{exampleHash}</a></p>
 |         <p>These codes are formed from the short codes in the level menu and full player/aggregate group names
-|           (spaces become _ and non-alphanumeric/_/./-/+/*/~/! characters become -);
+|           (spaces become _; non-alphanumeric​/_​/.​/-​/+​/*​/~​/! characters become -);
 |           navigate to your desired page via the menus to check the code in the address bar.</p>
 |         <p>Navigating back/forward in the browser flicks through your visited leaderboards,
 |           but your sorting settings and last-viewed leaderboards on inactive tabs persist.</p>
@@ -120,6 +120,12 @@ include headSite.pug
 |           <li><b>ℓ1</b>: ℓ1 norm (sum of strictly better runs)</li>
 |           <li><b>ℓ∞</b>: ℓ∞ norm (maximum number of strictly better runs)</li>
 |         </ul>
+|         <p>p% also replaces points with points % (points / entries) in player tables, and 
+|           is shown in a tooltip over ranks in level tables. Whenever p% is displayed, a tooltip
+|           also shows <b>r%</b>, normalised rank % (1 – ℓ1 / total entries across aggregate).</p>
+|         <p><i>Total entries is slightly different for p% vs r% because, for any isotope,
+|           the variant with the most entries is available for points, whereas
+|           only the entries of the one with fewer entries can at worst count against your ℓ1.</i></p>
 |
 |         <h3>Video Cutoffs</h3>
 |         <p>These show on the level leaderboards as coloured horizontal lines.
@@ -127,7 +133,7 @@ include headSite.pug
 |
 |         <h3>Note Link Formatting</h3>
 |         <p>Valid URLs in notes are converted to clickable links;
-|           links in the format <nobr>[text](link)</nobr> are converted to clickable links with custom text.
+|           links in the format <nobr><code>[text](link)</code></nobr> are converted to clickable links with custom text.
 |           All URLs must include <code>http(s)://</code> to be detected.</p>
 |         <p><i>⚠: Custom text links might not work on browsers or iOS that haven't been updated since Apr 2023.</i></p>
 |         <p><i>Certain characters (./@/:/;) are excluded if they appear at the end of a URL;

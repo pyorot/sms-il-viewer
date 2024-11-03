@@ -3,6 +3,10 @@
 // convention: x,y denote individual runs; p,l are player/level indices rsp.
 // they depend on class properties: this.dataIndex, this.sortIndex, Page.scoring
 
+// util: print fixed-precision percentage
+function pct(x,dp) { return (Math.floor(x*10**(dp+2))/10**dp).toFixed(dp) }
+
+
 // footer html generator
 function tableFooterHTML(tableWidth) {
   // colspans that are larger than the table width cause extra scrollable whitespace on Gecko only
@@ -25,21 +29,21 @@ try { // USES REGEX LOOKBEHIND SO REQUIRES SAFARI/IOS 16.4 (2023/03) OR OTHER BR
   var URLRegex    = new RegExp(              `https?\:\/\/[${URLMedial.source}]*[${URLFinal.source}]`,"g")  // as above but no lookbehind
 }
 
-function tooltipHTML(note) {
-  note = note.replace(/\n/g, "<br>")                          // render newlines
-  if (URLRegex.source.slice(0,4) == "(?<!") {                 // checks for lookbehind
+function tooltipHTML(display, tooltip, type) {
+  tooltip = tooltip.replace(/\n/g, "<br>")                          // render newlines
+  if (URLRegex.source.slice(0,4) == "(?<!") {                       // checks for lookbehind
     // we cannot run the URLRegex twice without the lookbehind else it would format markdown URLs twice
-    // so this must be skipped in that case; delete this shit in like 2027
-    note =  note.replace(MDLinkRegex, (match, text, link) => { // format markdown URLs (text/link params are 1st/2nd capture groups)
-              try {new URL(link)} catch (_){return match}     // skip URLs that fail validation (more secure)
-              return `<a href="${link}">${text}</a>`
-            })
+    // so this must be skipped in that case; delete this shit in like 2026
+    tooltip = tooltip.replace(MDLinkRegex, (match, text, link) => { // format markdown URLs (text/link params are 1st/2nd capture groups)
+                try {new URL(link)} catch (_){return match}         // skip URLs that fail validation (more secure)
+                return `<a href="${link}">${text}</a>`
+              })
   }
-  note =  note.replace(URLRegex, match => {                      // format raw URLs (match param is entire match)
-            try {new URL(match)} catch (_){return match}        // skip URLs that fail validation (more secure)
-            return `<a href="${match}">${match}</a>`
-          })
-  return `<div class="tooltip">📝<div class="tooltipbox"><div class="tooltiptext">${note}</div></div></div>`
+  tooltip = tooltip.replace(URLRegex, match => {                    // format raw URLs (match param is entire match)
+              try {new URL(match)} catch (_){return match}          // skip URLs that fail validation (more secure)
+              return `<a href="${match}">${match}</a>`
+            })
+  return `<div class="tooltip">${display}<div class="tooltipbox ${type}"><div class="tooltiptext">${tooltip}</div></div></div>`
 }
 
 
@@ -70,7 +74,9 @@ function tableAggregate() {
       l1: 0,            // l1 (sum of ranks-minus-one)
       linf: null,       // l∞ (maximum rank-minus-one)
       medals: [0,0,0],  // medal count
-      entries: 0,       // entry count across submitted levels
+      ptsEntries: 0,    // entry count across submitted levels (takes max for isotopes)
+      rkEntries: 0,     // entry count across submitted levels (takes min for isotopes)
+      // (a player can get max ptsEntries pts and max rkEntries l1 bc better result is always counted)
       v: [0,0],         // video count [0: unique levels, 1: redundant isotopes]
       n: [0,0],         // level count [0: unique levels, 1: redundant isotopes]
     }
@@ -84,14 +90,15 @@ function tableAggregate() {
       // entries = highest entry count of all isotopes
       x.entries = data.levels.entries[l_]
       y.entries = data.levels.isotopes[xCode] ? data.levels.entries[l_+1] : null
-      table[p_].entries += Math.max(x.entries, y.entries ?? 0)
+      table[p_].ptsEntries += Math.max(x.entries, y.entries ?? 0)
+      table[p_].rkEntries  += Math.min(x.entries, y.entries ?? Infinity)
       // points, submissions, videos
       if (x.time || y.time) { table[p_].n[0]++ }
       if (x.time && y.time) { table[p_].n[1]++ }
       if (x.link || y.link) { table[p_].v[0]++ }
       if (x.link && y.link) { table[p_].v[1]++ }
       table[p_].pts += Math.max(x.points ?? 0, y.points ?? 0)
-      // l1/linf count the best rank across isotopes, assuming rank = entries for unsubmitted levels
+      // l1/linf count the best rank across isotopes, counting rank = entries for unsubmitted levels
       let rankPenalty = Math.min(x.rank ?? x.entries + 1, y.rank ?? (y.entries ?? Infinity) + 1) - 1
       table[p_].l1 += rankPenalty
       table[p_].linf = Math.max(table[p_].linf, rankPenalty)
@@ -100,12 +107,13 @@ function tableAggregate() {
       if ([1,2,3].includes(y.rank) && !data.levels.medalless.includes(yCode)) {table[p_].medals[y.rank-1]++}
     }
     // score is the statistic that will be displayed
-    table[p_].score = {
+    table[p_].scores = {
       "p":    table[p_].pts,
-      "ppct": (Math.floor((table[p_].pts/table[p_].entries)*10000)/100).toFixed(2),
+      "ppct": pct(   table[p_].pts/table[p_].ptsEntries, 2),
+      "rpct": pct(1 - table[p_].l1/table[p_].rkEntries , 2),
       "l1":   table[p_].l1,
       "linf": table[p_].linf,
-    }[Page.scoring]
+    }
   }
   table.sort(this.sortMethods[this.sortIndex])
 
@@ -116,7 +124,7 @@ function tableAggregate() {
     // calculate ranks
     let value = { // depends on sort setting; these need to uniquely id sorts but needn't sort correctly themselves
       1: undefined,
-      2: entry.score,
+      2: entry.scores[Page.scoring],
       3: entry.medals.toString(),
       6: entry.v.concat(...entry.n).toString(),
       7: entry.n.concat(...entry.v).toString(),
@@ -125,9 +133,10 @@ function tableAggregate() {
     entry.rank = rank
     prevValue = value
     // generate display code
+    let scoreHTML = Page.scoring == "ppct" ? tooltipHTML(entry.scores["ppct"], `${entry.scores["rpct"]}% rank`, "score") : entry.scores[Page.scoring]
     html += `<tr><td class="cell-a1">${entry.rank ?? ""}</td>`
           + `<td class="cell-a2 selectable" onclick="go('p',${entry.p})">${entry.name}</td>`
-          + `<td class="cell-a3">${entry.score}</td>`
+          + `<td class="cell-a3">${scoreHTML}</td>`
           + `<td class="cell-a4">${entry.medals[0]}</td>`
           + `<td class="cell-a5">${entry.medals[1]}</td>`
           + `<td class="cell-a6">${entry.medals[2]}</td>`
@@ -167,12 +176,14 @@ function tableLevel() {
       <th class="cell-l4">note</th>
     </tr>`
   for (let [i,x] of table.entries()) {
-    let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] ?? `` // html class annotation for colouring
+    let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] ?? ``      // html class annotation for colouring
     let valueHTML = x.link ? `<a href="${x.link}">${x.value}</a>` : `${x.value}`
-    let noteHTML = x.note ? tooltipHTML(x.note) : ``
-    let cutoff = i == cutoffIndex && this.sortIndex == 0 ? `cutoff` : `` // cutoff appears as bottom border
+    let rankDesc = x.rank + x.points == data.levels.entries[x.l] + 1 ?    // ties exist iff r + p != n + 1
+                   `${pct(x.rQ, 1)}%` : `${pct(x.rQ, 1)}% rank\n${pct(x.pQ, 1)}% points`
+    let noteHTML = x.note ? tooltipHTML("📝", x.note, "note") : ``
+    let cutoff = i == cutoffIndex && this.sortIndex == 0 ? `cutoff` : ``  // cutoff appears as bottom border
     html += `<tr>
-      <td class="cell-l1 ${cutoff} ${colour}">${x.rank}</td>
+      <td class="cell-l1 ${cutoff} ${colour}">${tooltipHTML(x.rank, rankDesc, "score")}</td>
       <td class="cell-l2 ${cutoff} selectable" onclick="go('p',${x.p})">${data.players.names[x.p]}</td>
       <td class="cell-l3 ${cutoff}">${valueHTML}</td>
       <td class="cell-l4 ${cutoff}">${noteHTML}</td>
@@ -190,18 +201,18 @@ function tablePlayer() {
   let html = `<table><tr>
       <th class="cell-p1 selectable" onclick="pagePlayer.sortTable(0)">level</th>
       <th class="cell-p2 selectable" onclick="pagePlayer.sortTable(1)">rank</th>
-      <th class="cell-p3 selectable" onclick="pagePlayer.sortTable(2)">points</th>
+      <th class="cell-p3 selectable" onclick="pagePlayer.sortTable(2)">${Page.scoring == "ppct" ? "pts %" : "points"}</th>
       <th class="cell-p4">time</th>
       <th class="cell-p5">note</th>
     </tr>`
   for (let x of table) {
     let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] ?? ``  // html class annotation for colouring
     let valueHTML = x.link ? `<a href="${x.link}">${x.value}</a>` : `${x.value}`
-    let noteHTML = x.note ? tooltipHTML(x.note) : ``
+    let noteHTML = x.note ? tooltipHTML("📝", x.note, "note") : ``
     html += `<tr>
       <td class="cell-p1 selectable" onclick="go('l',${x.l})">${data.levels.codes[x.l]}</td>
       <td class="cell-p2 ${colour}">${x.rank}</td>
-      <td class="cell-p3">${x.points}</td>
+      <td class="cell-p3">${Page.scoring == "ppct" ? tooltipHTML(pct(x.pQ, 1), `${pct(x.rQ, 1)}% rank`, "score") : x.points}</td>
       <td class="cell-p4">${valueHTML}</td>
       <td class="cell-p5">${noteHTML}</td>
     </tr>`

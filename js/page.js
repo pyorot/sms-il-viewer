@@ -63,8 +63,8 @@ function loadPages() {
       },
       2: (a,b) => { // points sort
         switch (Page.scoring) {
-          case "p":  case "ppct": return b.score - a.score;
-          case "l1": case "linf": return a.score - b.score;
+          case "p":  case "ppct": return b.scores[Page.scoring] - a.scores[Page.scoring];
+          case "l1": case "linf": return a.scores[Page.scoring] - b.scores[Page.scoring];
         }
       },
       3: (a,b) => { // medal sort
@@ -104,9 +104,9 @@ function loadPages() {
     dataIndex: Math.floor(Math.random()*4), // random top-4 player
     sortIndex: 0, // default to level sort
     sortMethods: {
-      0: (x,y) => {return x.l      - y.l     }, // level sort
-      1: (x,y) => {return x.rank   - y.rank  }, // rank sort
-      2: (x,y) => {return y.points - x.points}, // points sort
+      0: (x,y) => {return x.l    - y.l   }, // level sort
+      1: (x,y) => {return x.rank - y.rank}, // rank sort
+      2: (x,y) => {return Page.scoring == "ppct" ? y.pQ - x.pQ : y.points - x.points}, // points/pts% sort
     },
     loadHashes: hashPlayer,
     loadNav: navPlayer,

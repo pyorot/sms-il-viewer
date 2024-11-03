@@ -1,10 +1,10 @@
 .tooltip {
   position: relative;
   display: inline-block;
+  width: 100%;
 }
 .tooltip .tooltipbox {
   visibility: hidden;
-  width: 280px;
   background: var(--colHighlight);
   color: var(--colText);
   font-size: 0.875rem;
@@ -15,7 +15,6 @@
   z-index: 10;
   bottom: 135%;
   left: 50%;
-  margin-left: -262px;
   opacity: 0;
   transition: opacity 0.3s;
   -webkit-user-select: all;
@@ -26,7 +25,6 @@
   content: "";
   position: absolute;
   top: 100%;
-  right: 11px;
   margin-left: -5px;
   border-width: 8px;
   border-style: solid;
@@ -35,6 +33,21 @@
 .tooltip .tooltipbox > .tooltiptext {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: normal;
+}
+.tooltip .tooltipbox.note {
+  width: 280px;
+  margin-left: -262px;
+}
+.tooltip .tooltipbox.note::after {
+  right: 11px;
+}
+.tooltip .tooltipbox.score {
+  width: 100px;
+  margin-left: -14px;
+}
+.tooltip .tooltipbox.score::after {
+  left: 11px;
 }
 .tooltip .tooltipbox.flip {
   bottom: auto;
