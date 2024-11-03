@@ -3,8 +3,14 @@
 // convention: x,y denote individual runs; p,l are player/level indices rsp.
 // they depend on class properties: this.dataIndex, this.sortIndex, Page.scoring
 
-// util: print fixed-precision percentage
-function pct(x,dp) { return (Math.floor(x*10**(dp+2))/10**dp).toFixed(dp) }
+// print format utils
+function pct(x, dp) {     // fixed-precision %
+  let txt = (Math.floor(x*10**(dp+2))/10**dp).toFixed(dp)
+  return txt.split(".")[0] == "100" ? "100" : txt
+}
+function smd(x) {         // small decimals
+  return x.replace(/\.(\d*)$/, `<span style="font-size:67%">.$1</span>`)
+}
 
 
 // footer html generator
@@ -12,7 +18,7 @@ function tableFooterHTML(tableWidth) {
   // colspans that are larger than the table width cause extra scrollable whitespace on Gecko only
   return `<tr><td colspan="${tableWidth}" id="tableFooter">
     this app was made by <a href='https://shoutplenty.netlify.app/sms'>shoutplenty</a> 
-    (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: v2.2)
+    (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: v2.3)
   </td></tr>`
 }
 
@@ -52,7 +58,7 @@ function tableAggregate() {
   // isotopes (pairs for which only the better is counted for points/ranks) complicate the design of this algorithm
   // they are handled simultaneously, so are not listed separately in levelIDs
   let levelIDs = data.levels.aggregateIndices[this.dataIndex]
-  let scoringName = {"p": "points", "ppct": "pts %", "l1": "ℓ<sub>1</sub>", "linf": "ℓ<sub>∞</sub>"}[Page.scoring]
+  let scoringName = {"p": "points", "ppct": "pts %", "rpct": "rk %", "l1": "ℓ<sub>1</sub>", "linf": "ℓ<sub>∞</sub>"}[Page.scoring]
   let html = `<table><tr>
       <th class="cell-a1">#</th>
       <th class="cell-a2 selectable" onclick="pageAggregate.sortTable(1)">player</th>
@@ -70,13 +76,17 @@ function tableAggregate() {
      table[p_] = {
       p: p_,                          // player index
       name: data.players.names[p_],   // player name
-      pts: 0,           // points
-      l1: 0,            // l1 (sum of ranks-minus-one)
-      linf: null,       // l∞ (maximum rank-minus-one)
+      ptsEntries: 0,    // entry count (points potential) across submitted levels (takes max for isotopes)
+      rkEntries: 0,     // entry count (rank potential) across submitted levels (takes min for isotopes)
+      score: {          // scores
+        p: 0,             // points
+        l1: 0,            // l1 (sum of ranks-minus-one)
+        linf: null,       // l∞ (maximum rank-minus-one)  
+        ppct: 0,          // points % (points / ptsEntries)
+        rpct: 0,          // rank % (l1 / rkEntries)
+      },
+      scoreText: {},    // printed scores (same keys as score)
       medals: [0,0,0],  // medal count
-      ptsEntries: 0,    // entry count across submitted levels (takes max for isotopes)
-      rkEntries: 0,     // entry count across submitted levels (takes min for isotopes)
-      // (a player can get max ptsEntries pts and max rkEntries l1 bc better result is always counted)
       v: [0,0],         // video count [0: unique levels, 1: redundant isotopes]
       n: [0,0],         // level count [0: unique levels, 1: redundant isotopes]
     }
@@ -92,28 +102,28 @@ function tableAggregate() {
       y.entries = data.levels.isotopes[xCode] ? data.levels.entries[l_+1] : null
       table[p_].ptsEntries += Math.max(x.entries, y.entries ?? 0)
       table[p_].rkEntries  += Math.min(x.entries, y.entries ?? Infinity)
-      // points, submissions, videos
+      // submissions, videos
       if (x.time || y.time) { table[p_].n[0]++ }
       if (x.time && y.time) { table[p_].n[1]++ }
       if (x.link || y.link) { table[p_].v[0]++ }
       if (x.link && y.link) { table[p_].v[1]++ }
-      table[p_].pts += Math.max(x.points ?? 0, y.points ?? 0)
+      // scores
+      table[p_].score.p += Math.max(x.points ?? 0, y.points ?? 0)
       // l1/linf count the best rank across isotopes, counting rank = entries for unsubmitted levels
       let rankPenalty = Math.min(x.rank ?? x.entries + 1, y.rank ?? (y.entries ?? Infinity) + 1) - 1
-      table[p_].l1 += rankPenalty
-      table[p_].linf = Math.max(table[p_].linf, rankPenalty)
+      table[p_].score.l1 += rankPenalty
+      table[p_].score.linf = Math.max(table[p_].score.linf, rankPenalty)
       // medals treat the isotopes as separate levels
       if ([1,2,3].includes(x.rank) && !data.levels.medalless.includes(xCode)) {table[p_].medals[x.rank-1]++}
       if ([1,2,3].includes(y.rank) && !data.levels.medalless.includes(yCode)) {table[p_].medals[y.rank-1]++}
     }
-    // score is the statistic that will be displayed
-    table[p_].scores = {
-      "p":    table[p_].pts,
-      "ppct": pct(   table[p_].pts/table[p_].ptsEntries, 2),
-      "rpct": pct(1 - table[p_].l1/table[p_].rkEntries , 2),
-      "l1":   table[p_].l1,
-      "linf": table[p_].linf,
-    }
+    // normalised scores
+    table[p_].score.ppct =     table[p_].score.p  / table[p_].ptsEntries
+    table[p_].score.rpct = 1 - table[p_].score.l1 / table[p_].rkEntries
+    // display scores
+    table[p_].scoreText = Object.fromEntries(Object.entries(table[p_].score).map(([key, score]) => {
+      return [key, key.includes("pct") ? smd(pct(score, 2)) : String(score)]
+    }))
   }
   table.sort(this.sortMethods[this.sortIndex])
 
@@ -124,16 +134,16 @@ function tableAggregate() {
     // calculate ranks
     let value = { // depends on sort setting; these need to uniquely id sorts but needn't sort correctly themselves
       1: undefined,
-      2: entry.scores[Page.scoring],
+      2: entry.score[Page.scoring],
       3: entry.medals.toString(),
       6: entry.v.concat(...entry.n).toString(),
       7: entry.n.concat(...entry.v).toString(),
-    }[this.sortIndex] 
+    }[this.sortIndex]
     if (value != prevValue) { rank = i + 1 }
     entry.rank = rank
     prevValue = value
     // generate display code
-    let scoreHTML = Page.scoring == "ppct" ? tooltipHTML(entry.scores["ppct"], `${entry.scores["rpct"]}% rank`, "score") : entry.scores[Page.scoring]
+    let scoreHTML = Page.scoring == "ppct" ? tooltipHTML(entry.scoreText["ppct"], `${entry.scoreText["rpct"]}% rank`, "score") : entry.scoreText[Page.scoring]
     html += `<tr><td class="cell-a1">${entry.rank ?? ""}</td>`
           + `<td class="cell-a2 selectable" onclick="go('p',${entry.p})">${entry.name}</td>`
           + `<td class="cell-a3">${scoreHTML}</td>`
@@ -179,7 +189,7 @@ function tableLevel() {
     let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] ?? ``      // html class annotation for colouring
     let valueHTML = x.link ? `<a href="${x.link}">${x.value}</a>` : `${x.value}`
     let rankDesc = x.rank + x.points == data.levels.entries[x.l] + 1 ?    // ties exist iff r + p != n + 1
-                   `${pct(x.rQ, 1)}%` : `${pct(x.rQ, 1)}% rank\n${pct(x.pQ, 1)}% points`
+                   `${smd(pct(x.rQ, 1))}%` : `${smd(pct(x.rQ, 1))}% rank\n${smd(pct(x.pQ, 1))}% points`
     let noteHTML = x.note ? tooltipHTML("📝", x.note, "note") : ``
     let cutoff = i == cutoffIndex && this.sortIndex == 0 ? `cutoff` : ``  // cutoff appears as bottom border
     html += `<tr>
@@ -212,7 +222,7 @@ function tablePlayer() {
     html += `<tr>
       <td class="cell-p1 selectable" onclick="go('l',${x.l})">${data.levels.codes[x.l]}</td>
       <td class="cell-p2 ${colour}">${x.rank}</td>
-      <td class="cell-p3">${Page.scoring == "ppct" ? tooltipHTML(pct(x.pQ, 1), `${pct(x.rQ, 1)}% rank`, "score") : x.points}</td>
+      <td class="cell-p3">${Page.scoring == "ppct" ? tooltipHTML(smd(pct(x.pQ, 1)), `${smd(pct(x.rQ, 1))}% rank`, "score") : x.points}</td>
       <td class="cell-p4">${valueHTML}</td>
       <td class="cell-p5">${noteHTML}</td>
     </tr>`

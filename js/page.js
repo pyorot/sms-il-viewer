@@ -62,10 +62,7 @@ function loadPages() {
         return a.name.localeCompare(b.name, 'en', { sensitivity: 'base' })
       },
       2: (a,b) => { // points sort
-        switch (Page.scoring) {
-          case "p":  case "ppct": return b.scores[Page.scoring] - a.scores[Page.scoring];
-          case "l1": case "linf": return a.scores[Page.scoring] - b.scores[Page.scoring];
-        }
+        return (Page.scoring[0] == "l" ? -1 : 1) * (b.score[Page.scoring] - a.score[Page.scoring])
       },
       3: (a,b) => { // medal sort
         for (let i of [0,1,2]) {if (a.medals[i] != b.medals[i]) {return b.medals[i] - a.medals[i]}}
