@@ -62,7 +62,7 @@ function tableAggregate() {
       <th class="cell-a6">🥉</th>
       <th class="cell-a7 selectable" onclick="pageAggregate.sortTable(6)">v</th>
       <th class="cell-a8 selectable" onclick="pageAggregate.sortTable(7)">n</th>
-    </tr>`
+    </tr>`.replace(`${this.sortIndex+1} selectable`, `${this.sortIndex+1} selected`)
   
   let table = [] // this is for raw data; it'll be reformatted for display later
   for (let p_ = 0; p_ < data.players.names.length; p_++) {
@@ -204,7 +204,7 @@ function tablePlayer() {
       <th class="cell-p3 selectable" onclick="pagePlayer.sortTable(2)">${Page.scoring == "ppct" ? "pts %" : "points"}</th>
       <th class="cell-p4">time</th>
       <th class="cell-p5">note</th>
-    </tr>`
+    </tr>`.replace(`${this.sortIndex+1} selectable`, `${this.sortIndex+1} selected`)
   for (let x of table) {
     let colour = {1: "gold", 2: "silver", 3: "bronze"}[x.rank] ?? ``  // html class annotation for colouring
     let valueHTML = x.link ? `<a href="${x.link}">${x.value}</a>` : `${x.value}`

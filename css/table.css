@@ -27,6 +27,10 @@ th.selectable, td.selectable {
     background: var(--colHighlight);
   }
 }
+th.selected, td.selected {
+  cursor: pointer;
+  background: var(--colHighlight);
+}
 th.cutoff, td.cutoff {
   border-bottom: 2px solid var(--colHead2);
 }
