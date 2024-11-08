@@ -1,4 +1,4 @@
-#menu label, #menu #menuTitle, #menu #loadStatus {
+#menu label, #menu #menuTitle, #menu #loadStatus, #menu #menuTitle > div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +8,7 @@
 #menu label {
   cursor: pointer;
 }
-#menu input + label {
+#menu input + label, #menu label + div {
   border-left: solid 1px var(--colHead2Active);
 }
 #menu > #menuTitle, #menu #loadStatus {
@@ -31,21 +31,21 @@
 #menu > #menuPages input:checked + label {
   background: var(--colHead2Active);
 }
-#menu > #menuToggles label {
+#menu > #menuTitle label, #menu #menuToggles label {
   flex: 1;
   background: var(--colHead1);
 }
 @media (hover: hover) {
-  #menu > #menuToggles label:hover {
+  #menu > #menuTitle label:hover, #menu #menuToggles label:hover {
     background: var(--colHead1Active);
   }
 }
 @media (hover: none) {
-  #menu > #menuToggles label:active {
+  #menu > #menuTitle label:active, #menu #menuToggles label:active {
     background: var(--colHead1Active);
   }
 }
-#menu > #menuToggles input:checked + label {
+#menu > #menuTitle input:checked + label, #menu #menuToggles input:checked + label {
   background: var(--colHead1Active);
 }
 

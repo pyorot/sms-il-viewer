@@ -1,5 +1,5 @@
 #menu {
-  label, #menuTitle, #loadStatus {
+  label, #menuTitle, #loadStatus, #menuTitle>div {
     display: flex;
     justify-content: center; // horizontal centring
     align-items: center;     // vertical centring
@@ -9,7 +9,7 @@
   label {
     cursor: pointer;
   }
-  input + label { // set interior borders between buttons only
+  input + label, label + div { // set interior borders between buttons only
     border-left: solid 1px var(--colHead2Active);
   }
 
@@ -27,7 +27,7 @@
     input:checked + label { background: var(--colHead2Active) }
   }
 
-  > #menuToggles {
+  > #menuTitle, #menuToggles {
     label {
       flex: 1;
       background: var(--colHead1);
