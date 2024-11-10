@@ -15,12 +15,13 @@ def convert(timestamp):
     with open(f"{dataRoot}{timestamp}.json") as f:
         data = json.loads(f.read())
     # patches
-    cutoffDict = {k: data["levels"][k] for k in ["cutoffs", "cutoffLimits"] if k in data["levels"]}
-    data["levels"] = levels | cutoffDict
+    if "converted" not in timestamp: # inject levels (above) into post 2022/01 data
+        cutoffDict = {k: data["levels"][k] for k in ["cutoffs", "cutoffLimits"] if k in data["levels"]}
+        data["levels"] = levels | cutoffDict
     processAnons(data)
     for level in data["body"]:
         for i, run in enumerate(level):
-            if run[1] == None: run[1] = ""                                  # v2.0+: null links → ""
+            if len(run) >= 2 and run[1] == None: run[1] = ""                # v2.0+: null links → ""
             while len(run) >= 1 and run[-1] == "": del run[-1]              # v2.3+: delete trailing "" params
             if len(run) >= 2 and run[1] != "": run[1] = urlClean(run[1])
     # write
@@ -53,7 +54,12 @@ def urlClean(oldUrl):
     return url
 
 tsList = [
+    "20210401-1300-converted", "20210501-1300-converted", "20210601-1300-converted",
+    "20210701-1300-converted", "20210801-1300-converted", "20210901-1300-converted",
+    "20211001-1300-converted", "20211101-1400-converted", "20211201-1400-converted",
+    "20220101-1400-converted",
     "20230701",      "20231101-1600", "20231201-1605", "20240101-1600",
+    "20240201-1600-reconstructed",
     "20240301-1600", "20240401-1500", "20240501-1500", "20240601-1500",
     "20240701-1500", "20240801-1500", "20240901-1500", "20241001-1500",
     "20241101-1600",

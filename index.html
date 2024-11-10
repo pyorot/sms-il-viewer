@@ -27,7 +27,7 @@
       }
       h1, h2 { text-align: center; color: MidnightBlue }
       h2 { margin-block-end: 0px }
-      p, ul { margin-block-start: 5px }
+      p, ul { margin-block-start: 5px; text-align: justify }
       table { width: 100%; box-sizing: border-box; text-align: center }
       tr:is(:nth-child(4), :nth-child(7), :nth-child(10)) >* { border-top: 2px solid black }
       th, td {
@@ -49,7 +49,7 @@
       <h2>Historic Leaderboard Viewer</h2>
       <p>Each snapshot is from the first of the month,
         and so is grouped by the previous month.
-        Orange cells are converted from an old format so lack links, notes and cutoffs.</p>
+        Orange cells are converted from the Excel tool so lack links, notes and cutoffs.</p>
       <table>
         <tbody>
           <tr><th rowspan="3">2024</th>
@@ -60,7 +60,7 @@
             <td class="j"><a href="2407">07</a></td> <td class="j"><a href="2406">06</a></td>
           </tr><tr>
             <td class="j"><a href="2405">05</a></td> <td class="j"><a href="2404">04</a></td>
-            <td class="j"><a href="2403">03</a></td> <!-- <td><a href="2402">02</a></td> -->
+            <td class="j"><a href="2403">03</a></td> <td class="j"><a href="2402">02</a></td>
           </tr><tr class="divider"><th rowspan="3">2023</th>
             <td class="j"><a href="2401">24/01</a></td> <td class="j"><a href="2312">12</a></td>
             <td class="j"><a href="2311">11</a></td> <td class="x"><a href="2310">10</a></td>
@@ -79,9 +79,19 @@
           </tr><tr>
             <td class="x"><a href="2205">05</a></td> <td class="x"><a href="2204">04</a></td>
             <td class="x"><a href="2203">03</a></td> <td class="x"><a href="2202">02</a></td>
-          </tr><tr><td></td>
-            <td class="x"><a href="2201">22/01</a></td>
-            <td colspan="3" class="l"><a href="https://drive.google.com/drive/u/1/folders/1yDb0_H9hWTMP0K8jnXF2ciwKwyAe5LB-" target="_blank">→ data archive</a></td>
+          </tr><tr class="divider"><th rowspan="3">2021</th>
+            <td class="j"><a href="2201">22/01</a></td> <td class="j"><a href="2112">12</a></td>
+            <td class="j"><a href="2111">11</a></td> <td class="j"><a href="2110">10</a></td>
+          </tr><tr>
+            <td class="j"><a href="2109">09</a></td> <td class="j"><a href="2108">08</a></td>
+            <td class="j"><a href="2107">07</a></td> <td class="j"><a href="2106">06</a></td>
+          </tr><tr>
+            <td class="j"><a href="2105">05</a></td> <td class="j"><a href="2104">04</a></td>
+            <td colspan="2" class="l">
+              <a href="https://drive.google.com/drive/u/1/folders/1yDb0_H9hWTMP0K8jnXF2ciwKwyAe5LB-" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" height="24pt" style="vertical-align: middle"/> archive
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
