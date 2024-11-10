@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- page properties -->
+    <base target="_blank" rel="noopener noreferrer">
+    <title>SMS IL Accurate Leaderboards</title>
+    <meta name="description" content="Super Mario Sunshine Individual Level Speedruns: Accurate Leaderboard Viewer">
+    <meta name="theme-color" content="#721616">
+    <meta name="default-sort" content="p">
+    <!-- style imports -->
+    <link rel="stylesheet" href="/css/colour.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/settings.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/title.css">
+    <link rel="stylesheet" href="/css/table.css">
+    <link rel="stylesheet" href="/css/tooltip.css">
+    <!-- site properties -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="kjiY3vqv_Q5J4yUW4W7ec1YJrlNk4xWinHBJfNgST-g">
+    <!-- favicons (from https://realfavicongenerator.net/) -->
+    <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png?v=2">
+    <link rel="manifest" href="/icon/site.webmanifest?v=2">
+    <link rel="mask-icon" href="/icon/safari-pinned-tab.svg?v=2" color="#5bbad5">
+    <link rel="shortcut icon" href="/icon/favicon.ico?v=2">
+    <meta name="apple-mobile-web-app-title" content="SMS ILs">
+    <meta name="application-name" content="SMS ILs">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/icon/browserconfig.xml?v=2">
+  </head>
+  <body ontouchstart><!-- ontouchstart binds :active psuedoclass to touch+hold event on iOS -->
+    <div id="main">
+
+      <div id="menu">
+        <div id="menuTitle">
+          <label style="flex:1;height:100%" onclick="location.href=`/`">🏠</label><div style="flex:2">22/06</div>
+        </div>
+        <div id="menuPages">
+          <input type="radio" id="radioPages-a" name="radioPages" value="a">
+          <label for="radioPages-a" onclick="go('a', pageAggregate.dataIndex)">Overall</label>
+          <input type="radio" id="radioPages-l" name="radioPages" value="l">
+          <label for="radioPages-l" onclick="go('l', pageLevel.dataIndex)">Levels</label>
+          <input type="radio" id="radioPages-p" name="radioPages" value="p">
+          <label for="radioPages-p" onclick="go('p', pagePlayer.dataIndex)">Players</label>    
+        </div>
+        <div id="menuToggles">
+          <input type="checkbox" id="check-help" name="checkToggles">
+          <label for="check-help" onclick="toggleHelp()"><div class="circle">?</div></label>
+          <input type="checkbox" id="check-settings" name="checkToggles">
+          <label for="check-settings" onclick="toggleSettings()">⚙️</label>
+        </div>
+        <div id="loadStatus">
+          <i>loading... (should take ~3s)</i>
+        </div>
+      </div>
+
+      <div id="settings">
+        <div class="settingsRow" id="settingsRowMain">
+          <div class="settingsBlock" id="blockScoring">
+            <div class="settingsItem">score:</div>
+            <input type="radio" id="radioScoring-p" name="radioScoring" value="p">
+            <label class="settingsItem" for="radioScoring-p" onclick="setScoring('p')">p</label>
+            <input type="radio" id="radioScoring-ppct" name="radioScoring" value="ppct">
+            <label class="settingsItem" for="radioScoring-ppct" onclick="setScoring('ppct')">p%</label>
+            <input type="radio" id="radioScoring-l1" name="radioScoring" value="l1">
+            <label class="settingsItem" for="radioScoring-l1" onclick="setScoring('l1')">ℓ<sub>1</sub></label>
+            <input type="radio" id="radioScoring-linf" name="radioScoring" value="linf">
+            <label class="settingsItem" for="radioScoring-linf" onclick="setScoring('linf')">ℓ<sub>∞</sub></label>
+          </div>
+          <div class="settingsBlock" id="blockTheme">
+            <label class="settingsItem" id="themeButton" onclick="toggleTheme()">theme</label>
+          </div>
+          <div class="settingsBlock" id="blockAnon">
+            <label class="settingsItem" id="anonButton" onclick="toggleAnon()">anon</label>
+          </div>
+        </div>
+        <div class="settingsRow">
+          <div id="blockAnonPrompt">
+            <div id="anonHTML"></div>
+            <div id="anonPromptButtons">
+              <label class="promptItem" onclick="toggleAnon(false)">show names</label>
+              <label class="promptItem" onclick="toggleAnon(true)">keep initials</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="panelbottom">
+        <div class="panelleft page nav level" id="navLevel"></div>
+        <div id="panelright">
+          <div class="paneltop page level" id="titleLevel"></div>
+          <div class="paneltop page nav aggregate" id="navAggregate"></div>
+          <div class="paneltop page nav player" id="navPlayer"></div>
+          <div id="lb"></div>
+        </div>
+      </div>
+
+      <div id="panelbottomoverlay">
+        <h2>Super Mario Sunshine Individual Level Speedruns: Accurate Leaderboard Viewer</h2>
+        <p style="background:rgba(211,211,211,30%)"> The data here is frozen to <b>2022/06/01 13:00 UTC</b>.</p>
+        <p>This app displays leaderboards for SMS ILs that strive towards accuracy,
+          loosely as described in this <a href="https://shoutplenty.netlify.app/sms/articles/leaderboard-manifesto">manifesto</a>.
+          The data is also viewable as a <b>table</b>
+          <a href="https://docs.google.com/spreadsheets/d/1M_X3fvZPhbeQ2H1Arm24sHbtwWY5LEozQ4SBcMWiGPw">here</a>
+          (where there are also links to the rules and other info) and as <b>raw JSON</b>
+          <a href="https://script.google.com/macros/s/AKfycbz3ihGMcxM65F3tfhXq38V_tkVdiLLJ9aIUl2sYSWiKQVALD1QTaHOPBsIQQQukrjE8ow/exec">here</a>.
+          It's synthesised by a tracker that monitors <b>two sources</b>:
+          <a href="https://docs.google.com/spreadsheets/d/12wDUXjLqmcUuWSEXWc1fHNJc24KlfyCh0pvibZYEQM0">1</a>,
+          <a href="https://docs.google.com/spreadsheets/d/1Ibq5m31pU1ZVfh4Dlo2r2Mnmk3WBiZwt6lja5bZSE1Q">2</a>.
+          You can submit your own ILs to source 2.
+          View past <b>snapshots</b> of the leaderboard <a href="https://history--smsilview.netlify.app">here</a>.</p>
+        <p>Here are some tips for fluid use of this app.</p>
+
+        <h3>URL Navigation</h3>
+        <p>Aside from the menu buttons, you can go straight to a
+          leaderboard by adding its code to the main URL, after a <i>#</i>. E.g.:<br>
+          <a href="#s4s" target="_self">https://smsilview.netlify.app#s4s</a></p>
+        <p>These codes are formed from the short codes in the level menu and full player/aggregate group names
+          (spaces become _; non-alphanumeric​/_​/.​/-​/+​/*​/~​/! characters become -);
+          navigate to your desired page via the menus to check the code in the address bar.</p>
+        <p>Navigating back/forward in the browser flicks through your visited leaderboards,
+          but your sorting settings and last-viewed leaderboards on inactive tabs persist.</p>
+
+        <h3>Cross-Links</h3>
+        <p>Any player or level can be clicked to go to an individual leaderboard.</p>
+
+        <h3>Sorting</h3>
+        <p>Sortable columns will show up when hovering or holding down their headers.
+          Click them to sort by that column.</p>
+
+        <h3>Scoring</h3>
+        <p>Set the scoring algorithm for aggregates (overall leaderboards) in the ⚙️ settings menu. The options are:</p>
+        <ul style="text-align:left">
+          <li><b>p</b>: points (sum of strictly worse runs + 1)</li>
+          <li><b>p%</b>: normalised points % (points / total entries across aggregate)</li>
+          <li><b>ℓ1</b>: ℓ1 norm (sum of strictly better runs)</li>
+          <li><b>ℓ∞</b>: ℓ∞ norm (maximum number of strictly better runs)</li>
+        </ul>
+        <p>p% also replaces points with points % (points / entries) in player tables, and 
+          is shown in a tooltip over ranks in level tables. Whenever p% is displayed, a tooltip
+          also shows <b>r%</b>, normalised rank % (1 – ℓ1 / total entries across aggregate).</p>
+        <p><i>Total entries is slightly different for p% vs r% because, for any isotope,
+          the variant with the most entries is available for points, whereas
+          only the entries of the one with fewer entries can at worst count against your ℓ1.</i></p>
+
+        <h3>Video Cutoffs</h3>
+        <p>These show on the level leaderboards as coloured horizontal lines.
+          Any time at least as good as the worst time above the line likely needs a video.</p>
+
+        <h3>Note Link Formatting</h3>
+        <p>Valid URLs in notes are converted to clickable links;
+          links in the format <nobr><code>[text](link)</code></nobr> are converted to clickable links with custom text.
+          All URLs must include <code>http(s)://</code> to be detected.</p>
+        <p><i>⚠: Custom text links might not work on browsers or iOS that haven't been updated since Apr 2023.</i></p>
+        <p><i>Certain characters (./@/:/;) are excluded if they appear at the end of a URL;
+          if you need them included, appending a # to the URL usually works.</i></p>
+
+        <h3>Copying Notes</h3>
+        <p>To view notes, hover over (desktop) or tap (iOS) the 📝 emoji. To copy them,
+          drag your mouse straight up (if desktop), then single-click the note.</p>
+
+        <h3>Why Times New Roman on iOS?</h3>
+        Apple does what it wants.
+
+        <h3>Aggregates (Overall Leaderboards)</h3>
+        <p>These sum scores across a selectable group of levels.
+          The <b>n</b> and <b>v</b> columns count number of submitted levels and videos respectively.</p>
+        <p>Certain pairs of levels (listed below as <i>version pairs</i>) have only the higher counted for points
+          (or lower for rank-based scores) wherever they are included, but medals count them individually.
+          A <b>'</b> mark in an n/v column means that person has submitted both versions of a pair,
+          in which case the number itself only includes one of them.</p>
+        <p>Certain levels (listed below as <i>medalless levels</i>) are not counted in medal columns,
+          but are counted in all other metrics.</p>
+
+        <h3>Level Details</h3>
+        <div id="helpHTML"><p><i>(this section should load from the data)</i></p></div>
+        <hr>
+        <p style="text-align: center; color: #e47f3b"><i>this app was made by <a href='https://shoutplenty.netlify.app/sms'>shoutplenty</a> 
+          (<a href='https://github.com/pyorot/sms-il-viewer'>code</a>: v2.3)</i></p>
+      </div>
+
+    </div>
+
+    <!-- script imports -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+    <script>var dataUrl = "data/20220601-1300.json";</script>
+    <script type="text/javascript" src="/js/data.js"></script>
+    <script type="text/javascript" src="/js/hash.js"></script>
+    <script type="text/javascript" src="/js/page.js"></script>
+    <script type="text/javascript" src="/js/nav.js"></script>
+    <script type="text/javascript" src="/js/settings.js"></script>
+    <script type="text/javascript" src="/js/table.js"></script>
+    <script type="text/javascript" src="/js/load.js"></script>
+  </body>
+</html>
